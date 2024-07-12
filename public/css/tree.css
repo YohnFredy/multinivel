@@ -1,0 +1,169 @@
+/* Reset para eliminar márgenes y rellenos predeterminados */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.caja {
+    /* overflow-x: scroll;*/
+    overflow: auto;
+    /* white-space: nowrap; */
+}
+
+/* Estilos para el árbol */
+.tree {
+    width: max-content; /* El ancho se ajusta al contenido */
+    overflow: auto; /* Desplazamiento cuando el contenido excede el tamaño del contenedor */
+    padding-bottom: 20px;
+    padding-top: 10px;
+}
+
+/* Estilos para la lista no ordenada del árbol */
+.tree ul {
+    padding-top: 10px; /* Espacio superior dentro del árbol */
+    position: relative; /* Posición relativa para los elementos hijos */
+    transition: all 0.5s; /* Transición suave para cambios */
+}
+
+/* Estilos para los elementos de la lista del árbol */
+.tree li {
+    float: left; /* Hace que los elementos de la lista floten a la izquierda */
+    text-align: center; /* Centra el texto */
+    list-style-type: none; /* Elimina los puntos de lista */
+    position: relative; /* Posición relativa para elementos hijos */
+    padding: 10px 5px 0 5px; /* Espaciado interno */
+    transition: all 0.5s; /* Transición suave para cambios */
+}
+
+/* Dibuja conectores entre elementos del árbol */
+.tree li::before,
+.tree li::after {
+    content: ""; /* Añade contenido pseudo-elemento */
+    position: absolute; /* Posición absoluta para los conectores */
+    top: 0; /* Posicionamiento en la parte superior */
+    right: 50%; /* Conectores centrados horizontalmente */
+    border-top: 2px solid #212a33; /* Estilo de línea para los conectores */
+    width: 50%; /* Ancho de los conectores */
+    height: 10px; /* Altura de los conectores */
+}
+.dark .tree li::before,
+.dark .tree li::after {
+    border-top: 2px solid #DBDBDB;
+}
+
+.tree li::after {
+    right: auto; /* Restablece la posición del conector */
+    left: 50%; /* Centra el conector horizontalmente */
+    border-left: 1px solid #212a33; /* Agrega línea para conectar */
+}
+
+.dark .tree li::after {
+    border-left: 1px solid #DBDBDB; /* Agrega línea para conectar */
+}
+
+/* Elimina conectores donde el elemento no tiene hermanos */
+.tree li:only-child::after,
+.tree li:only-child::before {
+    display: none; /* Oculta los conectores */
+}
+
+/* Ajustes para elementos hijos únicos */
+.tree li:only-child {
+    padding-top: 0; /* Elimina el espacio superior */
+}
+
+/* Elimina el conector izquierdo del primer hijo y el conector derecho del último hijo */
+.tree li:first-child::before,
+.tree li:last-child::after {
+    border: 0 none; /* Elimina los bordes */
+}
+
+/* Agrega un conector vertical para los últimos nodos */
+.tree li:last-child::before {
+    border-right: 1px solid #212a33; /* Añade línea para conectar */
+    border-radius: 0 5px 0 0; /* Agrega bordes redondeados */
+}
+
+.dark .tree li:last-child::before {
+    border-right: 1px solid #DBDBDB; /* Añade línea para conectar */
+}
+
+.tree li:first-child::after {
+    border-radius: 5px 0 0 0; /* Agrega bordes redondeados */
+}
+
+/* Agrega conectores debajo de los elementos principales */
+.tree ul ul::before {
+    content: ""; /* Añade contenido pseudo-elemento */
+    position: absolute; /* Posición absoluta para los conectores */
+    top: 0; /* Posicionamiento en la parte superior */
+    left: 50%; /* Centra el conector horizontalmente */
+    border-left: 1px solid #212a33; /* Estilo de línea para los conectores */
+    width: 0; /* Ancho de los conectores */
+    height: 10px; /* Altura de los conectores */
+}
+
+.dark .tree ul ul::before {
+    border-left: 1px solid #DBDBDB; /* Estilo de línea para los conectores */
+}
+
+/* Estilos para los enlaces dentro de los elementos del árbol */
+.tree li a {
+    box-shadow: 5px 5px 10px #b2b2b2; /* Sombra alrededor del enlace */
+    border-left: 6px solid #0765b8; /* Borde izquierdo del enlace */
+    padding: 5px 10px; /* Espaciado interno del enlace */
+    text-decoration: none; /* Elimina subrayado del enlace */
+    background: #fbfafb; /* Fondo del enlace */
+    font-family: arial, verdana, tahoma; /* Familia de fuentes */
+    font-size: 12px; /* Tamaño de la fuente */
+    display: inline-block; /* Hace que el enlace se comporte como un bloque en línea */
+    border-radius: 10px; /* Borde redondeado */
+    transition: all 0.5s; /* Transición suave para cambios */
+    cursor: pointer;
+}
+
+/* Estilos para los enlaces dentro de los elementos del árbol */
+.dark .tree li a {
+    box-shadow: 5px 5px 10px #000000; /* Sombra alrededor del enlace */
+    border-left: 6px solid #DBDBDB;
+    background: #1B1B1B ;
+}
+
+/* Estilos para los enlaces pequeños dentro del árbol */
+.tree li a.small {
+    font-size: 10px; /* Tamaño de fuente más pequeño */
+}
+
+/* Efectos flotantes al pasar el mouse */
+.tree li a:hover,
+.tree li a:hover + ul li a {
+    box-shadow: -5px -2px 10px #b2b2b2; /* Sombra invertida */
+    border-radius: 10px; /* Bordes redondeados más grandes */
+    background: #ffffff; /* Fondo blanco */
+    border-left: 6px solid #254663; /* Cambio de color del borde izquierdo */
+}
+
+.dark .tree li a:hover,
+.dark .tree li a:hover + ul li a {
+    box-shadow: -5px -2px 10px #000000; /* Sombra invertida */
+    border-radius: 10px; /* Bordes redondeados más grandes */
+    background: #0F0F0F; /* Fondo blanco */
+    border-left: 6px solid #E7E7E7; /* Cambio de color del borde izquierdo */
+}
+
+/* Estilos de conectores para elementos flotantes */
+.tree li a:hover + ul li::after,
+.tree li a:hover + ul li::before,
+.tree li a:hover + ul li:last-child::before,
+.tree li a:hover + ul::before, 
+.tree li a:hover + ul ul::before {
+    border-color: #0F0F0F; /* Cambia el color del conector */
+}
+
+.dark .tree li a:hover + ul li::after,
+.dark .tree li a:hover + ul li::before,
+.dark .tree li a:hover + ul li:last-child::before,
+.dark .tree li a:hover + ul::before, 
+.dark .tree li a:hover + ul ul::before {
+    border-color: #F3F3F3; /* Cambia el color del conector */
+}

@@ -28,9 +28,14 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'last_name' => fake()->lastName(),
+            'identification_card' => fake()->unique()->numerify('#########'),
+            'username' => fake()->unique()->userName(),
+            /* 'username' => fake()->unique()->regexify('[a-zA-Z0-9]{8,12}'), */
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            /* 'password' => static::$password ??= Hash::make('password'), */
+            'password' => static::$password ??= Hash::make('123'),
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'remember_token' => Str::random(10),
@@ -38,6 +43,8 @@ class UserFactory extends Factory
             'current_team_id' => null,
         ];
     }
+
+   
 
     /**
      * Indicate that the model's email address should be unverified.

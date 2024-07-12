@@ -25,7 +25,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'last_name',
+        'identification_card',
+        'username',
+        'email',   
         'password',
     ];
 
@@ -61,5 +64,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function userData(){
+        return $this->hasOne(UserData::class);
+    }
+
+    public function relationship(){
+        return $this->hasOne(Relationship::class);
+    }
+
+    public function userCount(){
+        return $this->hasOne(UserCount::class);
     }
 }
