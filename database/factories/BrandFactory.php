@@ -3,12 +3,13 @@
 namespace Database\Factories;
 
 use Illuminate\Support\Str;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Brand>
  */
-class CategoryFactory extends Factory
+class BrandFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,7 +21,8 @@ class CategoryFactory extends Factory
         return [
             'name' => $this->faker->word,
             'slug' => Str::slug($this->faker->unique()->word),
-            'description' => $this->faker->paragraph,
         ];
     }
+
+    
 }

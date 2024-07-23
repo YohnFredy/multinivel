@@ -2,13 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subcategory>
  */
-class CategoryFactory extends Factory
+class SubcategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -21,6 +22,7 @@ class CategoryFactory extends Factory
             'name' => $this->faker->word,
             'slug' => Str::slug($this->faker->unique()->word),
             'description' => $this->faker->paragraph,
+            'category_id' => Category::inRandomOrder()->first()->id,
         ];
     }
 }

@@ -2,7 +2,11 @@
 
 namespace Database\Seeders;
 
-
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Image;
+use App\Models\Product;
+use App\Models\Subcategory;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,12 +18,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        /* User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]); */
+        // Ejecutar el seeder que borra las imágenes
+        $this->call(ClearImagesSeeder::class);
 
         User::factory()->create([
             'name' => 'Yohn Fredy',
@@ -29,9 +30,27 @@ class DatabaseSeeder extends Seeder
             'email' => 'fredy.guapacha@gmail.com',
             'password' => bcrypt('123'),
         ]);
+        User::factory(30)->create();
+        $this->call(RelationshipSeeder::class);
 
-        User::factory(99)->create();  
+        $categories = Category::factory(4)->create()->each(function ($category) {
+            $category->images()->createMany(
+                Image::factory(1)->category()->make()->toArray()
+            );
+        });
 
-        $this->call(RelationshipSeeder::class); 
+        $subcategories = Subcategory::factory(10)->create()->each(function ($subcategory) {
+            $subcategory->images()->createMany(
+                Image::factory(1)->subcategory()->make()->toArray()
+            );
+        });
+
+        Brand::factory(10)->create();
+
+        Product::factory(20)->create()->each(function ($product) {
+            $product->images()->createMany(
+                Image::factory(1)->product()->make()->toArray()
+            );
+        }); 
     }
 }

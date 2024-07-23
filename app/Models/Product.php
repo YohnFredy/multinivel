@@ -7,22 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Str;
 
-class Category extends Model
+class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'description'];
+    protected $fillable = ['name', 'slug', 'description', 'price', 'stock', 'category_id', 'subcategory_id', 'brand_id'];
 
-    public function subcategories()
+    public function category()
     {
-        return $this->hasMany(SubCategory::class);
+        return $this->belongsTo(Category::class);
     }
 
-    public function products()
+    public function subcategory()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Subcategory::class);
     }
 
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 
     public static function boot()
     {

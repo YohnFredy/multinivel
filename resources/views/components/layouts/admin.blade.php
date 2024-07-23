@@ -61,7 +61,7 @@
     </div>
 
     <div id="main_content" class="main-content">
-        <div class="inner-content text-palette-600 dark:text-gray-300 px-6 pt-6 pb-10">
+        <div class="inner-content px-6 pt-6 pb-10 ">
             {{ $slot }}
         </div>
 
