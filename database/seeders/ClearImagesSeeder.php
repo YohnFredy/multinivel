@@ -14,8 +14,8 @@ class ClearImagesSeeder extends Seeder
      */
     protected $directories = [
         'products',
-        'categories',
-        'subcategories',
+        /* 'categories',
+        'subcategories', */
     ];
 
     /**

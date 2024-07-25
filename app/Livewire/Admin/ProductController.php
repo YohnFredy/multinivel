@@ -18,17 +18,16 @@ use Livewire\WithPagination;
 class ProductController extends Component
 {
 
-    use WithPagination, WithoutUrlPagination, WithFileUploads; 
+    use WithPagination, WithoutUrlPagination, WithFileUploads;
 
     public ProductForm $form;
     public $updateMode = false, $modalProduct = false;
-    public $categories, $subcategories, $brands;
+    public $categories, $brands;
     public $search = '', $searchTerms;
 
     public function mount()
     {
         $this->categories = Category::all();
-        $this->subcategories = Subcategory::all();
         $this->brands = Brand::all();
     }
 
@@ -59,12 +58,17 @@ class ProductController extends Component
         $this->form->name = $product->name;
         $this->form->description = $product->description;
         $this->form->price = $product->price;
+        $this->form->pts = $product->pts;
+        $this->form->tangible = $product->tangible;
+        $this->form->stock = $product->stock;
+        $this->form->allow_backorder = $product->allow_backorder;
         $this->form->category_id = $product->category_id;
-        $this->form->subcategory_id = $product->subcategory_id;
         $this->form->brand_id = $product->brand_id;
-
+        $this->form->is_active = $product->is_active;
         $this->form->images = $product->images->pluck('path')->toArray();
 
+        // Debugging
+    /* dd($this->form->is_active, $this->form->tangible, $this->form->allow_backorder); */
         $this->updateMode = true;
         $this->modalProduct = true;
     }
@@ -75,7 +79,7 @@ class ProductController extends Component
         $this->form->update($product);
         $this->form->reset();
         $this->modalProduct = false;
-        $this->edit($product->id); 
+        $this->edit($product->id);
     }
 
     public function delete($id)
@@ -97,7 +101,8 @@ class ProductController extends Component
         Image::where('path', $path)->delete();
     }
 
-    public function searchEnter(){
+    public function searchEnter()
+    {
         $this->searchTerms = array_filter(explode(' ', $this->search));
         $this->resetPage();
     }
@@ -116,6 +121,11 @@ class ProductController extends Component
         }
 
         $products = $products->paginate(5);
+
+        if ($this->form->price) {
+            $result = $this->form->price * 20 / 100;
+            $this->form->suggestedPts = number_format($result, 2, '.', ',');
+        }
 
         return view('livewire.admin.product-controller', [
             'products' => $products,

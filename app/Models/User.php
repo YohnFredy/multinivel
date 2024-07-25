@@ -28,7 +28,7 @@ class User extends Authenticatable
         'last_name',
         'identification_card',
         'username',
-        'email',   
+        'email',
         'password',
     ];
 
@@ -66,15 +66,33 @@ class User extends Authenticatable
         ];
     }
 
-    public function userData(){
+    public function userData()
+    {
         return $this->hasOne(UserData::class);
     }
 
-    public function relationship(){
+    public function relationship()
+    {
         return $this->hasOne(Relationship::class);
     }
 
-    public function userCount(){
+    public function userCount()
+    {
         return $this->hasOne(UserCount::class);
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
     }
 }

@@ -30,27 +30,25 @@ class DatabaseSeeder extends Seeder
             'email' => 'fredy.guapacha@gmail.com',
             'password' => bcrypt('123'),
         ]);
+
+
+
+
         User::factory(30)->create();
         $this->call(RelationshipSeeder::class);
 
-        $categories = Category::factory(4)->create()->each(function ($category) {
-            $category->images()->createMany(
-                Image::factory(1)->category()->make()->toArray()
-            );
-        });
-
-        $subcategories = Subcategory::factory(10)->create()->each(function ($subcategory) {
-            $subcategory->images()->createMany(
-                Image::factory(1)->subcategory()->make()->toArray()
-            );
-        });
-
-        Brand::factory(10)->create();
+        /* Category::factory()->create([
+            'name' => 'Hogar',
+            'slug' => 'hogar',
+            'description' => 'hogar la mejor manera',
+        ]); */
+        Category::factory(10)->create();
+        Brand::factory(5)->create();
 
         Product::factory(20)->create()->each(function ($product) {
             $product->images()->createMany(
                 Image::factory(1)->product()->make()->toArray()
             );
-        }); 
+        });
     }
 }

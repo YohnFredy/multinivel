@@ -20,16 +20,20 @@ class ProductForm extends Form
     #[Validate('required|numeric|min:0')]
     public $price = 0;
 
+    #[Validate('numeric|min:0')]
+    public $pts = 0;
+
+    public $tangible = 1;
+
+    #[Validate('numeric|min:0')]
     public $stock = 0;
 
-    #[Validate('required|numeric')]
+    public $allow_backorder = 0;
+
+    #[Validate('required')]
     public $category_id;
-    
-    public $subcategory_id;
-    public $brand_id;
-    public $newImages = [];
-    public $images = [];
-    public $product_id;
+
+    public $brand_id, $is_active = 1, $suggestedPts = 0, $newImages = [], $images = [], $product_id;
 
     public function rules()
     {

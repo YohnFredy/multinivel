@@ -10,7 +10,7 @@ use App\Livewire\Admin\SubCategoryController;
 use App\Livewire\Membership;
 use App\Livewire\Office\Tree\Binary;
 use App\Livewire\Office\Tree\Unilevel;
-
+use App\Livewire\ProductList;
 use App\Livewire\Prueba;
 
 use Illuminate\Support\Facades\Route;
@@ -22,6 +22,8 @@ Route::get('/', function () {
 Route::get('menu', function () {
     return view('menu-admin');
 });
+
+Route::get('productos', ProductList::class)->name('products');
 
 Route::middleware([
     'auth:sanctum',

@@ -27,9 +27,9 @@ class ProductFactory extends Factory
             'slug' => Str::slug($this->faker->unique()->word),
             'description' => $this->faker->paragraph,
             'price' => $this->faker->randomFloat(2, 10, 1000),
+            'pts' => 10,
             'stock' => $this->faker->numberBetween(0, 100),
             'category_id' => Category::inRandomOrder()->first()->id,
-            'subcategory_id' => Subcategory::inRandomOrder()->first()->id,
             'brand_id' => Brand::inRandomOrder()->first()->id,
         ];
     }

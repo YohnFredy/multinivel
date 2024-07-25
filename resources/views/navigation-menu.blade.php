@@ -11,23 +11,23 @@
                 </div>
 
                 <!-- Navigation Links -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
-                           Inicio
-                        </x-nav-link>
-                        <x-nav-link href="#">
-                            {{ 'Productos' }}
-                        </x-nav-link>
-                        <x-nav-link href="#">
-                            {{ 'Oportunidad' }}
-                        </x-nav-link>
-                        <x-nav-link href="#">
-                            {{ 'Contacto' }}
-                        </x-nav-link>
-                        <x-nav-link href="{{ route('office.index') }}" :active="request()->routeIs('office.index')">
-                            {{ 'Oficina' }}
-                        </x-nav-link>
-                    </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                        Inicio
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
+                        {{ 'Productos' }}
+                    </x-nav-link>
+                    <x-nav-link href="#">
+                        {{ 'Oportunidad' }}
+                    </x-nav-link>
+                    <x-nav-link href="#">
+                        {{ 'Contacto' }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('office.index') }}" :active="request()->routeIs('office.index')">
+                        {{ 'Oficina' }}
+                    </x-nav-link>
+                </div>
 
                 {{-- <div class="space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('membership', ['username' => 'master','position'=> 'right']) }}" :active="request()->routeIs('membership')">
@@ -37,8 +37,8 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                 <div class="hidden lg:flex mr-2" x-cloak>
-                    <x-dark-button /> 
+                <div class="hidden lg:flex mr-2" x-cloak>
+                    <x-dark-button />
                 </div>
                 <!-- Teams Dropdown -->
                 @auth
@@ -85,8 +85,8 @@
                     <div class="flex items-center px-4">
                         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                             <div class="shrink-0 me-3">
-                                <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
-                                    alt="{{ Auth::user()->name }}" />
+                                <img class="h-10 w-10 rounded-full object-cover"
+                                    src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                             </div>
                         @endif
 

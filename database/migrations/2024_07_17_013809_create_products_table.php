@@ -17,10 +17,14 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->decimal('price', 8, 2);
-            $table->integer('stock')->default(0);
+            $table->decimal('pts', 8, 2)->nullable();
+
+            $table->boolean('tangible')->default(true);
+            $table->integer('stock')->nullable(); // Null para productos intangibles
+            $table->boolean('allow_backorder')->default(false); // Permitir venta sin stock
             $table->foreignId('category_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-           $table->foreignId('subcategory_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null'); 
             $table->foreignId('brand_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
