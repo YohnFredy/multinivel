@@ -18,16 +18,12 @@ class ProductImagesCarousel extends Component
 
     public function prevMainImage()
     {
-        if ($this->mainImageIndex > 0) {
-            $this->mainImageIndex--;
-        }
+        $this->mainImageIndex = max(0, $this->mainImageIndex - 1);
     }
 
     public function nextMainImage()
     {
-        if ($this->mainImageIndex < count($this->product->images) - 1) {
-            $this->mainImageIndex++;
-        }
+        $this->mainImageIndex = min(count($this->product->images) - 1, $this->mainImageIndex + 1);
     }
 
     public function setMainImage($index)
@@ -35,31 +31,15 @@ class ProductImagesCarousel extends Component
         $this->mainImageIndex = $index;
     }
 
-    public function setThumbnailImage($index)
-    {
-        $this->mainImageIndex = $index;
-    }
-
     public function prevThumbnailImage()
     {
-        if ($this->thumbnailIndex > 0) {
-            $this->thumbnailIndex -= $this->thumbnailCount;
-            if ($this->thumbnailIndex < 0) {
-                $this->thumbnailIndex = 0;
-            }
-        }
+        $this->thumbnailIndex = max(0, $this->thumbnailIndex - $this->thumbnailCount);
     }
 
     public function nextThumbnailImage()
     {
         $totalImages = count($this->product->images);
-        if ($this->thumbnailIndex < $totalImages - $this->thumbnailCount) {
-            $this->thumbnailIndex += $this->thumbnailCount;
-            if ($this->thumbnailIndex > $totalImages - $this->thumbnailCount) {
-                $this->thumbnailIndex = $totalImages - $this->thumbnailCount;
-            }
-        }
-        
+        $this->thumbnailIndex = min($totalImages - $this->thumbnailCount, $this->thumbnailIndex + $this->thumbnailCount);
     }
 
     public function render()

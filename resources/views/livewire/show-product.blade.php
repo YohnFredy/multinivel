@@ -1,16 +1,17 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="bg-white p-4 mt-2 rounded-md shadow-md shadow-palette-300">
-        <div class="grid grid-cols-6 gap-10 mt-2 divide-x">
-            <div class="col-span-3 pl-6">
-                <a class="flex items-center cursor-pointer mb-2">
-                    <i class="fas fa-long-arrow-alt-left mr-2"></i>
-                    <h5>Home</h5>
+    <div class="bg-white pt-6 pb-8 mt-2 rounded-md shadow-md shadow-palette-300">
+        <div class="grid grid-cols-6 divide-x">
+            <div class="col-span-3 px-10">
+                <a class="flex items-center cursor-pointer ">
+                    <i class="fas fa-long-arrow-alt-left"></i>
+                    <h5>Home</h5> 
                 </a>
+                
             
                 @livewire('product-images-carousel', ['product' => $product])
 
             </div>
-            <div class="col-span-3 mt-5 px-10">
+            <div class="col-span-3 mt-4 px-10">
                 <h1 class="text-palette-200 font-bold uppercase">{{ $product->name }}</h1>
                 <p class="mt-6">{{ $product->description }}</p>
                 <h1 class="mt-6 text-palette-200 font-bold">$ {{ $product->price }}</h1>
