@@ -59,6 +59,7 @@ class ProductImagesCarousel extends Component
                 $this->thumbnailIndex = $totalImages - $this->thumbnailCount;
             }
         }
+        
     }
 
     public function render()

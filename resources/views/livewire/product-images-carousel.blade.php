@@ -40,7 +40,7 @@
                                 <div wire:key="thumb-{{ $index }}" class=" w-full">
                                     <div class=" flex justify-center {{ $loop->last ? '' : 'mr-2' }} cursor-pointer ">
                                         <img src="{{ asset('storage/' . $image->path) }}" alt="{{ $product->name }}"
-                                            class=" h-12  object-contain">
+                                            class=" h-14  object-contain">
                                     </div>
                                 </div>
                             </div>
