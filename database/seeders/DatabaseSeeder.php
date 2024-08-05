@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
         // Ejecutar el seeder que borra las imágenes
         $this->call(ClearImagesSeeder::class);
 
@@ -30,10 +29,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'fredy.guapacha@gmail.com',
             'password' => bcrypt('123'),
         ]);
-
-
-
-
+        
         User::factory(30)->create();
         $this->call(RelationshipSeeder::class);
 
@@ -42,7 +38,9 @@ class DatabaseSeeder extends Seeder
             'slug' => 'hogar',
             'description' => 'hogar la mejor manera',
         ]); */
-        Category::factory(10)->create();
+
+        $this->call(CategorySeeder::class);
+        
         Brand::factory(5)->create();
 
         Product::factory(20)->create()->each(function ($product) {

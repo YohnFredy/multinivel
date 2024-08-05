@@ -18,7 +18,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price', 8, 2);
             $table->decimal('pts', 8, 2)->nullable();
-
+            $table->text('specifications')->nullable();
+            $table->text('information')->nullable();
             $table->boolean('tangible')->default(true);
             $table->integer('stock')->nullable(); // Null para productos intangibles
             $table->boolean('allow_backorder')->default(false); // Permitir venta sin stock

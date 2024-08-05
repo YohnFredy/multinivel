@@ -11,19 +11,23 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'description','parent_id'];
+    protected $fillable = ['name', 'slug', 'description', 'is_active', 'parent_id'];
 
-      // Subcategorías
-      public function children()
-      {
-          return $this->hasMany(Category::class, 'parent_id');
-      }
-  
-      // Categoría padre
-      public function parent()
-      {
-          return $this->belongsTo(Category::class, 'parent_id');
-      }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id')->where('is_active', 1);
+    }
 
 
     public function products()
@@ -47,20 +51,5 @@ class Category extends Model
         $count = static::where('slug', 'LIKE', "{$slug}%")->count();
 
         return $count ? "{$slug}-{$count}" : $slug;
-    }
-
-    public function images()
-    {
-        return $this->morphMany(Image::class, 'imageable');
-    }
-
-    public function latestImage(): MorphOne
-    {
-        return $this->morphOne(Image::class, 'imageable')->latestOfMany();
-    }
-
-    public function oldestImage(): MorphOne
-    {
-        return $this->morphOne(Image::class, 'imageable')->oldestOfMany();
     }
 }

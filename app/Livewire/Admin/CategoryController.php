@@ -4,8 +4,6 @@ namespace App\Livewire\Admin;
 
 use App\Livewire\Forms\Admin\CategoryForm;
 use App\Models\Category;
-use App\Models\Image;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -48,8 +46,6 @@ class CategoryController extends Component
         $this->form->name = $category->name;
         $this->form->description = $category->description;
        
-        $this->form->images = $category->images->pluck('path')->toArray();
-
         $this->updateMode = true;
         $this->modalCategory = true;
     }
@@ -66,21 +62,11 @@ class CategoryController extends Component
     public function delete($id)
     {
         $category = Category::findOrFail($id);
-        $category->images()->each(function ($image) {
-            Storage::delete('public/' . $image->path);
-            $image->delete();
-        });
-
+        
         $category->delete();
         session()->flash('message', 'Categoria eliminada exitosamente.');
     }
 
-    public function removeImage($path)
-    {
-        $this->form->images = array_filter($this->form->images, fn ($image) => $image !== $path);
-        Storage::delete('public/' . $path);
-        Image::where('path', $path)->delete();
-    }
 
     public function searchEnter(){
         $this->searchTerms = array_filter(explode(' ', $this->search));

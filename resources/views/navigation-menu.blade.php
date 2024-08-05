@@ -16,7 +16,7 @@
                         Inicio
                     </x-nav-link>
                     <x-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
-                        {{ 'Productos' }}
+                        {{'Productos' }}
                     </x-nav-link>
                     <x-nav-link href="#">
                         {{ 'Oportunidad' }}

@@ -19,11 +19,12 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
       
+        $name = $this->faker->word;
         return [
-            'name' => $this->faker->word,
-            'slug' => Str::slug($this->faker->unique()->word),
-            'description' => $this->faker->paragraph,
-           /*  'parent_id' => Category::inRandomOrder()->first()->id, */
+            'name' => $name,
+            'slug' => Str::slug($name),
+            'description' => $this->faker->sentence,
+            'parent_id' => null
         ];
     }
 }

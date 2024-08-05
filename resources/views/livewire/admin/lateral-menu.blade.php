@@ -9,17 +9,12 @@
         </li>
 
         <li>
-            <x-lateral-nav-link href="{{ route('admin.category') }}" :active="request()->routeIs('admin.category')">
+            <x-lateral-nav-link href="{{ route('admin.categories') }}" :active="request()->routeIs('admin.categories')">
                 <i class=" ml-5 mr-2 fas fa-layer-group"></i>
                 <span class="text">Categoria</span>
             </x-lateral-nav-link>
         </li>
-        <li>
-            <x-lateral-nav-link href="{{ route('admin.subcategory') }}" :active="request()->routeIs('admin.subcategory')">
-                <i class="ml-5 mr-2 fas fa-list"></i>
-                <span class="text">Subcategory</span>
-            </x-lateral-nav-link>
-        </li>
+        
         <li>
             <x-lateral-nav-link href="{{ route('admin.brand') }}" :active="request()->routeIs('admin.brand')">
                 <i class="ml-5 mr-2 far fa-registered"></i>
@@ -27,7 +22,7 @@
             </x-lateral-nav-link>
         </li>
         <li>
-            <x-lateral-nav-link href="{{ route('admin.product') }}" :active="request()->routeIs('admin.product')">
+            <x-lateral-nav-link href="{{ route('admin.products.index') }}" :active="request()->routeIs('admin.products*')">
                 <i class="ml-5 mr-2 fas fa-tags"></i>
                 <span class="text">Productos</span>
             </x-lateral-nav-link>

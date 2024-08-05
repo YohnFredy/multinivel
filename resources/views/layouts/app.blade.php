@@ -19,11 +19,13 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    @stack('js')
+
     <script>
         (function() {
             const darkMode = localStorage.getItem('dark');
             if (darkMode === 'true' || (darkMode === null && window.matchMedia('(prefers-color-scheme: dark)')
-                .matches)) {
+                    .matches)) {
                 document.documentElement.classList.add('dark');
             }
         })();
@@ -48,7 +50,7 @@
     @stack('modals')
 
     @livewireScripts
-    
+
     <script>
         function darkModeHandler() {
             return {
@@ -85,6 +87,8 @@
             }
         }
     </script>
+
+    @stack('script')
 
 </body>
 

@@ -22,15 +22,29 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $parentCategoryId = Category::whereNull('parent_id')->inRandomOrder()->value('id');
+        Category::where('id', $parentCategoryId)->update(['is_active' => 1]);
+
+        $subCategoryId = Category::where('parent_id', $parentCategoryId)->inRandomOrder()->value('id');
+        Category::where('id', $subCategoryId)->update(['is_active' => 1]);
+
+        $subSubCategoryId = Category::where('parent_id', $subCategoryId)->inRandomOrder()->value('id');
+        Category::where('id', $subSubCategoryId)->update(['is_active' => 1]);
+
+        $brand = Brand::inRandomOrder()->first()->id;
+        Brand::where('id', $brand)->update(['is_active' => 1]);
+
         return [
             'name' => $this->faker->word,
             'slug' => Str::slug($this->faker->unique()->word),
             'description' => $this->faker->paragraph,
             'price' => $this->faker->randomFloat(2, 10, 1000),
             'pts' => 10,
+            'specifications' => $this->faker->paragraph,
+            'information' => $this->faker->paragraph,
             'stock' => $this->faker->numberBetween(0, 100),
-            'category_id' => Category::inRandomOrder()->first()->id,
-            'brand_id' => Brand::inRandomOrder()->first()->id,
+            'category_id' => $subSubCategoryId,
+            'brand_id' => $brand,
         ];
     }
 }

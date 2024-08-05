@@ -16,22 +16,12 @@ class CategoryForm extends Form
     #[Validate('nullable|string|min:3')]
     public $description = '';
 
-    public $newImages = [];
-    public $images = [];
     public $category_id;
-
-    public function rules()
-    {
-        return [
-            'newImages.*' => 'image|max:1024', // Máximo 1MB por imagen
-        ];
-    }
 
     public function store()
     {
         $this->validate();
         $category = Category::create($this->all());
-        $this->saveImages($category);
     }
 
     public function update($category)
@@ -40,14 +30,7 @@ class CategoryForm extends Form
         $category->update(
             $this->all()
         );
-        $this->saveImages($category);
+       
     }
 
-    public function saveImages($category)
-    {
-        foreach ($this->newImages as $image) {
-            $path = $image->storeAs('categories', $image->getClientOriginalName(), 'public');
-            $category->images()->create(['path' => $path]);
-        }
-    }
 }

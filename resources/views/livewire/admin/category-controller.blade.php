@@ -17,7 +17,7 @@
                 bg-gradient-to-r from-palette-200 dark:from-palette-70  via-palette-150 dark:via-palette-50 to-palette-200 dark:to-palette-70 
                  ">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-center">Imágenes</th>
+                       
                         <th scope="col" class="px-6 py-3">Nombre</th>
                         <th scope="col" class="px-6 py-3">Descripción</th>
                         <th scope="col" class="px-6 py-3">Acciones</th>
@@ -28,14 +28,6 @@
                         <div wire:key="{{ $category->id }}">
                             <tr
                                 class="bg-white border-b dark:bg-palette-80  border-palette-300 dark:border-palette-40 hover:bg-palette-10 dark:hover:bg-palette-60">
-    
-                                <th scope="row" class="px-6 py-4 whitespace-nowrap">
-    
-                                    @if ($category->latestImage)
-                                        <img class=" h-10 mx-auto" src="{{ Storage::url($category->latestImage->path) }}"
-                                            alt="{{ $category->name }}">
-                                    @endif
-                                </th>
                                 <td class="px-6 py-4">{{ $category->name }}</td>
                                 <td class="px-6 py-4">{{ $category->description }}</td>
                                 <td class="py-4 text-lg text-center">
@@ -43,7 +35,6 @@
                                         class="font-medium text-palette-200 hover:text-palette-150 dark:text-palette-30 dark:hover:text-white mr-2"><i
                                             class="fas fa-edit"></i>
                                     </button>
-    
                                     <button type="button" wire:click="delete({{ $category->id }})"
                                         wire:confirm="Esta seguuro de eliminar el categoria {{ $category->name }} ?"
                                         class="font-medium text-palette-400 hover:text-opacity-75 dark:text-palette-40 dark:hover:text-white"><i
@@ -90,32 +81,8 @@
                             rows="3">
                         </x-textarea-l>
                     </div>
-                    
-                    <div class="col-span-9 form-group">
-                        <x-input-file-l label="Imagenes:" for="form.newImages" wire:model="form.newImages"
-                            x-ref="fileInput" wire:loading.attr="disabled" />
-                    </div>
+                 
                 </div>
-
-                @if ($updateMode)
-                    <div class=" mt-4">
-                        <x-label>Imágenes Existentes:</x-label>
-                        <div class="grid grid-cols-4 gap-2 ">
-                            @foreach ($form->images as $image)
-                                <div
-                                    class="col-span-2 md:col-span-1  relative bg-white shadow-md shadow-palette-300 dark:shadow-none border border-palette-200 dark:border-palette-80 rounded-lg flex items-center justify-center p-2">
-                                    <div class="">
-                                        <img src="{{ Storage::url($image) }}" class="h-20"
-                                            alt="Imagen del categoria">
-                                        <button type="button"  wire:confirm="Esta seguuro de eliminar la imagen ?"
-                                            class=" absolute top-2 right-2 font-bold text-palette-400"
-                                            wire:click="removeImage('{{ $image }}')">X</button>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
 
                 <div class=" flex justify-end mt-4">
                     <x-secondary-button wire:click="$set('modalCategory', false)" class=" mr-4">

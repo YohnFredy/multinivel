@@ -8,33 +8,28 @@ use Livewire\Form;
 
 class ProductForm extends Form
 {
-
-    #[Validate('required|string|max:100|min:3')]
+    #[Validate('required|string|max:255')]
     public $name = '';
-
-    public $slug = '';
-
-    #[Validate('nullable|string|min:3')]
+    #[Validate('nullable|string')]
     public $description = '';
-
     #[Validate('required|numeric|min:0')]
-    public $price = 0;
+    public $price = '';
+    #[Validate('nullable|numeric|min:0')]
+    public $pts = '';
+    #[Validate('required|boolean')]
+    public $tangible = '';
+    #[Validate('nullable|integer|min:0')]
+    public $stock = '';
+    #[Validate('required|boolean')]
+    public $allow_backorder = '';
+    #[Validate('required|exists:categories,id')]
+    public $category_id = '';
+    #[Validate('nullable|exists:brands,id')]
+    public $brand_id = '';
+    #[Validate('required|boolean')]
+    public $is_active = '';
 
-    #[Validate('numeric|min:0')]
-    public $pts = 0;
-
-    public $tangible = 1;
-
-    #[Validate('numeric|min:0')]
-    public $stock = 0;
-
-    public $allow_backorder = 0;
-
-    #[Validate('required')]
-    public $category_id;
-
-    public $brand_id, $is_active = 1, $suggestedPts = 0, $newImages = [], $images = [], $product_id;
-
+    public $newImages = [], $images = [];
     public function rules()
     {
         return [
