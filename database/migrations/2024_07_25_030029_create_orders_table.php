@@ -14,11 +14,19 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->string('contact');
+            $table->string('phone');
             $table->string('status')->default('pending');
-            $table->decimal('total', 10, 2);
+            $table->enum('envio_type', [1, 2]);
+            $table->string('shipping_cost')->nullable();
+            $table->float('total');
             $table->decimal('total_pts', 10, 2)->default(0);
-            $table->string('shipping_address')->nullable();
-            $table->string('billing_address')->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->unsignedBigInteger('state_id')->nullable();
+            $table->string('city')->nullable();
+            $table->string('address')->nullable();
+            $table->string('reference')->nullable();
+           
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

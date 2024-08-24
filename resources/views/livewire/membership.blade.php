@@ -9,17 +9,18 @@
 
         <form wire:submit="save">
             <div class="grid md:grid-cols-2 md:gap-x-6">
-                <x-input-field wire:model.blur="form.name" type="text" name="form.name" label="Nombre" required autofocus
+
+                <x-input-field wire:model.blur="form.name" type="text" name="form.name" label="Nombre" autofocus
                     autocomplete="form.name" />
-                <x-input-field wire:model.blur="form.last_name" type="text" name="form.last_name" label="Apellidos"
-                    required autocomplete="form.last_name" />
+                <x-input-field wire:model.blur="form.lastName" type="text" name="form.lastName" label="Apellidos"
+                    autocomplete="form.lastName" />
                 <x-input-field wire:model.live.debounce.1000ms="form.username" type="text" name="form.username"
-                    id="username" label="Nombre de usurio" required autocomplete="form.username" />
-                <x-input-field wire:model.blur="form.identification_card" type="text" name="form.identification_card"
-                    label="Identificacion" required autocomplete="form.identification_card" />
+                    id="username" label="Nombre de usurio" autocomplete="form.username" />
+                <x-input-field wire:model.blur="form.identificationCard" type="text" name="form.identificationCard"
+                    label="Identificacion" autocomplete="form.identificationCard" />
             </div>
 
-            <x-input-field wire:model.blur="form.email" type="email" name="form.email" label="Email address" required
+            <x-input-field wire:model.blur="form.email" type="email" name="form.email" label="Email address"
                 autocomplete="form.email" />
 
             <div class="grid md:grid-cols-2 md:gap-x-6">
@@ -27,54 +28,61 @@
                 <x-input-radio label='Sexo'>
                     <div class=" flex items-center">
                         <input wire:model.blur="form.sex" class="mr-2" type="radio" id="male" name="gender"
-                            value="male" required>
+                            value="male">
                         <label for="male">Masculino</label>
                     </div>
                     <div class="flex items-center">
                         <input wire:model.blur="form.sex" class="ml-5 mr-2" type="radio" id="female" name="gender"
-                            value="female" required>
+                            value="female">
                         <label for="female">Femenino</label>
                     </div>
-                    {{-- <div class="flex items-center">
-                                <input wire:model.blur="form.sex" class=" ml-5 mr-2" type="radio" id="other" name="gender" value="other" required>
-                                <label for="other">Otro</label>
-                            </div> --}}
                 </x-input-radio>
 
                 <x-input-field wire:model.blur="form.birthdate" type="date" name="form.birthdate"
-                    id="fecha de nacimiento" label="fecha de nacimiento" required />
+                    id="fecha de nacimiento" label="fecha de nacimiento" />
 
-                <x-input-field wire:model.blur="form.phone" type="text" name="form.phone" label="Telefono"
-                    required />
+                <x-input-field wire:model.blur="form.phone" type="text" name="form.phone" label="Telefono" />
 
-                <x-select-field wire:model.live="country_id" name="form.country_id" label="Pais">
+                <x-select-field wire:model.live="selectedCountry" name="form.country" label="Pais">
                     <option value="" hidden>Seleccionar un pais</option>
                     @foreach ($countries as $country)
-                        <option class=" text-gray-800" value="{{ $country->id }}">{{ $country->name }}
-                        </option>
+                        <option class=" text-gray-800" value="{{ $country['id'] }}">{{ $country['name'] }}</option>
                     @endforeach
                 </x-select-field>
 
-                <x-select-field wire:model.live="form.state_id" name="form.state_id" label="Departamento">
-                    <option value="" hidden>Seleccionar departamento</option>
-                    @foreach ($states as $state)
-                        <option class=" text-gray-800" value="{{ $state->id }}">{{ $state->name }}
-                        </option>
-                    @endforeach
-                </x-select-field>
+                @if ($selectedCountry)
+                    <x-select-field wire:model.live="selectedState" name="form.state" label="Departamento">
+                        <option value="" hidden>Seleccionar departamento</option>
+                        @foreach ($states as $state)
+                            <option class=" text-gray-800" value="{{ $state['id'] }}">{{ $state['name'] }}
+                            </option>
+                        @endforeach
+                    </x-select-field>
 
-
-
-                <x-input-field wire:model="form.city" type="text" name="form.city" label="Ciudad" />
+                    @if ($selectedState)
+                        @if (count($cities) > 0)
+                            <x-select-field wire:model.live="selectedCity" name="form.city" label="Ciudad">
+                                <option value="" hidden>Seleccionar una ciudad</option>
+                                @foreach ($cities as $city)
+                                    <option class=" text-gray-800" value="{{ $city['id'] }}">{{ $city['name'] }}
+                                    </option>
+                                @endforeach
+                            </x-select-field>
+                        @else
+                            <x-input-field wire:model.blur="form.addCity" type="text" name="form.addCity"
+                                label="Ciudad" />
+                        @endif
+                    @endif
+                @endif
             </div>
 
             <x-input-field wire:model="form.address" type="text" name="form.address" label="Dirección" />
 
-            <x-input-field wire:model.live="form.password_confirmation" type="password"
-                name="form.password_confirmation" label="Password" required autocomplete="form.new-password" />
+            <x-input-field wire:model.live.debounce.750ms="form.password" type="password" name="form.password"
+                label="Password" required />
 
-            <x-input-field wire:model.live="form.password" type="password" name="form.password"
-                label="Confirmar Password" required autocomplete="form.new-password" />
+            <x-input-field wire:model.live.debounce.750ms="form.password_confirmation" type="password"
+                name="form.password_confirmation" label="Confirmar Password" />
 
             <div class="grid md:grid-cols-2 md:gap-x-6">
                 <x-input-field wire:model="form.sponsor" type="text" name="form.sponsor" label="Sponsor" disabled />

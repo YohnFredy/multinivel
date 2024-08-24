@@ -48,5 +48,7 @@ class DatabaseSeeder extends Seeder
                 Image::factory(1)->product()->make()->toArray()
             );
         });
+
+        $this->call(CountrySeeder::class);
     }
 }

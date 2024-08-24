@@ -16,6 +16,7 @@ class UserData extends Model
         'phone',
         'country_id',
         'state_id',
+        'city_id',
         'city',
         'address',
 

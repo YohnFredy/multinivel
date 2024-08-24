@@ -42,6 +42,10 @@ class ProductImagesCarousel extends Component
         $this->thumbnailIndex = min($totalImages - $this->thumbnailCount, $this->thumbnailIndex + $this->thumbnailCount);
     }
 
+    public function addToCart(){
+
+    }
+
     public function render()
     {
         return view('livewire.product-images-carousel');

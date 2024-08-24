@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-palette-80 border-b border-palette-30 dark:border-palette-70">
+<nav x-data="{ open: false }" class="bg-white dark:bg-palette-50 border-b border-palette-30 dark:border-palette-70">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -37,19 +37,30 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <div class="hidden lg:flex mr-2" x-cloak>
+                {{-- <div class="hidden lg:flex mr-2" x-cloak>
                     <x-dark-button />
-                </div>
+                </div> --}}
+                
                 <!-- Teams Dropdown -->
                 @auth
                     <x-profile-configuration />
                 @else
-                    <a href="{{ route('login') }}" :active="request() - > routeIs('login')">
+                    <a href="{{ route('login') }}" :active="request() -> routeIs('login')">
                         <x-dropdown-button>
                             Iniciar Sesión
                         </x-dropdown-button>
                     </a>
                 @endauth
+
+                <!-- cart -->
+                <div class=" ml-3">
+                    <a href="{{ route('cart') }}" :active="request()->routeIs('cart')" class="relative inline-block cursor-pointer">
+                        <i class="fas fa-cart-arrow-down text-xl {{ request()->routeIs('cart') ? 'text-palette-400' : 'text-palette-200 hover:text-palette-300' }}"></i>
+                        <div class="top-0 left-5 absolute {{ request()->routeIs('cart') ? 'bg-palette-200' : 'bg-palette-400' }} rounded-full p-1"></div> 
+                    </a>
+                </div>
+                
+               
             </div>
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">

@@ -3,16 +3,13 @@
 namespace App\Livewire;
 
 use App\Livewire\Forms\MembershipForm;
+use App\Models\City;
 use App\Models\Country;
 use App\Models\Relationship;
 use App\Models\State;
 use App\Models\User;
 use App\Models\UserCount;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class Membership extends Component
@@ -21,7 +18,8 @@ class Membership extends Component
 
     public bool $confirmingRegistration = false;
     public string $sponsor = 'master', $position = 'right';
-    public $countries,  $states = [], $country_id = '';
+    public $countries = [], $states = [], $cities = [];
+    public $selectedCountry = '', $selectedState = '', $selectedCity = '';
 
     public function mount($sponsor, $position)
     {
@@ -30,22 +28,39 @@ class Membership extends Component
         $this->countries = Country::all();
     }
 
-    public function updatedCountryId($value)
+    public function updatedSelectedCountry($countryId)
     {
-        $this->states = State::where('country_id', $value)->get();
-        $this->form->country_id = $value;
+        $this->reset(['cities', 'selectedState', 'selectedCity']);
+        $this->form->reset('state', 'city', 'addCity');
+        $this->states = State::where('country_id', $countryId)->get();
+        $this->form->country = $countryId;
+    }
+
+    public function updatedSelectedState($stateId)
+    {
+        $this->reset(['selectedCity']);
+        $this->form->reset('addCity');
+        $this->cities = City::where('state_id', $stateId)->get();
+
+        $this->form->state = $stateId;
+    }
+
+    public function updatedSelectedCity($cityId)
+    {
+        $this->form->city = $cityId;
+        $this->form->reset('addCity');
     }
 
     public function updatedConfirmingRegistration()
     {
         $this->form->reset();
+        $this->reset(['countries', 'states', 'cities', 'selectedCountry', 'selectedState', 'selectedCity']);
         $this->form->sponsor = $this->sponsor;
         $this->form->position = $this->position;
     }
 
     public function save()
     {
-
         $userId = $this->form->store();
         /* $parent = User::where('username', $this->form->sponsor)->firstOrFail(); */
         $parent =  User::where('username', $this->form->sponsor)->first();
@@ -54,7 +69,6 @@ class Membership extends Component
         $relationship = $this->createRelationship($userId, $parent->id, $binaryParentId, $this->form->position);
 
         $this->updateUserCounts($relationship, $parent->id);
-
 
         $this->confirmingRegistration = true;
     }

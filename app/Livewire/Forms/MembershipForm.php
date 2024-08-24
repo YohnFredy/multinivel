@@ -10,62 +10,57 @@ use Livewire\Form;
 
 class MembershipForm extends Form
 {
-    
     #[Validate('required|min:3')]
-    public $name = '';
-
-    #[Validate('required|min:3')]
-    public $last_name = '';
+    public string $name = '', $lastName = '';
 
     #[Validate('required|min:5|unique:users,identification_card')]
-    public $identification_card = '';
+    public string $identificationCard = '';
 
     #[Validate('required|min:3|max:20|unique:users,username')]
-    public $username = '';
+    public string $username = '';
 
     #[Validate('required|unique:users,email')]
-    public $email = '';
+    public string $email = '';
 
     #[Validate('required')]
-    public $sex = '';
+    public string $sex = '', $birthdate = '', $phone = '';
 
     #[Validate('required')]
-    public $birthdate = '';
+    public ?int $country = null, $state = null;
 
-    public $country_id= '';
-    public $state_id = '';
-    public $city = '';
-    public $address = '';
+    #[Validate('required_without:addCity', message: 'El campo ciudad es requerido')]
+    public ?int $city = null;
 
-    #[Validate('required')]
-    public $phone = '';
+    #[Validate('required_without:city', message: 'El campo agregar ciudad es requerido')]
+    public ?string $addCity = null;
+
+    public string $address = '';
 
     #[Validate('required')]
     #[Validate('exists:users,username', message: 'El nombre de usuario no está registrado en nuestra base de datos')]
-    public $sponsor = '';
+    public string $sponsor = '';
 
     #[Validate('required|in:left,right')]
-    public $position = '';
-
-    #[Validate('required|string|min:8|confirmed',)]
-    public $password = '';
+    public string $position = '';
 
     #[Validate('required|string|min:8')]
+    public $password = '';
+
+    #[Validate('required|same:password')]
     public $password_confirmation = '';
 
     #[Validate('accepted')]
-    public $terms;
+    public bool $terms = false;
 
     public function store()
     {
         $this->username = preg_replace('/\s+/', '', $this->username);
-
         $this->validate();
 
-       $user = User::create([
+        $user = User::create([
             'name' => $this->name,
-            'last_name' => $this->last_name,
-            'identification_card' => $this->identification_card,
+            'last_name' => $this->lastName,
+            'identification_card' => $this->identificationCard,
             'username' => $this->username,
             'email' => $this->email,
             'password' => Hash::make($this->password),
@@ -76,9 +71,10 @@ class MembershipForm extends Form
             'sex' => $this->sex,
             'birthdate' => $this->birthdate,
             'phone' => $this->phone,
-            'country_id' => $this->country_id,
-            'state_id' => $this->state_id,
-            'city' => $this->city,
+            'country_id' => $this->country,
+            'state_id' => $this->state,
+            'city_id' => $this->city,
+            'city' => $this->addCity,
             'address' => $this->address,
         ]);
 

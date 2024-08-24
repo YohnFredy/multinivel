@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="flex flex-row justify-end px-6 py-4 bg-palette-200 dark:bg-palette-40 text-end">
+    <div class="flex flex-row justify-end px-6 py-4  dark:bg-palette-40 text-end">
         {{ $footer }}
     </div>
 </x-modal>
