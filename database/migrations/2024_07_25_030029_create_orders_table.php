@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('total_pts', 10, 2)->default(0);
             $table->unsignedBigInteger('country_id')->nullable();
             $table->unsignedBigInteger('state_id')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->string('city')->nullable();
             $table->string('address')->nullable();
             $table->string('reference')->nullable();

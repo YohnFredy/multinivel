@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Country;
+use App\Models\State;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as faker;
@@ -40,5 +41,14 @@ class CountrySeeder extends Seeder
                 }
             }
         }
+
+        $country = Country::create([
+            'name' => 'Colombia',
+        ]);
+
+        $state = $country->states()->create([
+            'name' => 'Valle del Cauca',
+           
+        ]);
     }
 }

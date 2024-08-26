@@ -2,62 +2,38 @@
 
 namespace App\Livewire;
 
+use App\Models\City;
+use App\Models\Country;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\State;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use League\CommonMark\Reference\Reference;
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class CreateOrder extends Component
 {
-
     public $cart = [], $products = [];
-    public $countries = [], $states = [], $cities = [];
     public $user_id, $quantity = 0, $reference = '';
+    public $countries = [], $states =[], $cities = [];
 
-    #[Validate('required|min:3')]
-    public $contact, $phone;
+    #[Validate]
+    public $name = '', $phone = '', $envio_type = 1, $selectedCountry = '', $selectedState = '', $selectedCity = '',  $addCity = '', $address = '', $total = 0, $total_pts = 0;
 
-    #[Validate('required|in:1,2')]
-    public $envio_type = 1;
-
-
-    #[Validate('required|numeric|min:0')]
-    public $total = 0, $total_pts = 0;
-
-    #[Validate('required_if:envio_type,2')]
-    public $country_id = '', $state_id = '', $city = '', $address = '';
-
-
-    public function messages()
+    public function rules()
     {
         return [
-            'address.required' => 'El :attribute es requirido.',
-        ];
-    }
-
-
-    public function onEnvioTypeChange()
-    {
-        if ($this->envio_type == 1) {
-
-            $this->resetValidation(
-                [
-                    'country_id',
-                    'state_id',
-                    'city',
-                    'address',
-                ]
-            );
-        }
-    }
-
-    public function validationAttributes()
-    {
-        return [
-            'address' => 'departamento',
+            'name' => 'required|min:3',
+            'phone' => 'required|min:3',
+            'envio_type' => 'required|in:1,2',
+            'selectedCountry' => Rule::requiredIf($this->envio_type == 2),
+            'selectedState' => Rule::requiredIf($this->envio_type == 2),
+            'selectedCity' => Rule::requiredIf($this->envio_type == 2 && empty($this->addCity)),
+            'addCity' => Rule::requiredIf($this->envio_type == 2 && empty($this->selectedCity)),
+            'address' => Rule::requiredIf($this->envio_type == 2),
+            'total' => 'required|numeric|min:0',
+            'total_pts' => 'required|numeric|min:0',
         ];
     }
 
@@ -65,6 +41,42 @@ class CreateOrder extends Component
     {
         $this->cart = session()->get('cart', []);
         $this->showProducts();
+        $this->countries = Country::all();
+    }
+
+    public function onEnvioTypeChange()
+    {
+        if ($this->envio_type == 1) {
+            $this->reset(
+                [
+                    'selectedCountry',
+                    'states',
+                    'selectedState',
+                    'cities',
+                    'selectedCity',
+                    'addCity',
+                    'address',
+                    'reference',
+                ]
+            );
+        }
+    }
+
+    public function updatedSelectedCountry($countryId)
+    {
+        $this->reset(['states', 'selectedState', 'cities', 'selectedCity', 'addCity']);
+        $this->states = State::where('country_id', $countryId)->get();
+    }
+
+    public function updatedSelectedState($stateId)
+    {
+        $this->reset(['cities', 'selectedCity', 'addCity']);
+        $this->cities = City::where('state_id', $stateId)->get();
+    }
+
+    public function updatedSelectedCity()
+    {
+        $this->reset('addCity');
     }
 
     public function showProducts()
@@ -85,23 +97,21 @@ class CreateOrder extends Component
         }
 
         foreach ($this->products as $product) {
-
             $this->total += $product['quantity'] * $product['price'];
             $this->total_pts += $product['quantity'] * $product['pts'];
             $this->quantity += $product['quantity'];
         }
     }
 
-
     public function create_order()
     {
-        $this->user_id = Auth::user()->id;
 
-        $this->validate();
+        $this->user_id = Auth::user()->id;
+        $this->validate(); 
 
         $orderData = [
             'user_id' => $this->user_id,
-            'contact' => $this->contact,
+            'contact' => $this->name,
             'phone' => $this->phone,
             'envio_type' => $this->envio_type,
             'total' => $this->total,
@@ -110,16 +120,16 @@ class CreateOrder extends Component
 
         if ($this->envio_type == 2) {
             $orderData = array_merge($orderData, [
-                'country_id' => $this->country_id,
-                'state_id' => $this->state_id,
-                'city' => $this->city,
+                'country_id' => $this->selectedCountry,
+                'state_id' => $this->selectedState,
+                'city_id' => $this->selectedCity,
+                'city' => $this->addCity,
                 'address' => $this->address,
                 'reference' => $this->reference,
             ]);
         }
 
-        /* $order = Order::create($orderData); */
-
+        $order = Order::create($orderData);
 
         /* session()->forget('cart');
 

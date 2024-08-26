@@ -9,8 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-
-    protected $fillable = ['user_id', 'contact', 'phone', 'status', 'envio_type', 'shipping_cost', 'total', 'total_pts', 'country_id', 'state_id', 'city', 'address', 'reference'];
+    protected $fillable = ['user_id', 'contact', 'phone', 'status', 'envio_type', 'shipping_cost', 'total', 'total_pts', 'country_id', 'state_id', 'city_id', 'city', 'address', 'reference'];
 
     const STATUS_PENDING = 'pending';
     const STATUS_PROCESSING = 'processing';

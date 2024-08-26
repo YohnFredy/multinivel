@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->integer('country_id');
             $table->integer('state_id')->nullable();
-            $table->unsignedBigInteger('city_id')->nullable();
+            $table->integer('city_id')->nullable();
             $table->string('city')->nullable();
             $table->string('address')->nullable();
             

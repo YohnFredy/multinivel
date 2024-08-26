@@ -9,7 +9,9 @@ use App\Models\Relationship;
 use App\Models\State;
 use App\Models\User;
 use App\Models\UserCount;
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class Membership extends Component
@@ -19,7 +21,19 @@ class Membership extends Component
     public bool $confirmingRegistration = false;
     public string $sponsor = 'master', $position = 'right';
     public $countries = [], $states = [], $cities = [];
-    public $selectedCountry = '', $selectedState = '', $selectedCity = '';
+   
+    #[Validate()]
+    public $selectedCountry = '', $selectedState = '', $selectedCity = '',  $addCity = '';
+
+    public function rules()
+    {
+        return [
+            'selectedCountry' => 'required',
+            'selectedState' => 'required',
+            'selectedCity' => Rule::requiredIf(empty($this->addCity)),
+            'addCity' => Rule::requiredIf(empty($this->selectedCity)),  
+        ];
+    }
 
     public function mount($sponsor, $position)
     {
@@ -30,38 +44,47 @@ class Membership extends Component
 
     public function updatedSelectedCountry($countryId)
     {
-        $this->reset(['cities', 'selectedState', 'selectedCity']);
-        $this->form->reset('state', 'city', 'addCity');
+        $this->reset(['states', 'selectedState', 'cities', 'selectedCity', 'addCity']);
         $this->states = State::where('country_id', $countryId)->get();
-        $this->form->country = $countryId;
+        $this->form->countryId = $countryId;
+        $this->form->reset('stateId', 'cityId', 'addCity');
     }
 
     public function updatedSelectedState($stateId)
     {
-        $this->reset(['selectedCity']);
-        $this->form->reset('addCity');
+        $this->reset(['cities', 'selectedCity', 'addCity']);
         $this->cities = City::where('state_id', $stateId)->get();
-
-        $this->form->state = $stateId;
+        $this->form->stateId = $stateId;
+        $this->form->reset('cityId', 'addCity');
     }
 
     public function updatedSelectedCity($cityId)
     {
-        $this->form->city = $cityId;
+        $this->reset('addCity');
+        $this->form->cityId = $cityId;
         $this->form->reset('addCity');
+    }
+
+    public function updatedAddCity()
+    {
+        $this->form->addCity = $this->addCity;
+        $this->form->reset('cityId');
     }
 
     public function updatedConfirmingRegistration()
     {
         $this->form->reset();
-        $this->reset(['countries', 'states', 'cities', 'selectedCountry', 'selectedState', 'selectedCity']);
+        $this->reset(['states', 'cities', 'selectedCountry', 'selectedState', 'selectedCity', 'addCity']);
         $this->form->sponsor = $this->sponsor;
         $this->form->position = $this->position;
     }
 
     public function save()
     {
+        $this->form->username = preg_replace('/\s+/', '', $this->form->username);
+        $this->validate();
         $userId = $this->form->store();
+
         /* $parent = User::where('username', $this->form->sponsor)->firstOrFail(); */
         $parent =  User::where('username', $this->form->sponsor)->first();
 

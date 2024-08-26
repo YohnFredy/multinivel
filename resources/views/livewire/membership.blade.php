@@ -43,7 +43,7 @@
 
                 <x-input-field wire:model.blur="form.phone" type="text" name="form.phone" label="Telefono" />
 
-                <x-select-field wire:model.live="selectedCountry" name="form.country" label="Pais">
+                <x-select-field wire:model.live="selectedCountry" name="selectedCountry" label="Pais">
                     <option value="" hidden>Seleccionar un pais</option>
                     @foreach ($countries as $country)
                         <option class=" text-gray-800" value="{{ $country['id'] }}">{{ $country['name'] }}</option>
@@ -51,7 +51,7 @@
                 </x-select-field>
 
                 @if ($selectedCountry)
-                    <x-select-field wire:model.live="selectedState" name="form.state" label="Departamento">
+                    <x-select-field wire:model.live="selectedState" name="selectedState" label="Departamento">
                         <option value="" hidden>Seleccionar departamento</option>
                         @foreach ($states as $state)
                             <option class=" text-gray-800" value="{{ $state['id'] }}">{{ $state['name'] }}
@@ -61,7 +61,7 @@
 
                     @if ($selectedState)
                         @if (count($cities) > 0)
-                            <x-select-field wire:model.live="selectedCity" name="form.city" label="Ciudad">
+                            <x-select-field wire:model.live="selectedCity" name="selectedCity" label="Ciudad">
                                 <option value="" hidden>Seleccionar una ciudad</option>
                                 @foreach ($cities as $city)
                                     <option class=" text-gray-800" value="{{ $city['id'] }}">{{ $city['name'] }}
@@ -69,7 +69,7 @@
                                 @endforeach
                             </x-select-field>
                         @else
-                            <x-input-field wire:model.blur="form.addCity" type="text" name="form.addCity"
+                            <x-input-field wire:model.blur="addCity" type="text" name="addCity"
                                 label="Ciudad" />
                         @endif
                     @endif
@@ -79,7 +79,7 @@
             <x-input-field wire:model="form.address" type="text" name="form.address" label="Dirección" />
 
             <x-input-field wire:model.live.debounce.750ms="form.password" type="password" name="form.password"
-                label="Password" required />
+                label="Password"  />
 
             <x-input-field wire:model.live.debounce.750ms="form.password_confirmation" type="password"
                 name="form.password_confirmation" label="Confirmar Password" />
