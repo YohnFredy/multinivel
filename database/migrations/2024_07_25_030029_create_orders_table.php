@@ -13,23 +13,23 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained();
             $table->string('contact');
             $table->string('phone');
             $table->string('status')->default('pending');
             $table->enum('envio_type', [1, 2]);
-            $table->string('shipping_cost')->nullable();
+            $table->float('discount')->nullable();
+            $table->float('shipping_cost')->nullable();
             $table->float('total');
             $table->decimal('total_pts', 10, 2)->default(0);
-            $table->unsignedBigInteger('country_id')->nullable();
-            $table->unsignedBigInteger('state_id')->nullable();
-            $table->unsignedBigInteger('city_id')->nullable();
-            $table->string('city')->nullable();
+            $table->foreignId('country_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('state_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('city_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('addCity')->nullable();
             $table->string('address')->nullable();
             $table->string('reference')->nullable();
-           
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            
         });
     }
 

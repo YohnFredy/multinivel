@@ -1,8 +1,8 @@
 <x-dropdown align="right" width="48">
     <x-slot name="trigger">
         <x-dropdown-button>
-            <span x-show="!isDarkMode" class="mr-2"><i class="fas fa-moon"></i></span>
-            <span x-show="isDarkMode" class="mr-2"><i class="fas fa-sun"></i></span>
+            <span x-show="!isDarkMode" class="mr-2 "><i class="fas fa-moon"></i></span>
+            <span x-show="isDarkMode" class="mr-2 "><i class="fas fa-sun"></i></span>
             <span>Modo</span>
         </x-dropdown-button>
     </x-slot>

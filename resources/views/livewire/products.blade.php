@@ -14,7 +14,7 @@
                             <div class=" col-span-2">
                                 <div wire:key="{{ $product->id }}">
                                 <a href="{{ route('product.show', $product) }}"
-                                    class="bg-white shadow-md shadow-palette-300 rounded-lg overflow-hidden flex flex-col">
+                                    class="bg-white dark:bg-palette-10 shadow-md shadow-palette-300 rounded-lg overflow-hidden flex flex-col">
 
                                     @if ($product->latestImage)
                                         <img src="{{ asset('storage/' . $product->latestImage->path) }}"
@@ -25,11 +25,11 @@
                                     @endif
 
                                     <div class=" pt-2 pb-4 px-4">
-                                        <p class="text-palette-200 font-bold uppercase">{{ $product->name }}</p>
-                                        <p class=" text-gray-700 mt-2 line-clamp-3 ">{{ $product->description }}</p>
+                                        <p class="text-palette-200 dark:text-palette-80 font-bold uppercase">{{ $product->name }}</p>
+                                        <p class=" dark:text-palette-60 mt-2 line-clamp-3 ">{{ $product->description }}</p>
                                         <div class="text-right">
-                                            <p class="text-palette-200 mt-2">${{ $product->price }}</p>
-                                            <h5 class=" text-palette-400">Pts: {{ $product->pts }}</h5>
+                                            <p class="text-palette-200 dark:text-palette-70 mt-2">${{ $product->price }}</p>
+                                            <h5 class=" text-palette-400 dark:text-palette-50 ">Pts: {{ $product->pts }}</h5>
                                         </div>
                                     </div>
                                 </a>

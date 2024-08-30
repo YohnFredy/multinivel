@@ -103,11 +103,24 @@
                         <li class=" flex justify-between py-2">
                             <p>Productos ({{ $quantity }})
                             </p>
-                            <p> ${{ $total }}</p>
+                            <p> ${{ $subTotal }}</p>
+                        </li>
+                        @if ($discount > 0)
+                            <li class=" flex justify-between py-2">
+                                <p>Descuento:
+                                </p>
+                                <p> ${{ $discount }}</p>
+                            </li>
+                        @endif
+
+                        <li class=" flex justify-between py-2">
+                            <p>Envio:
+                            </p>
+                            <p> ${{ $shipping_cost }}</p>
                         </li>
 
                         <li class=" flex justify-between py-2">
-                            <p>total:
+                            <p>Total:
                             </p>
                             <p> ${{ $total }}</p>
                         </li>

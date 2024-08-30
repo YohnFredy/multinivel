@@ -37,9 +37,9 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                {{-- <div class="hidden lg:flex mr-2" x-cloak>
+                <div class="hidden lg:flex mr-2" x-cloak>
                     <x-dark-button />
-                </div> --}}
+                </div> 
                 
                 <!-- Teams Dropdown -->
                 @auth
@@ -55,12 +55,10 @@
                 <!-- cart -->
                 <div class=" ml-3">
                     <a href="{{ route('cart') }}" :active="request()->routeIs('cart')" class="relative inline-block cursor-pointer">
-                        <i class="fas fa-cart-arrow-down text-xl {{ request()->routeIs('cart') ? 'text-palette-400' : 'text-palette-200 hover:text-palette-300' }}"></i>
-                        <div class="top-0 left-5 absolute {{ request()->routeIs('cart') ? 'bg-palette-200' : 'bg-palette-400' }} rounded-full p-1"></div> 
+                        <i class="fas fa-cart-arrow-down text-xl {{ request()->routeIs('cart') ? 'text-palette-400 dark:text-white': 'text-palette-200 hover:text-palette-300 dark:text-palette-30 dark:hover:text-white' }}"></i>
+                        <div class="top-0 left-5 absolute {{ request()->routeIs('cart') ? 'bg-palette-200 dark:bg-palette-30' : 'bg-palette-400 dark:bg-white' }} rounded-full p-1"></div> 
                     </a>
                 </div>
-                
-               
             </div>
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">

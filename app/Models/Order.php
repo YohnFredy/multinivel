@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'contact', 'phone', 'status', 'envio_type', 'shipping_cost', 'total', 'total_pts', 'country_id', 'state_id', 'city_id', 'city', 'address', 'reference'];
+    protected $fillable = ['user_id', 'contact', 'phone', 'status', 'envio_type','discount','shipping_cost', 'total', 'total_pts', 'country_id', 'state_id', 'city_id', 'addCity', 'address', 'reference'];
 
     const STATUS_PENDING = 'pending';
     const STATUS_PROCESSING = 'processing';
@@ -27,6 +27,20 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function country(){
+        return $this->belongsTo(Country::class);
+    }
+
+    public function state(){
+        return $this->belongsTo(State::class);
+    }
+
+    public function city(){
+        return $this->belongsTo(City::class);
+    }
+
+    
 
     public function paymentMethod()
     {

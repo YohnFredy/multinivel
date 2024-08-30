@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\State;
 use Illuminate\Support\Facades\Auth;
@@ -15,12 +16,11 @@ use Livewire\Component;
 class CreateOrder extends Component
 {
     public $cart = [], $products = [];
-    public $user_id, $quantity = 0, $reference = '';
-    public $countries = [], $states =[], $cities = [];
+    public $user_id, $reference = '', $quantity = 0, $subTotal = 0, $discount = 0, $shipping_cost = 0, $total = 0, $total_pts = 0;
+    public $countries = [], $states = [], $cities = [];
 
     #[Validate]
-    public $name = '', $phone = '', $envio_type = 1, $selectedCountry = '', $selectedState = '', $selectedCity = '',  $addCity = '', $address = '', $total = 0, $total_pts = 0;
-
+    public $name = '', $phone = '', $envio_type = 1, $selectedCountry, $selectedState, $selectedCity,  $addCity = '', $address = '';
     public function rules()
     {
         return [
@@ -32,8 +32,6 @@ class CreateOrder extends Component
             'selectedCity' => Rule::requiredIf($this->envio_type == 2 && empty($this->addCity)),
             'addCity' => Rule::requiredIf($this->envio_type == 2 && empty($this->selectedCity)),
             'address' => Rule::requiredIf($this->envio_type == 2),
-            'total' => 'required|numeric|min:0',
-            'total_pts' => 'required|numeric|min:0',
         ];
     }
 
@@ -43,6 +41,8 @@ class CreateOrder extends Component
         $this->showProducts();
         $this->countries = Country::all();
     }
+
+    
 
     public function onEnvioTypeChange()
     {
@@ -64,19 +64,24 @@ class CreateOrder extends Component
 
     public function updatedSelectedCountry($countryId)
     {
-        $this->reset(['states', 'selectedState', 'cities', 'selectedCity', 'addCity']);
+        $this->reset(['states', 'selectedState', 'cities', 'selectedCity', 'addCity', 'shipping_cost']);
         $this->states = State::where('country_id', $countryId)->get();
+        $this->billingProcess();
     }
 
     public function updatedSelectedState($stateId)
     {
-        $this->reset(['cities', 'selectedCity', 'addCity']);
+        $this->reset(['cities', 'selectedCity', 'addCity', 'shipping_cost']);
         $this->cities = City::where('state_id', $stateId)->get();
+        $this->billingProcess();
     }
 
-    public function updatedSelectedCity()
+
+    public function updatedSelectedCity($cityId)
     {
         $this->reset('addCity');
+        $this->shipping_cost = City::find($cityId)->cost;
+        $this->billingProcess();
     }
 
     public function showProducts()
@@ -97,23 +102,31 @@ class CreateOrder extends Component
         }
 
         foreach ($this->products as $product) {
-            $this->total += $product['quantity'] * $product['price'];
+            $this->subTotal += $product['quantity'] * $product['price'];
             $this->total_pts += $product['quantity'] * $product['pts'];
             $this->quantity += $product['quantity'];
         }
+
+        $this->billingProcess();
+    }
+
+    public function billingProcess(){
+        $this->total = $this->subTotal - $this->discount + $this->shipping_cost;
     }
 
     public function create_order()
     {
 
         $this->user_id = Auth::user()->id;
-        $this->validate(); 
+        $this->validate();
 
         $orderData = [
             'user_id' => $this->user_id,
             'contact' => $this->name,
             'phone' => $this->phone,
             'envio_type' => $this->envio_type,
+            'discount' => $this->discount,
+            'shipping_cost' => $this->shipping_cost,
             'total' => $this->total,
             'total_pts' => $this->total_pts,
         ];
@@ -123,17 +136,27 @@ class CreateOrder extends Component
                 'country_id' => $this->selectedCountry,
                 'state_id' => $this->selectedState,
                 'city_id' => $this->selectedCity,
-                'city' => $this->addCity,
+                'addCity' => $this->addCity,
                 'address' => $this->address,
                 'reference' => $this->reference,
             ]);
         }
-
         $order = Order::create($orderData);
 
-        /* session()->forget('cart');
+        foreach ($this->products as $product) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' =>  $product['id'],
+                'name' =>  $product['name'],
+                'quantity' => $product['quantity'], 
+                'price' => $product['price'],
+                'pts' => $product['pts'],    
+            ]); 
+        }
 
-        return redirect()->route('orders.payment', $order); */
+        session()->forget('cart');
+
+        return redirect()->route('orders.payment', $order); 
     }
 
     public function render()
