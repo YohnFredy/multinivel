@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Office\IndexController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\TestingAndCreatingDataController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\WebhookTestController;
 use App\Http\Middleware\ValidateCsrfToken;
@@ -23,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 })->name('index');
+
+Route::get('TestingAndCreatingData', [TestingAndCreatingDataController::class, 'createData'])->name('TestingAndCreatingData');
 
 Route::get('productos', Products::class)->name('products');
 Route::get('producto/{product}', ShowProduct::class)->name('product.show');
@@ -55,6 +58,7 @@ Route::middleware([
 });
 
 Route::post('/webhook/bold/payment-status', [WebhookController::class, 'boldHandlePaymentStatus']);
+Route::get('/webhook/prueba', [WebhookController::class, 'prueba']);
 Route::get('/webhook/test', function () {
     return view('webhook_test');
 })->name('webhook.test');

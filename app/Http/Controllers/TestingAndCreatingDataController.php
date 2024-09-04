@@ -1,42 +1,49 @@
 <?php
 
-namespace Database\Seeders;
+namespace App\Http\Controllers;
 
 use App\Models\Order;
-use App\Models\Relationship;
 use App\Models\User;
 use App\Models\UserCount;
+use App\Models\Relationship;
 use App\Models\UserPoint;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
-class RelationshipSeeder extends Seeder
+class TestingAndCreatingDataController extends Controller
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    protected static ?string $password;
+    public function createData()
     {
-        Relationship::create([
-            'user_id' => 1,
-            'parent_id' => null,
-            'binary_parent_id' => null,
-            'position' => null,
-        ]);
+        for ($i = 0; $i < 10; $i++) {
+            $user = User::create([
+                'name' => fake()->name(),
+                'last_name' => fake()->lastName(),
+                'identification_card' => fake()->unique()->numerify('#########'),
+                'username' => fake()->unique()->userName() . ' ' . bin2hex(random_bytes(2)),
+                /* 'username' => fake()->unique()->regexify('[a-zA-Z0-9]{8,12}'), */
+                'email' => fake()->unique()->safeEmail(),
+                'email_verified_at' => now(),
+                /* 'password' => static::$password ??= Hash::make('password'), */
+                'password' => static::$password ??= Hash::make('123'),
+                'two_factor_secret' => null,
+                'two_factor_recovery_codes' => null,
+                'remember_token' => Str::random(10),
+                'profile_photo_path' => null,
+                'current_team_id' => null,
+            ]);
 
-        $users = User::where('id', '>', 1)->get();
-
-        foreach ($users as $user) {
             $parentId = $this->getSponsor($user);
             $position = $this->getBinaryPosition($parentId);
             $binaryParentId = $this->getBinarySponsor($parentId->id, $position);
             $relationship = $this->saveRelationshipData($user->id, $parentId->id, $binaryParentId, $position);
             $this->countUsers($relationship, $parentId->id);
+
             $this->createOrder($user);
         }
     }
-
 
     private function getSponsor($user)
     {
