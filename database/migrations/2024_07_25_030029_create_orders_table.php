@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('public_order_number')->unique();
             $table->foreignId('user_id')->constrained();
             $table->string('contact');
             $table->string('phone');
@@ -28,7 +29,10 @@ return new class extends Migration
             $table->string('addCity')->nullable();
             $table->string('address')->nullable();
             $table->string('reference')->nullable();
+            $table->string('payment_id')->nullable();
             $table->timestamps();
+
+            $table->index('public_order_number');
             
         });
     }

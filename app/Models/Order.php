@@ -9,14 +9,21 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'contact', 'phone', 'status', 'envio_type','discount','shipping_cost', 'total', 'total_pts', 'country_id', 'state_id', 'city_id', 'addCity', 'address', 'reference'];
+    protected $fillable = ['public_order_number','user_id', 'contact', 'phone', 'status', 'envio_type','discount','shipping_cost', 'total', 'total_pts', 'country_id', 'state_id', 'city_id', 'addCity', 'address', 'reference','payment_id'];
 
-    const STATUS_PENDING = 'pending';
+
     const STATUS_PROCESSING = 'processing';
-    const STATUS_SHIPPED = 'shipped';
-    const STATUS_DELIVERED = 'delivered';
-    const STATUS_COMPLETED = 'completed';
-    const STATUS_CANCELLED = 'cancelled';
+    const STATUS_PENDING = 'pending';
+    const STATUS_APPROVED = 'approved';
+    const STATUS_REJECTED = 'rejected';
+    const STATUS_FAILED = 'failed';
+    
+
+    public function getRouteKeyName()
+    {
+        return 'public_order_number';
+    }
+
 
     public function user()
     {
@@ -40,17 +47,19 @@ class Order extends Model
         return $this->belongsTo(City::class);
     }
 
-    
-
-    public function paymentMethod()
-    {
-        return $this->belongsTo(PaymentMethod::class);
-    }
-
     // Método para actualizar el estado de la orden
     public function updateStatus($status)
     {
         $this->status = $status;
+        $this->save();
+    }
+
+    public function updateStatusAndPayment($status, $paymentId = null)
+    {
+        $this->status = $status;
+        if ($paymentId) {
+            $this->payment_id = $paymentId;
+        }
         $this->save();
     }
 }

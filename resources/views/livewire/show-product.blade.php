@@ -11,7 +11,7 @@
             <div class="col-span-3 mt-4 px-10">
                 <h1 class="text-palette-200 dark:text-white font-bold uppercase">{{ $product->name }}</h1>
                 <p class="mt-6 dark:text-palette-20">{{ $product->description }}</p>
-                <h1 class="mt-6 text-palette-200 dark:text-palette-10 font-bold">$ {{ $product->price }}</h1>
+                <h1 class="mt-6 text-palette-200 dark:text-palette-10 font-bold">${{number_format($product->price, 0) }}</h1>
                 <p class="text-palette-400 dark:text-palette-20 font-bold">Pts: {{ $product->pts }}</p>
 
                 <div class="flex items-center py-6">
@@ -74,7 +74,7 @@
                             </div>
                         </th>
                         <td class="px-6 py-4">
-                            ${{ $product->price }}
+                            ${{number_format($product->price, 0) }}
                         </td>
 
                         <td class="px-6 py-4">

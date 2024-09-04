@@ -116,11 +116,13 @@ class CreateOrder extends Component
 
     public function create_order()
     {
-
         $this->user_id = Auth::user()->id;
         $this->validate();
 
+        $publicOrderNumber = strtoupper(dechex(time()) . bin2hex(random_bytes(4)));
+        
         $orderData = [
+            'public_order_number'=>$publicOrderNumber, 
             'user_id' => $this->user_id,
             'contact' => $this->name,
             'phone' => $this->phone,

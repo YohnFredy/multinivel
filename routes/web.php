@@ -3,6 +3,9 @@
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Office\IndexController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\WebhookTestController;
+use App\Http\Middleware\ValidateCsrfToken;
 use App\Livewire\Admin\BrandCotroller;
 use App\Livewire\Admin\CategoryController;
 use App\Livewire\Admin\ProductForm;
@@ -47,8 +50,15 @@ Route::middleware([
     Route::get('/admin/products/{product}/edit', ProductForm::class)->name('admin.products.edit');
     Route::get('orders/create', CreateOrder::class)->name('orders.create');
     Route::get('orders/{order}/payment', [OrderController::class, 'payment'])->name('orders.payment');
-
+    Route::get('orders/bold/respuesta', [OrderController::class, 'boldResponsePayment'])->name('orders.bold');
+  
 });
+
+Route::post('/webhook/bold/payment-status', [WebhookController::class, 'boldHandlePaymentStatus']);
+Route::get('/webhook/test', function () {
+    return view('webhook_test');
+})->name('webhook.test');
+
 
 Route::get('register/{sponsor}/{position}', Membership::class);
 Route::get('prueba', Prueba::class);

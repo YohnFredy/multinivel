@@ -28,7 +28,7 @@
                                         <p class="text-palette-200 dark:text-palette-80 font-bold uppercase">{{ $product->name }}</p>
                                         <p class=" dark:text-palette-60 mt-2 line-clamp-3 ">{{ $product->description }}</p>
                                         <div class="text-right">
-                                            <p class="text-palette-200 dark:text-palette-70 mt-2">${{ $product->price }}</p>
+                                            <p class="text-palette-200 dark:text-palette-70 mt-2">${{number_format($product->price, 0) }}</p>
                                             <h5 class=" text-palette-400 dark:text-palette-50 ">Pts: {{ $product->pts }}</h5>
                                         </div>
                                     </div>

@@ -3,7 +3,7 @@
         <div class=" col-span-6 md:col-span-4 ">
 
             <h2>Carro ({{ $quantity }} productos)</h2>
-            <div class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 p-4 mt-2">
+            <div class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none p-4 mt-2">
 
                 <div class=" grid grid-cols-12 gap-2 mt-2">
                     @if ($products)
@@ -25,7 +25,7 @@
                             <div class="col-span-5 lg:col-span-2 flex items-center justify-center">
                                 <div class=" text-sm">
                                     <p class="">
-                                        ${{ $product['price'] }}
+                                        ${{ number_format($product['price'],0) }}
                                     </p>
 
                                     <p class=" mt-2"> Pts: {{ $product['pts'] }}</p>
@@ -66,18 +66,18 @@
         </div>
         <div class="col-span-6 md:col-span-2">
             <h2>Resumen de la orden</h2>
-            <div class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 p-4 mt-2">
+            <div class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none  p-4 mt-2">
                 <ul class=" divide-y">
                     <li class=" flex justify-between py-2">
                         <p>Productos ({{ $quantity }})
                         </p>
-                        <p> ${{ $total }}</p>
+                        <p>  ${{number_format($total,2) }}</p>
                     </li>
 
                     <li class=" flex justify-between py-2">
                         <p>total:
                         </p>
-                        <p> ${{ $total }}</p>
+                        <p> ${{number_format($total,2) }}</p>
                     </li>
                 </ul>
 

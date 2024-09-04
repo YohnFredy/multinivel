@@ -10,11 +10,19 @@ use Livewire\Component;
 
 class Prueba extends Component
 {
-    public PruebaForm $form;
-
 
     public function render()
     {
+
+
+       // Generate a lightweight, unique public order number
+$publicOrderNumber = strtoupper(dechex(time()) . bin2hex(random_bytes(4)));
+        dd($publicOrderNumber);
+
+
+
+
+
         return view('livewire.prueba');
     }
 }

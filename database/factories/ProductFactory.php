@@ -38,7 +38,8 @@ class ProductFactory extends Factory
             'name' => $this->faker->word,
             'slug' => Str::slug($this->faker->unique()->word),
             'description' => $this->faker->paragraph,
-            'price' => $this->faker->randomFloat(2, 10, 1000),
+            /* 'price' => $this->faker->randomFloat(2, 10, 1000), */
+            'price' => 100000,
             'pts' => 10,
             'specifications' => $this->faker->paragraph,
             'information' => $this->faker->paragraph,

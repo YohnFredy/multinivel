@@ -47,16 +47,29 @@ class ShowProduct extends Component
     }
 
     public function addToCart()
-    {   
+    {
+        $this->cart = session()->get('cart', []);
 
-        $product = [
-            'id' => $this->product->id,
-            'quantity' => $this->quantity,
-        ];
+        // Busca si el producto ya está en el carrito
+        $index = collect($this->cart)->search(function ($item) {
+            return $item['id'] === $this->product->id;
+        });
 
-        $this->cart[] = $product;
+        if ($index !== false) {
+            // Si el producto ya está en el carrito, actualiza la cantidad
+            $this->cart[$index]['quantity'] += $this->quantity;
+        } else {
+            // Si el producto no está en el carrito, agrégalo
+            $this->cart[] = [
+                'id' => $this->product->id,
+                'quantity' => $this->quantity,
+            ];
+        }
+
+        // Guarda el carrito actualizado en la sesión
         session()->put('cart', $this->cart);
 
+        // Muestra el modal del carrito
         $this->modalCart = true;
     }
 
