@@ -51,15 +51,15 @@
                 </x-select-field>
 
                 @if ($selectedCountry)
-                    <x-select-field wire:model.live="selectedState" name="selectedState" label="Departamento">
+                    <x-select-field wire:model.live="selectedDepartment" name="selectedDepartment" label="Departamento">
                         <option value="" hidden>Seleccionar departamento</option>
-                        @foreach ($states as $state)
-                            <option class=" text-gray-800" value="{{ $state['id'] }}">{{ $state['name'] }}
+                        @foreach ($departments as $department)
+                            <option class=" text-gray-800" value="{{ $department['id'] }}">{{ $department['name'] }}
                             </option>
                         @endforeach
                     </x-select-field>
 
-                    @if ($selectedState)
+                    @if ($selectedDepartment)
                         @if (count($cities) > 0)
                             <x-select-field wire:model.live="selectedCity" name="selectedCity" label="Ciudad">
                                 <option value="" hidden>Seleccionar una ciudad</option>

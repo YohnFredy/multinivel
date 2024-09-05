@@ -15,7 +15,7 @@ class UserData extends Model
         'birthdate',
         'phone',
         'country_id',
-        'state_id',
+        'department_id',
         'city_id',
         'city',
         'address',

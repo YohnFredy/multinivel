@@ -1,4 +1,5 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
     <div class="grid grid-cols-6 gap-6 mt-6">
         <div class="col-span-6 md:col-span-4">
             <div class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none p-4 mt-2">
@@ -14,7 +15,8 @@
 
             <div x-data="{ envio_type: @entangle('envio_type') }" class="mt-6">
                 <p class=" font-bold">Envios</p>
-                <div class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none p-4 mt-2">
+                <div
+                    class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none p-4 mt-2">
                     <div class=" flex justify-between">
                         <div class="flex items-center">
                             <input wire:model="envio_type" wire:change="onEnvioTypeChange" type="radio"
@@ -27,7 +29,8 @@
                     </div>
                 </div>
 
-                <div class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none p-4 mt-4">
+                <div
+                    class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none p-4 mt-4">
                     <div class="flex items-center">
                         <input wire:model="envio_type" wire:change="onEnvioTypeChange" type="radio"
                             x-model="envio_type" name="envio_type" value="2"
@@ -47,14 +50,14 @@
                             </div>
                             @if ($selectedCountry)
                                 <div class="col-span-2 md:col-span-1">
-                                    <x-select-l wire:model.live="selectedState" label="Departamento:"
-                                        for="selectedState">
-                                        @foreach ($states as $state)
-                                            <option value="{{ $state->id }}">{{ $state->name }}</option>
+                                    <x-select-l wire:model.live="selectedDepartment" label="Departamento:"
+                                        for="selectedDepartment">
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->id }}">{{ $department->name }}</option>
                                         @endforeach
                                     </x-select-l>
                                 </div>
-                                @if ($selectedState)
+                                @if ($selectedDepartment)
                                     @if (count($cities) > 0)
                                         <div class="col-span-2 md:col-span-1">
                                             <x-select-l wire:model.live="selectedCity" label="Ciudad:"
@@ -72,14 +75,15 @@
                                     @endif
                                 @endif
                             @endif
+
                             <div class="col-span-2 md:col-span-1">
                                 <x-input-l wire:model.blur="address" type="text" label="Dirección:" for="address"
                                     required placeholder="Ingrese dirección " />
                             </div>
                         </div>
                         <div class=" mt-2">
-                            <x-input-l wire:model.blur="reference" type="text" label="Referencia:" for="nota"
-                                placeholder="Ingrese referencia" />
+                            <x-input-l wire:model.blur="additionalAddress" type="text" label="Referencia:"
+                                for="nota" placeholder="Ingrese referencia" />
                         </div>
 
                     </div>
@@ -92,7 +96,9 @@
             <div class=" py-4">
                 <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, incidunt eligendi! Vel, ab?
                     Nostrum optio inventore id nam expedita, neque blanditiis veritatis ipsa iusto ullam odit, eos
-                    voluptatem ad nisi? <a class=" text-palette-400 dark:text-white font-semibold hover:text-opacity-85 dark:hover:text-opacity-85" href="http://">Politicas
+                    voluptatem ad nisi? <a
+                        class=" text-palette-400 dark:text-white font-semibold hover:text-opacity-85 dark:hover:text-opacity-85"
+                        href="http://">Politicas
                         y Privaciddad.</a></p>
             </div>
         </div>
@@ -100,7 +106,8 @@
 
             <div class="col-span-6 md:col-span-2">
                 <h2>Resumen de la orden</h2>
-                <div class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none p-4 mt-2">
+                <div
+                    class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none p-4 mt-2">
                     <ul class=" divide-y">
                         <li class=" flex justify-between py-2">
                             <p>Productos ({{ $quantity }})
@@ -118,13 +125,13 @@
                         <li class=" flex justify-between py-2">
                             <p>Envio:
                             </p>
-                            <p> ${{ number_format($shipping_cost,0) }}</p>
+                            <p> ${{ number_format($shipping_cost, 0) }}</p>
                         </li>
 
                         <li class=" flex justify-between py-2">
                             <p>Total:
                             </p>
-                            <p> ${{ number_format($total,0) }}</p>
+                            <p> ${{ number_format($total, 0) }}</p>
                         </li>
                     </ul>
                 </div>
@@ -132,5 +139,4 @@
         </div>
     </div>
 
-</div>
 </div>

@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123'),
         ]);
         
-        User::factory(30)->create();
+        User::factory(10)->create();
         $this->call(RelationshipSeeder::class);
 
         /* Category::factory()->create([

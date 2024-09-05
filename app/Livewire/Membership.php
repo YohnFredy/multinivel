@@ -5,8 +5,8 @@ namespace App\Livewire;
 use App\Livewire\Forms\MembershipForm;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Department;
 use App\Models\Relationship;
-use App\Models\State;
 use App\Models\User;
 use App\Models\UserCount;
 use Illuminate\Validation\Rule;
@@ -20,16 +20,16 @@ class Membership extends Component
 
     public bool $confirmingRegistration = false;
     public string $sponsor = 'master', $position = 'right';
-    public $countries = [], $states = [], $cities = [];
+    public $countries = [], $departments = [], $cities = [];
    
     #[Validate()]
-    public $selectedCountry = '', $selectedState = '', $selectedCity = '',  $addCity = '';
+    public $selectedCountry = '', $selectedDepartment = '', $selectedCity = '',  $addCity = '';
 
     public function rules()
     {
         return [
             'selectedCountry' => 'required',
-            'selectedState' => 'required',
+            'selectedDepartment' => 'required',
             'selectedCity' => Rule::requiredIf(empty($this->addCity)),
             'addCity' => Rule::requiredIf(empty($this->selectedCity)),  
         ];
@@ -44,17 +44,17 @@ class Membership extends Component
 
     public function updatedSelectedCountry($countryId)
     {
-        $this->reset(['states', 'selectedState', 'cities', 'selectedCity', 'addCity']);
-        $this->states = State::where('country_id', $countryId)->get();
+        $this->reset(['departments', 'selectedDepartment', 'cities', 'selectedCity', 'addCity']);
+        $this->departments = Department::where('country_id', $countryId)->get();
         $this->form->countryId = $countryId;
-        $this->form->reset('stateId', 'cityId', 'addCity');
+        $this->form->reset('departmentId', 'cityId', 'addCity');
     }
 
-    public function updatedSelectedState($stateId)
+    public function updatedSelectedDepartment($departmentId)
     {
         $this->reset(['cities', 'selectedCity', 'addCity']);
-        $this->cities = City::where('state_id', $stateId)->get();
-        $this->form->stateId = $stateId;
+        $this->cities = City::where('department_id', $departmentId)->get();
+        $this->form->departmentId = $departmentId;
         $this->form->reset('cityId', 'addCity');
     }
 
@@ -74,7 +74,7 @@ class Membership extends Component
     public function updatedConfirmingRegistration()
     {
         $this->form->reset();
-        $this->reset(['states', 'cities', 'selectedCountry', 'selectedState', 'selectedCity', 'addCity']);
+        $this->reset(['states', 'cities', 'selectedCountry', 'selectedDepartment', 'selectedCity', 'addCity']);
         $this->form->sponsor = $this->sponsor;
         $this->form->position = $this->position;
     }

@@ -5,8 +5,6 @@ use App\Http\Controllers\Office\IndexController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TestingAndCreatingDataController;
 use App\Http\Controllers\WebhookController;
-use App\Http\Controllers\WebhookTestController;
-use App\Http\Middleware\ValidateCsrfToken;
 use App\Livewire\Admin\BrandCotroller;
 use App\Livewire\Admin\CategoryController;
 use App\Livewire\Admin\ProductForm;
@@ -25,7 +23,7 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('TestingAndCreatingData', [TestingAndCreatingDataController::class, 'createData'])->name('TestingAndCreatingData');
+Route::get('testing_and_creating_data', [TestingAndCreatingDataController::class, 'createData'])->name('TestingAndCreatingData');
 
 Route::get('productos', Products::class)->name('products');
 Route::get('producto/{product}', ShowProduct::class)->name('product.show');

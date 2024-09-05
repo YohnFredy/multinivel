@@ -24,11 +24,11 @@ return new class extends Migration
             $table->float('total');
             $table->decimal('total_pts', 10, 2)->default(0);
             $table->foreignId('country_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('state_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('department_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('city_id')->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('addCity')->nullable();
             $table->string('address')->nullable();
-            $table->string('reference')->nullable();
+            $table->string('additional_address')->nullable();
             $table->string('payment_id')->nullable();
             $table->timestamps();
 

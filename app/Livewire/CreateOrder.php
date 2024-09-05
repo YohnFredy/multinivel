@@ -4,10 +4,10 @@ namespace App\Livewire;
 
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Department;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
-use App\Models\State;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
@@ -16,11 +16,11 @@ use Livewire\Component;
 class CreateOrder extends Component
 {
     public $cart = [], $products = [];
-    public $user_id, $reference = '', $quantity = 0, $subTotal = 0, $discount = 0, $shipping_cost = 0, $total = 0, $total_pts = 0;
-    public $countries = [], $states = [], $cities = [];
+    public $user_id, $additionalAddress = '', $quantity = 0, $subTotal = 0, $discount = 0, $shipping_cost = 0, $total = 0, $total_pts = 0;
+    public $countries = [], $departments = [], $cities = [];
 
     #[Validate]
-    public $name = '', $phone = '', $envio_type = 1, $selectedCountry, $selectedState, $selectedCity,  $addCity = '', $address = '';
+    public $name = '', $phone = '', $envio_type = 1, $selectedCountry, $selectedDepartment, $selectedCity,  $addCity = '', $address = '';
     public function rules()
     {
         return [
@@ -28,7 +28,7 @@ class CreateOrder extends Component
             'phone' => 'required|min:3',
             'envio_type' => 'required|in:1,2',
             'selectedCountry' => Rule::requiredIf($this->envio_type == 2),
-            'selectedState' => Rule::requiredIf($this->envio_type == 2),
+            'selectedDepartment' => Rule::requiredIf($this->envio_type == 2),
             'selectedCity' => Rule::requiredIf($this->envio_type == 2 && empty($this->addCity)),
             'addCity' => Rule::requiredIf($this->envio_type == 2 && empty($this->selectedCity)),
             'address' => Rule::requiredIf($this->envio_type == 2),
@@ -50,13 +50,13 @@ class CreateOrder extends Component
             $this->reset(
                 [
                     'selectedCountry',
-                    'states',
-                    'selectedState',
+                    'departments',
+                    'selectedDepartment',
                     'cities',
                     'selectedCity',
                     'addCity',
                     'address',
-                    'reference',
+                    'additionalAddress',
                 ]
             );
         }
@@ -64,15 +64,15 @@ class CreateOrder extends Component
 
     public function updatedSelectedCountry($countryId)
     {
-        $this->reset(['states', 'selectedState', 'cities', 'selectedCity', 'addCity', 'shipping_cost']);
-        $this->states = State::where('country_id', $countryId)->get();
+        $this->reset(['departments', 'selectedDepartment', 'cities', 'selectedCity', 'addCity', 'shipping_cost']);
+        $this->departments = Department::where('country_id', $countryId)->get();
         $this->billingProcess();
     }
 
-    public function updatedSelectedState($stateId)
+    public function updatedSelectedDepartment($departmentId)
     {
         $this->reset(['cities', 'selectedCity', 'addCity', 'shipping_cost']);
-        $this->cities = City::where('state_id', $stateId)->get();
+        $this->cities = City::where('department_id', $departmentId)->get();
         $this->billingProcess();
     }
 
@@ -116,7 +116,7 @@ class CreateOrder extends Component
 
     public function create_order()
     {
-        $this->user_id = Auth::user()->id;
+      $this->user_id = Auth::user()->id;
         $this->validate();
 
         $publicOrderNumber = strtoupper(dechex(time()) . bin2hex(random_bytes(4)));
@@ -136,11 +136,11 @@ class CreateOrder extends Component
         if ($this->envio_type == 2) {
             $orderData = array_merge($orderData, [
                 'country_id' => $this->selectedCountry,
-                'state_id' => $this->selectedState,
+                'department_id' => $this->selectedDepartment,
                 'city_id' => $this->selectedCity,
                 'addCity' => $this->addCity,
                 'address' => $this->address,
-                'reference' => $this->reference,
+                'additional_address' => $this->additionalAddress,
             ]);
         }
         $order = Order::create($orderData);

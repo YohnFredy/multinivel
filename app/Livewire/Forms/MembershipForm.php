@@ -25,7 +25,7 @@ class MembershipForm extends Form
     #[Validate('required')]
     public string $sex = '', $birthdate = '', $phone = '';
 
-    public $countryId, $stateId, $cityId, $addCity = '', $address = '';
+    public $countryId, $departmentId, $cityId, $addCity = '', $address = '';
 
     #[Validate('required|string|min:8')]
     public $password = '';
@@ -60,7 +60,7 @@ class MembershipForm extends Form
             'birthdate' => $this->birthdate,
             'phone' => $this->phone,
             'country_id' => $this->countryId,
-            'state_id' => $this->stateId,
+            'department_id' => $this->departmentId,
             'city_id' => $this->cityId,
             'city' => $this->addCity,
             'address' => $this->address,

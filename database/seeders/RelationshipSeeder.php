@@ -186,7 +186,7 @@ class RelationshipSeeder extends Seeder
     private function updateUserPoints($userId, $points, $pointType = 'personal_pts')
     {
         UserPoint::updateOrCreate(
-            ['user_id' => $userId, 'status' => 'active'],
+            ['user_id' => $userId, 'status' => 1],
             [$pointType => DB::raw("$pointType + " . $points)]
         );
     }

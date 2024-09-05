@@ -17,14 +17,14 @@ class TestingAndCreatingDataController extends Controller
     protected static ?string $password;
     public function createData()
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 1000; $i++) {
             $user = User::create([
                 'name' => fake()->name(),
                 'last_name' => fake()->lastName(),
                 'identification_card' => fake()->unique()->numerify('#########'),
                 'username' => fake()->unique()->userName() . ' ' . bin2hex(random_bytes(2)),
                 /* 'username' => fake()->unique()->regexify('[a-zA-Z0-9]{8,12}'), */
-                'email' => fake()->unique()->safeEmail(),
+                'email' => bin2hex(random_bytes(2)).fake()->unique()->safeEmail(),
                 'email_verified_at' => now(),
                 /* 'password' => static::$password ??= Hash::make('password'), */
                 'password' => static::$password ??= Hash::make('123'),
@@ -193,7 +193,7 @@ class TestingAndCreatingDataController extends Controller
     private function updateUserPoints($userId, $points, $pointType = 'personal_pts')
     {
         UserPoint::updateOrCreate(
-            ['user_id' => $userId, 'status' => 'active'],
+            ['user_id' => $userId, 'status' => 1],
             [$pointType => DB::raw("$pointType + " . $points)]
         );
     }

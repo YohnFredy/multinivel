@@ -17,8 +17,8 @@
                         <p class="">Calle 15 #42, Cali, Valle del Cauca</p>
                     @else
                         <p class="">Envío a la dirección:</p>
-                        <p class="">{{ $order->address }} - {{ $order->reference }}</p>
-                        <p class="">{{ $order->country->name }} - {{ $order->state->name }} -
+                        <p class="">{{ $order->address }} - {{ $order->additional_address }}</p>
+                        <p class="">{{ $order->country->name }} - {{ $order->department->name }} -
                             {{ $order->city->name }} {{ $order->addCity }}</p>
                     @endif
                 </div>

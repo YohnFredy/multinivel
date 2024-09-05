@@ -28,14 +28,14 @@ class CountrySeeder extends Seeder
 
             // Crear estados falsos para cada país
             for ($j = 0; $j < 5; $j++) {
-                $state = $country->states()->create([
+                $department = $country->department()->create([
                     'name' => $faker->state,
                     /* 'code' => strtoupper($faker->stateAbbr()), */
                 ]);
 
                 // Crear ciudades falsas para cada estado
                 for ($k = 0; $k < 3; $k++) {
-                    $state->cities()->create([
+                    $department->cities()->create([
                         'name' => $faker->city,
                     ]);
                 }
@@ -46,7 +46,7 @@ class CountrySeeder extends Seeder
             'name' => 'Colombia',
         ]);
 
-        $state = $country->states()->create([
+        $department = $country->department()->create([
             'name' => 'Valle del Cauca',
            
         ]);

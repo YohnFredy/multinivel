@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('birthdate');
             $table->string('phone');
             $table->integer('country_id');
-            $table->integer('state_id')->nullable();
+            $table->integer('department_id')->nullable();
             $table->integer('city_id')->nullable();
             $table->string('city')->nullable();
             $table->string('address')->nullable();
