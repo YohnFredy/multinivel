@@ -33,9 +33,8 @@ class Binary extends Component
             'right' => $userCount->total_binary_right ?? 0
         ];
 
-        $personal_pts = UserPoint::where('user_id', $relationship->user_id)->first();
-        $binaryPoints = $this->calculateBinaryPoints($relationship->user_id);
-
+        $userPoint = UserPoint::where('user_id', $relationship->user_id)->first();
+        
         $branch = [
             'level' => $level,
             'id' => $relationship->user_id,
@@ -44,9 +43,9 @@ class Binary extends Component
             'position' => $relationship->position,
             'left' => $totalBinary['left'],
             'right' => $totalBinary['right'],
-            'personal_pts' => $personal_pts->personal_pts ?? 0,
-            'leftPts' => $binaryPoints['left'],
-            'rightPts' => $binaryPoints['right'],
+            'personal_pts' => $userPoint->personal_pts ?? 0,
+            'leftPts' => $userPoint->left_pts ?? 0,
+            'rightPts' =>$userPoint->right_pts ?? 0,
         ];
 
         if ($level < self::MAX_TREE_LEVEL) {
@@ -56,21 +55,7 @@ class Binary extends Component
         return $branch;
     }
 
-    private function calculateBinaryPoints(int $userId): array
-    {
-        $points = ['left' => 0, 'right' => 0];
-        $binaryDirects = Relationship::where('binary_parent_id', $userId)->get();
-
-        foreach ($binaryDirects as $direct) {
-            $position = $direct->position;
-            if (in_array($position, ['left', 'right'])) {
-                $userPoint = UserPoint::firstWhere('user_id', $direct->user_id);
-                $points[$position] = $userPoint ? $userPoint->binary_pts + $userPoint->personal_pts : 0;
-            }
-        }
-
-        return $points;
-    }
+    
 
     private function getChildrenBranches(int $parentId, int $currentLevel): array
     {

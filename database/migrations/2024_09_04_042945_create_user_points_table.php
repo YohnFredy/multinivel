@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate();
             $table->decimal('personal_pts', 8, 2)->default(0);
-            $table->decimal('binary_pts', 8, 2)->default(0);
+            $table->decimal('left_pts', 8, 2)->default(0);
+             $table->decimal('right_pts', 8, 2)->default(0);
             $table->decimal('unilevel_pts', 8, 2)->default(0);
             $table->enum('status', [1, 2, 3])->default(1)->comment('1: Active, 2: Process, 3: Inactive');
             $table->timestamps();

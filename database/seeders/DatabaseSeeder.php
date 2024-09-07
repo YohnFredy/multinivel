@@ -41,9 +41,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call(CategorySeeder::class);
         
-        Brand::factory(5)->create();
+        Brand::factory(2)->create();
 
-        Product::factory(20)->create()->each(function ($product) {
+        Product::factory(5)->create()->each(function ($product) {
             $product->images()->createMany(
                 Image::factory(1)->product()->make()->toArray()
             );

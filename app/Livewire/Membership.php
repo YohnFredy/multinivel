@@ -90,7 +90,6 @@ class Membership extends Component
 
         $binaryParentId = $this->findBinarySponsor($parent->id, $this->form->position);
         $relationship = $this->createRelationship($userId, $parent->id, $binaryParentId, $this->form->position);
-
         $this->updateUserCounts($relationship, $parent->id);
 
         $this->confirmingRegistration = true;

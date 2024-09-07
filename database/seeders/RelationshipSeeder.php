@@ -7,15 +7,11 @@ use App\Models\Relationship;
 use App\Models\User;
 use App\Models\UserCount;
 use App\Models\UserPoint;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class RelationshipSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Relationship::create([
@@ -24,62 +20,43 @@ class RelationshipSeeder extends Seeder
             'binary_parent_id' => null,
             'position' => null,
         ]);
-
-        $users = User::where('id', '>', 1)->get();
-
-        foreach ($users as $user) {
-            $parentId = $this->getSponsor($user);
-            $position = $this->getBinaryPosition($parentId);
-            $binaryParentId = $this->getBinarySponsor($parentId->id, $position);
-            $relationship = $this->saveRelationshipData($user->id, $parentId->id, $binaryParentId, $position);
-            $this->countUsers($relationship, $parentId->id);
-            $this->createOrder($user);
-        }
+        $this->processUsers();
     }
 
-
-    private function getSponsor($user)
+    private function processUsers(): void
     {
-        return User::where('id', '<', $user->id)->inRandomOrder()->first();
+        User::where('id', '>', 1)->get()->each(function ($user) {
+            $parentId = User::where('id', '<', $user->id)->inRandomOrder()->first();
+            $position = $this->getBinaryPosition($parentId);
+            $binaryParentId = $this->getBinarySponsor($parentId->id, $position);
+
+            $relationship = $this->saveRelationshipData($user->id, $parentId->id, $binaryParentId, $position);
+            $this->updateUserCounts($relationship, $parentId->id);
+            $this->createOrder($user);
+        });
     }
 
     private function getBinaryPosition($parentId)
     {
         $userCount = $parentId->userCount;
-
         $left = $userCount ? $userCount->total_binary_left : 0;
         $right = $userCount ? $userCount->total_binary_right : 0;
-
         return $left < $right ? 'left' : 'right';
     }
 
     private function getBinarySponsor($parentId, $position)
     {
-        $upward = true;
-        while ($upward) {
+        while (true) {
             $relationship = Relationship::where('binary_parent_id', $parentId)
                 ->where('position', $position)
                 ->first();
 
             if (!$relationship) {
                 return $parentId;
-                break;
             }
 
             $parentId = $relationship->user_id;
-            $userCount = UserCount::firstOrCreate(
-                ['user_id' => $parentId],
-                [
-                    'total_binary_left' => 0,
-                    'total_binary_right' => 0
-                ]
-            );
-
-            if ($position === 'left') {
-                $userCount->increment('total_binary_left');
-            } else {
-                $userCount->increment('total_binary_right');
-            }
+            $this->incrementBinaryCount($parentId, $position);
         }
     }
 
@@ -93,7 +70,7 @@ class RelationshipSeeder extends Seeder
         ]);
     }
 
-    private function countUsers($relationship, $parentId)
+    private function updateUserCounts($relationship, $parentId)
     {
         $this->addUnilevelUsers($relationship->parent_id);
         $this->addAscendingUnilevelUsers($relationship->parent_id);
@@ -102,30 +79,20 @@ class RelationshipSeeder extends Seeder
 
     private function addUnilevelUsers($userId)
     {
-        $userCount = UserCount::firstOrCreate(
+        UserCount::updateOrCreate(
             ['user_id' => $userId],
             [
-                'total_direct' => 0,
-                'total_unilevel' => 0
+                'total_direct' => DB::raw('total_direct + 1'),
+                'total_unilevel' => DB::raw('total_unilevel + 1')
             ]
         );
-
-        $userCount->increment('total_direct');
-        $userCount->increment('total_unilevel');
     }
 
     private function addAscendingUnilevelUsers($userId)
     {
-        $ascending = true;
-        while ($ascending) {
-            if ($userId <= 1) {
-                break;
-            }
-
+        while ($userId > 1) {
             $relationship = Relationship::where('user_id', $userId)->first();
-            if (!$relationship) {
-                break;
-            }
+            if (!$relationship) break;
 
             $userId = $relationship->parent_id;
             UserCount::where('user_id', $userId)->increment('total_unilevel');
@@ -134,37 +101,31 @@ class RelationshipSeeder extends Seeder
 
     private function addAscendingBinaryUsers($userId, $position)
     {
-        $ascending = true;
-        while ($ascending) {
+        while (true) {
             $relationship = Relationship::where('user_id', $userId)->first();
-            if (!$relationship) {
-                break;
-            }
+            if (!$relationship) break;
 
-            $userCount = UserCount::firstOrCreate(
-                ['user_id' => $userId],
-                [
-                    'total_binary_left' => 0,
-                    'total_binary_right' => 0
-                ]
-            );
-
-            if ($position === 'left') {
-                $userCount->increment('total_binary_left');
-            } else {
-                $userCount->increment('total_binary_right');
-            }
+            $this->incrementBinaryCount($userId, $position);
 
             $userId = $relationship->binary_parent_id;
             $position = $relationship->position;
         }
     }
 
-    public function createOrder($user)
+    private function incrementBinaryCount($userId, $position)
     {
-        $publicOrderNumber = strtoupper(dechex(time()) . bin2hex(random_bytes(4)));
-        $orderData = [
-            'public_order_number' => $publicOrderNumber,
+        UserCount::updateOrCreate(
+            ['user_id' => $userId],
+            [
+                "total_binary_$position" => DB::raw("total_binary_$position + 1")
+            ]
+        );
+    }
+
+    private function createOrder($user)
+    {
+        $order = Order::create([
+            'public_order_number' => strtoupper(dechex(time()) . bin2hex(random_bytes(4))),
             'user_id' => $user->id,
             'contact' => 'fredy',
             'phone' => '627728',
@@ -174,34 +135,33 @@ class RelationshipSeeder extends Seeder
             'shipping_cost' => 0,
             'total' => 100000,
             'total_pts' => 10,
-        ];
-
-        $order = Order::create($orderData);
-
+        ]);
 
         $this->updateUserPoints($order->user_id, $order->total_pts);
-        $this->findBinarySponsor($order->user_id, $order->total_pts);
+        $this->updateBinarySponsorPoints($order->user_id, $order->total_pts);
     }
 
-    private function updateUserPoints($userId, $points, $pointType = 'personal_pts')
+    private function updateUserPoints($userId, $points)
     {
         UserPoint::updateOrCreate(
             ['user_id' => $userId, 'status' => 1],
-            [$pointType => DB::raw("$pointType + " . $points)]
+            ['personal_pts' => DB::raw("personal_pts + $points")]
         );
     }
 
-    private function findBinarySponsor($parentId, $pts)
+    private function updateBinarySponsorPoints($userId, $points)
     {
         while (true) {
-            $relationship = Relationship::where('user_id', $parentId)->first();
-            // Si no se encuentra una relación o no hay padre binario, salir del bucle
-            if (!$relationship || !$relationship->binary_parent_id) {
-                return;
-            }
+            $relationship = Relationship::where('user_id', $userId)->first();
+            if (!$relationship || !$relationship->binary_parent_id) return;
 
-            $parentId = $relationship->binary_parent_id;
-            $this->updateUserPoints($parentId, $pts, 'binary_pts');
+            $userId = $relationship->binary_parent_id;
+            $pointField = $relationship->position === 'left' ? 'left_pts' : 'right_pts';
+
+            UserPoint::updateOrCreate(
+                ['user_id' => $userId],
+                [$pointField => DB::raw("$pointField + $points")]
+            );
         }
     }
 }

@@ -12,17 +12,17 @@ class CategorySeeder extends Seeder
     {
         // Crear 10 categorías principales
         Category::factory()
-            ->count(10)
+            ->count(2)
             ->create()
             ->each(function ($category) {
                 // Crear 10 subcategorías para cada categoría principal
                 Category::factory()
-                    ->count(5)
+                    ->count(2)
                     ->create(['parent_id' => $category->id])
                     ->each(function ($subCategory) {
                         // Crear 10 sub-subcategorías para cada subcategoría
                         Category::factory()
-                            ->count(5)
+                            ->count(2)
                             ->create(['parent_id' => $subCategory->id]);
                     });
             });
