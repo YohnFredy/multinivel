@@ -1,40 +1,56 @@
 <?php
 
-namespace Database\Seeders;
+namespace App\Jobs;
 
 use App\Models\Income;
-use App\Models\Order;
-use App\Models\Relationship;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use App\Models\User;
+use App\Models\Relationship;
 use App\Models\UserCount;
+use App\Models\Order;
 use App\Models\UserPoint;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
-class RelationshipSeeder extends Seeder
+class CreateUserJob implements ShouldQueue
 {
-    public function run(): void
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected static ?string $password;
+
+    public function handle()
     {
-        Relationship::create([
-            'user_id' => 1,
-            'parent_id' => null,
-            'binary_parent_id' => null,
-            'position' => null,
-        ]);
-        $this->processUsers();
+        $user = $this->createUser();
+        $parentId = User::where('id', '<', $user->id)->inRandomOrder()->first();
+        $position = $this->getBinaryPosition($parentId);
+        $binaryParentId = $this->getBinarySponsor($parentId->id, $position);
+
+        $relationship = $this->saveRelationshipData($user->id, $parentId->id, $binaryParentId, $position);
+        $this->updateUserCounts($relationship, $parentId->id);
+        $this->createOrder($user);
     }
 
-    private function processUsers(): void
+    private function createUser()
     {
-        User::where('id', '>', 1)->get()->each(function ($user) {
-            $parentId = User::where('id', '<', $user->id)->inRandomOrder()->first();
-            $position = $this->getBinaryPosition($parentId);
-            $binaryParentId = $this->getBinarySponsor($parentId->id, $position);
-
-            $relationship = $this->saveRelationshipData($user->id, $parentId->id, $binaryParentId, $position);
-            $this->updateUserCounts($relationship, $parentId->id);
-            $this->createOrder($user);
-        });
+        return User::create([
+            'name' => fake()->name(),
+            'last_name' => fake()->lastName(),
+            'identification_card' => fake()->unique()->numerify('#########'),
+            'username' => fake()->unique()->userName() . ' ' . bin2hex(random_bytes(2)),
+            'email' => bin2hex(random_bytes(2)) . fake()->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            'password' => static::$password ??= Hash::make('123'),
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'remember_token' => Str::random(10),
+            'profile_photo_path' => null,
+            'current_team_id' => null,
+        ]);
     }
 
     private function getBinaryPosition($parentId)

@@ -95,4 +95,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Address::class);
     }
+
+    public function commissions()
+    {
+        return $this->hasMany(commissions::class);
+    }
 }

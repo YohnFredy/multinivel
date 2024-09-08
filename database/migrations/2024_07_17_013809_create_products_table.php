@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->decimal('price', 9,2);
+            $table->decimal('price', 9, 2);
+            $table->decimal('commission_income', 8, 2)->nullable();
             $table->decimal('pts', 8, 2)->nullable();
             $table->text('specifications')->nullable();
             $table->text('information')->nullable();
