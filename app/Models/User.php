@@ -98,6 +98,11 @@ class User extends Authenticatable
 
     public function commissions()
     {
-        return $this->hasMany(commissions::class);
+        return $this->hasMany(Commission::class);
+    }
+
+    public function ranks()
+    {
+        return $this->hasMany(Rank::class);
     }
 }

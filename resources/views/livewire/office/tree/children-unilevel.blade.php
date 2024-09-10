@@ -6,6 +6,9 @@
                 <div class=" col-span-2 text-palette-300 dark:text-palette-10 font-bold">
                     <h4>{{ $node['username'] }}</h4>
                 </div>
+                <div class=" col-span-2 text-palette-300 dark:text-palette-10 font-bold">
+                    <h6>$rango: {{ $node['rank'] }}</h6>
+                </div>
                 
                 <div class="col-span-2">
                     <h5 class=" text-palette-200 dark:text-palette-20"> <span class=" text-palette-300 dark:text-palette-10 font-medium">Directos:</span> {{$node['total_direct'] }}</h5>

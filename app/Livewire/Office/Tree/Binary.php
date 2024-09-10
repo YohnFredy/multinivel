@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Office\Tree;
 
+use App\Models\Rank;
 use App\Models\Relationship;
 use App\Models\User;
 use App\Models\UserCount;
@@ -33,10 +34,18 @@ class Binary extends Component
             'right' => $userCount->total_binary_right ?? 0
         ];
 
+        $rank = Rank::where('user_id', $relationship->user_id)->where('status', 1)->first();
+        if ($rank) {
+            $rank = $rank->level;
+        }else{
+            $rank = 0;
+        }
+
         $userPoint = UserPoint::where('user_id', $relationship->user_id)->first();
         
         $branch = [
             'level' => $level,
+            'rank' => $rank,
             'id' => $relationship->user_id,
             'username' => $relationship->user->id,
             'children' => [],

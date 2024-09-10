@@ -5,6 +5,9 @@
                 <div class=" col-span-2 text-palette-300 dark:text-palette-10 font-bold">
                     <h4>{{ $node['username'] }}</h4>
                 </div>
+                <div class=" col-span-2 text-palette-300 dark:text-palette-10 font-bold">
+                    <h6>$rango: {{ $node['rank'] }}</h6>
+                </div>
                 @if ($node['level'] ==0)
                 <div class="col-span-2 text-palette-600 dark:text-palette-10">
                     <h6>Pts: {{ $node['personal_pts'] }}</h6>

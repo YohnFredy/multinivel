@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Office\Tree;
 
+
+use App\Models\Rank;
 use App\Models\Relationship;
 use App\Models\User;
 use App\Models\UserCount;
@@ -16,7 +18,7 @@ class Unilevel extends Component
     public $secondaryUserId;
     public $primaryUserId;
 
-    const MAX_TREE_LEVEL = 4;
+    const MAX_TREE_LEVEL = 2;
 
     public function mount()
     {
@@ -26,15 +28,22 @@ class Unilevel extends Component
 
     private function buildTree($relationship, $level = 0)
     {
-        $userCount = UserCount::where('user_id', $relationship->user_id,)->first();
+        $userCount = UserCount::where('user_id', $relationship->user_id)->first();
+        $rank = Rank::where('user_id', $relationship->user_id)->where('status', 1)->first();
+        if ($rank) {
+            $rank = $rank->level;
+        }else{
+            $rank = 0;
+        }
 
         $total_direct = $userCount->total_direct ?? 0;
         $total_unilevel = $userCount->total_unilevel ?? 0;
 
         $branch = [
             'level' => $level,
+            'rank' => $rank,
             'id' => $relationship->user_id,
-            'username' => $relationship->user->username,
+            'username' => $relationship->user->id,
             'children' => [],
             'total_direct' => $total_direct,
             'total_unilevel' =>  $total_unilevel,

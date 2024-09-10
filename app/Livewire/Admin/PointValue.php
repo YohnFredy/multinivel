@@ -11,9 +11,11 @@ class PointValue extends Component
     public $ptsValue = 0;
     public $income;
     public $dolar = 4174.26;
+    public $minimun_pts;
 
     public function mount()
     {
+        $this->minimun_pts = config('services.multilevel.minimum_pts');
         $this->income = Income::where('status', 1)->firstOrFail();
         $this->ptsValue = $this->income->pts_value;
     }
@@ -35,7 +37,7 @@ class PointValue extends Component
     {
         return UserPoint::all()->sum(function ($userPoint) {
             $points = min($userPoint->left_pts, $userPoint->right_pts);
-            return $points > 5 ? $points : 0;
+            return $points > $this->minimun_pts ? $points : 0;
         }) * 0.1; // 10% of the total points
     }
 
