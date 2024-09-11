@@ -39,9 +39,9 @@ class ProductFactory extends Factory
             'slug' => Str::slug($this->faker->unique()->word),
             'description' => $this->faker->paragraph,
             /* 'price' => $this->faker->randomFloat(2, 10, 1000), */
-            'price' => 19.17,
-            'commission_income' =>5.45,
-            'pts' => 2,
+            'price' => 28.75,
+            'commission_income' =>5.71,
+            'pts' => 5,
             'specifications' => $this->faker->paragraph,
             'information' => $this->faker->paragraph,
             'stock' => $this->faker->numberBetween(0, 100),

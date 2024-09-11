@@ -9,7 +9,7 @@ class TestingAndCreatingDataController extends Controller
 {
     public function createData()
     {
-        for ($i = 0; $i < 89; $i++) {
+        for ($i = 0; $i < 1000; $i++) {
             CreateUserJob::dispatch();
         }
 

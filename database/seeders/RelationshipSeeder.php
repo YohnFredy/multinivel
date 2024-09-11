@@ -134,15 +134,15 @@ class RelationshipSeeder extends Seeder
             'envio_type' => 1,
             'discount' => 0,
             'shipping_cost' => 0,
-            'total' => 19.17,
-            'total_pts' => 2,
+            'total' => 28.75,
+            'total_pts' => 5,
         ]);
 
         Income::updateOrCreate(
             ['status' => 1],
             [
-                'sale_income' => DB::raw('COALESCE(sale_income, 0) + 19.17'),
-                'commission_income' => DB::raw('COALESCE(commission_income, 0) + 5.45'),
+                'sale_income' => DB::raw('COALESCE(sale_income, 0) + 28.75'),
+                'commission_income' => DB::raw('COALESCE(commission_income, 0) + 5.71'),
             ]
         );
 

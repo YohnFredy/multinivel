@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('sale_income', 10, 2)->default(0);
             $table->decimal('commission_income', 10, 2)->default(0);
             $table->decimal('binary_points_for_payment', 10, 2)->default(0);
-            $table->decimal('pool1_percentage')->default(40);
+            $table->decimal('pool1_percentage')->default(60);
             $table->decimal('pts_value')->default(1);
             $table->enum('status', [1, 2, 3])->default(1)->comment('1: Active, 2: Process, 3: Inactive');
 

@@ -2,8 +2,11 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Commission;
 use App\Models\Income;
+use App\Models\Rank;
 use App\Models\UserPoint;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class PointValue extends Component
@@ -15,6 +18,9 @@ class PointValue extends Component
 
     public function mount()
     {
+
+       
+      
         $this->minimun_pts = config('services.multilevel.minimum_pts');
         $this->income = Income::where('status', 1)->firstOrFail();
         $this->ptsValue = $this->income->pts_value;
@@ -22,6 +28,11 @@ class PointValue extends Component
 
     public function updatePointValue()
     {
+
+        DB::table('commissions')->truncate();
+       DB::table('ranks')->truncate();
+
+
         $binaryPayment = $this->calculateBinaryPayment();
         $ptsValue = $this->calculatePointsValue($binaryPayment);
 

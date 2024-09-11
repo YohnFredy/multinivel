@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Office\Tree;
 
-
+use App\Models\Commission;
 use App\Models\Rank;
 use App\Models\Relationship;
 use App\Models\User;
@@ -30,17 +30,20 @@ class Unilevel extends Component
     {
         $userCount = UserCount::where('user_id', $relationship->user_id)->first();
         $rank = Rank::where('user_id', $relationship->user_id)->where('status', 1)->first();
-        if ($rank) {
-            $rank = $rank->level;
-        }else{
-            $rank = 0;
-        }
+        $commission = Commission::where('user_id', $relationship->user_id)->first();
+        
+        $binary_commission = $commission->binary_commission ?? 0;
+        $generational_commission = $commission->generational_commission ?? 0;
+        $rank = $rank->level ?? 0;
+        
 
         $total_direct = $userCount->total_direct ?? 0;
         $total_unilevel = $userCount->total_unilevel ?? 0;
 
         $branch = [
             'level' => $level,
+            'binary_commission' => $binary_commission,
+            'generational_commission' => $generational_commission,
             'rank' => $rank,
             'id' => $relationship->user_id,
             'username' => $relationship->user->id,
