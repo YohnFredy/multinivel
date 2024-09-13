@@ -18,19 +18,15 @@ class PointValue extends Component
 
     public function mount()
     {
-
-       
-      
         $this->minimun_pts = config('services.multilevel.minimum_pts');
         $this->income = Income::where('status', 1)->firstOrFail();
-        $this->ptsValue = $this->income->pts_value;
     }
 
     public function updatePointValue()
     {
 
         DB::table('commissions')->truncate();
-       DB::table('ranks')->truncate();
+        DB::table('ranks')->truncate();
 
 
         $binaryPayment = $this->calculateBinaryPayment();
@@ -44,13 +40,15 @@ class PointValue extends Component
         $this->ptsValue = $ptsValue;
     }
 
-    private function calculateBinaryPayment(): float
-    {
-        return UserPoint::all()->sum(function ($userPoint) {
-            $points = min($userPoint->left_pts, $userPoint->right_pts);
-            return $points > $this->minimun_pts ? $points : 0;
-        }) * 0.1; // 10% of the total points
-    }
+    private function calculateBinaryPayment()
+{
+    $points = UserPoint::all()->sum(function ($userPoint) {
+        $minPts = min($userPoint->left_pts, $userPoint->right_pts); 
+        return $this->minimun_pts <= $minPts ? $minPts : 0; 
+    });
+
+    return $points * 0.1;
+}
 
     private function calculatePointsValue(float $binaryPayment): float
     {

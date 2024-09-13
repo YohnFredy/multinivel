@@ -20,6 +20,7 @@ class Relationship extends Model
         return $this->hasOne(UserCount::class);
     }
 
+
     /* public function children()
     {
         return $this->hasMany(Relationship::class, 'parent_id');
