@@ -14,11 +14,13 @@
             </div>
             <div class=" col col-span-1">
                 @livewire('admin.commission-by-depth-levels')
-            </div>
-          
+            </div> 
         </div>
-        
+    </div>
 
+    <div class=" bg-white rounded-md shadow-md shadow-palette-300 p-4 mt-4">
+        @livewire('admin.commission-data');
+        hola
     </div>
     
 </x-layouts.admin>

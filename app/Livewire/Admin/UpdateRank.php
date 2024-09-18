@@ -12,7 +12,7 @@ class UpdateRank extends Component
 {
     public function updateRanks()
     {
-        Commission::where('status', 1)
+        Commission::where('user_id', '<', 32)->where('status', 1)
             ->orderByDesc('user_id')
             ->chunk(100, function ($commissions) {
                 foreach ($commissions as $commission) {

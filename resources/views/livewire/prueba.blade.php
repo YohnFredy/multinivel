@@ -1,6 +1,6 @@
 <div>
 
-    <form action="http://multinivel.test/webhook/tu-endpoint" method="POST">
+    <form action="http://fornuvi.test/webhook/tu-endpoint" method="POST">
         @csrf
     
         <div class="mb-4">

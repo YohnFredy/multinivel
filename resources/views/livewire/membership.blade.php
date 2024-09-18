@@ -2,7 +2,7 @@
     <div class=" max-w-lg mx-auto px-4 py-8 bg-white rounded-md shadow-md shadow-gray-400 ">
 
         <h1 class=" text-center text-blue-600">
-            Registro Multinivel
+            Registro fornuvi
         </h1>
 
         <hr class=" mt-4 mb-8  border-blue-600">
@@ -112,7 +112,7 @@
 
 
             <div class=" text-right mt-3 ">
-                <x-link href="http://multinivel.test/">
+                <x-link href="http://fornuvi.test/">
                     Pagina de inicio</x-link>
             </div>
 

@@ -6,7 +6,7 @@
     <title>Formulario POST</title>
 </head>
 <body>
-    <form id="postForm" method="POST" action="http://multinivel.test/webhook/bold/payment-status">
+    <form id="postForm" method="POST" action="http://fornuvi.test/webhook/bold/payment-status">
         <label for="id">ID:</label>
         <input type="text" id="id" name="id" value="191850cb-00f8-4f64-aa5f-4975848e9428"><br><br>
 
