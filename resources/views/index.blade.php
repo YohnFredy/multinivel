@@ -23,7 +23,7 @@
         <img class=" w-full shadow-md" src="{{ asset('storage\images\1682656345.jpg') }}" alt="">
         <div class="absolute posicion ">
             <div class=" text-center text-palette-100 text-xl md:text-3xl lg:text-4xl">
-                <p>La mejor manera de crecer</p>
+                <p>La mejor manera de crecer en fornuvi</p>
                 <p class=" flex items-center justify-center">
                     <Strong>App</Strong>
                     <span class="  font-semibold">Plus</span>
