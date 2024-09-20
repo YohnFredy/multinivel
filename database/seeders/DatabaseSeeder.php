@@ -30,14 +30,14 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123'),
         ]);
         
-        User::factory(10)->create();
-        $this->call(RelationshipSeeder::class);
+       /*   User::factory(1)->create();  */
+        $this->call(RelationshipSeeder::class); 
 
-        /* Category::factory()->create([
+       /*   Category::factory()->create([
             'name' => 'Hogar',
             'slug' => 'hogar',
             'description' => 'hogar la mejor manera',
-        ]); */
+        ]); 
 
         $this->call(CategorySeeder::class);
         
@@ -49,6 +49,6 @@ class DatabaseSeeder extends Seeder
             );
         });
 
-        $this->call(CountrySeeder::class);
+        $this->call(CountrySeeder::class);  */
     }
 }

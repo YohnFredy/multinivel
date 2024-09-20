@@ -1,9 +1,8 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+          <img src="{{ asset('storage\images\fornuvi-logo.png') }}" alt="logo" class=" w-44 object-cover">
         </x-slot>
-
         <x-validation-errors class="mb-4" />
 
         @session('status')

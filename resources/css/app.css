@@ -6,6 +6,22 @@
     display: none;
 }
 
+.elephant-text {
+    font-family: 'Elephant', sans-serif;
+}
+
+@font-face {
+    font-family: 'Aptos';
+    src: url('/fonts/Aptos-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+.aptos-italic {
+    font-family: 'Aptos', sans-serif;
+    font-style: italic;
+}
+
 @layer base {
     h1 {
         @apply text-2xl;

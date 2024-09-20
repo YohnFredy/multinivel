@@ -51,7 +51,7 @@ class Binary extends Component
             'binary_commission' => $binary_commission,
             'generational_commission' => $generational_commission,
             'id' => $relationship->user_id,
-            'username' => $relationship->user->id,
+            'username' => $relationship->user->username,
             'children' => [],
             'position' => $relationship->position,
             'left' => $totalBinary['left'],

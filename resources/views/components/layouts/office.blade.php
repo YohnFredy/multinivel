@@ -45,7 +45,7 @@
         <div class="sidebar-header shadow-xl shadow-palette-160 dark:shadow-palette-80 h-14 flex items-center">
             <a href="{{ route('office.index') }}" class="flex items-center text-xl">
                 <i class="ml-5 mr-2 fas fa-building"></i>
-                <span class="text"><strong>Multi</strong>nivel</span>
+                <span class="text"> <span class="elephant-text">FORNUVI</span>
             </a>
         </div>
         @livewire('office.lateral-menu')
@@ -71,8 +71,7 @@
                     <div>
                         <h3 class="text-xl font-semibold text-white mb-4">Sobre Nosotros</h3>
                         <p class="text-sm leading-relaxed">Somos una empresa dedicada a brindar soluciones innovadoras y
-                            de alta calidad en el sector tecnológico. Nuestra misión es mejorar la vida de las personas
-                            a través de la tecnología.</p>
+                            de alta calidad en el sector de la salud. Nuestra misión es mejorar la vida de las personas.</p>
                     </div>
                     <div>
                         <h3 class="text-xl font-semibold text-white mb-4">Enlaces Rápidos</h3>
@@ -85,9 +84,9 @@
                     </div>
                     <div>
                         <h3 class="text-xl font-semibold text-white mb-4">Contacto</h3>
-                        <p class="text-sm leading-relaxed"><strong>Dirección:</strong> Calle Falsa 123, Ciudad, País</p>
-                        <p class="text-sm leading-relaxed"><strong>Teléfono:</strong> (123) 456-7890</p>
-                        <p class="text-sm leading-relaxed"><strong>Email:</strong> contacto@empresa.com</p>
+                        {{-- <p class="text-sm leading-relaxed"><strong>Dirección:</strong> Calle 15, Ciudad, País</p> --}}
+                        <p class="text-sm leading-relaxed"><strong>Teléfono:</strong> +57 3145207814</p>
+                        <p class="text-sm leading-relaxed"><strong>Email:</strong> contacto@fornuvi.com</p>
                     </div>
                     <div>
                         <h3 class="text-xl font-semibold text-white mb-4">Síguenos</h3>
@@ -100,7 +99,7 @@
                     </div>
                 </div>
                 <div class="border-t border-palette-100 mt-12 pt-8 text-center text-sm">
-                    &copy; 2024 Empresa Ficticia. Todos los derechos reservados.
+                    &copy; 2024 Fornuvi. Todos los derechos reservados.
                 </div>
             </div>
         </footer>

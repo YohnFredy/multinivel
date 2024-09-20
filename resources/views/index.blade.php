@@ -23,10 +23,9 @@
         <img class=" w-full shadow-md" src="{{ asset('storage\images\1682656345.jpg') }}" alt="">
         <div class="absolute posicion ">
             <div class=" text-center text-palette-100 text-xl md:text-3xl lg:text-4xl">
-                <p>La mejor manera de crecer en fornuvi</p>
+                <p>La mejor manera de crecer</p>
                 <p class=" flex items-center justify-center">
-                    <Strong>App</Strong>
-                    <span class="  font-semibold">Plus</span>
+                    <span class="elephant-text text-2xl font-semibold">FORNUVI</span>
                     <i class="fas fa-chevron-right text-sm md:text-lg lg:text-2xl ml-2"></i>
                     <i class="fas fa-chevron-right text-sm md:text-lg lg:text-2xl"></i>
                 </p>
@@ -41,38 +40,39 @@
             <div class=" col-span-5 md:col-span-3 flex items-center ">
 
                 <div>
-                    <p class=" text-xl font-bold text-center text-palette-200">Todo en una plataforma. </p>
+                    <p class=" text-xl font-bold text-center text-palette-200">Salud y Solidaridad: Un Camino hacia el
+                        Bienestar Colectivo a través de Productos Naturales </p>
 
                     <p class="text-justify mt-4">
-                        AppPlus es una plataforma que reúne diferentes aplicaciones, ofreciendo una experiencia de
-                        usuario única y completa. Al unirse a la comunidad de AppPlus, se tiene la posibilidad de
-                        acceder a todas las aplicaciones que se encuentran en la plataforma, lo que resulta en una
-                        oferta amplia y diversa de servicios. <br><br>
 
-                        La comunidad de AppPlus está en constante crecimiento a nivel mundial, lo que significa que se
-                        pueden conectar con personas de diferentes partes del mundo y conocer nuevas aplicaciones y
-                        servicios. Pero lo más importante es que todas las aplicaciones que se conectan a la plataforma
-                        de AppPlus, son cuidadosamente seleccionadas y ofrecen un excelente servicio, lo que resulta en
-                        grandes ganancias para la comunidad. <br><br>
+                        La salud es uno de los aspectos más importantes de la vida. Mantener un cuerpo y mente
+                        saludables no solo nos permite disfrutar más plenamente de nuestras actividades diarias, sino
+                        que también nos proporciona bienestar a largo plazo. Adoptar un estilo de vida saludable, basado
+                        en productos naturales, es una forma efectiva de cuidar de nosotros mismos de manera sostenible.
+                        Los productos naturales no solo benefician a nuestro organismo, sino que respetan el equilibrio
+                        con el entorno, evitando el uso de sustancias. <br><br>
 
-                        Al utilizar los servicios de AppPlus, se tiene la garantía de contar con un servicio seguro,
-                        fácil de utilizar y con una atención de primera. Cada usuario es importante para la comunidad de
-                        AppPlus y se asegura que se sientan cómodos y satisfechos con los servicios ofrecidos.
+                        Cuidar nuestra salud a través de estos productos puede ir más allá de un beneficio personal,
+                        convirtiéndose en una acción solidaria. Imagínate ser parte de una comunidad donde cada compra
+                        no solo mejora tu bienestar, sino que también ayuda a otros. A través de un sistema
+                        colaborativo, cada comisión generada por las ventas se dirige a una bolsa global, la cual se
+                        reparte de forma equitativa. Este modelo tiene en cuenta el crecimiento de cada consumidor,
+                        incentivando una participación activa y consciente en el cuidado de la salud de todos. <br><br>
+
+                        Así, elige productos naturales no solo transforma tu vida, sino que contribuye a crear un
+                        círculo virtuoso de apoyo y crecimiento. Cada paso que das hacia tu propio bienestar también
+                        impulsa a otros en ese mismo camino, fomentando una red de solidaridad donde el bienestar
+                        colectivo es tan importante como el individual. En este ecosistema, cuidar de nuestra salud se
+                        convierte en una oportunidad para construir juntos un futuro más saludable y solidario.
                     </p>
                 </div>
             </div>
             <div class=" flex items-center col-span-5 md:col-span-2">
                 <img class=" rounded-md shadow-md"
-                    src="https://acnews.blob.core.windows.net/imgnews/large/NAZ_43e8b0a1269e4e769bec1761e0b8f97a.jpg"
-                    alt="">
+                    src="https://miamidiario.com/wp-content/uploads/F35ICS6ZOZFKPAAKPGG6XUN5XM.jpg"
+                    class=" object-cover" alt="">
             </div>
-            <p class=" col-span-5  text-center">
-                AppPlus es una plataforma que ofrece una experiencia completa para los usuarios al
-                reunir diferentes aplicaciones en un solo lugar. Al unirse a la comunidad de AppPlus, se puede
-                acceder a una oferta amplia y diversa de servicios, todos cuidadosamente seleccionados para
-                ofrecer un excelente servicio y grandes ganancias a la comunidad. Además, se tiene la garantía
-                de contar con un servicio seguro, fácil de utilizar y con una atención de primera.
-            </p>
+
         </div>
 
         <div class=" grid grid-cols-4 gap-6 md:gap-x-10 lg:gap-3 xl:gap-4 mt-8 md:mt-12">
@@ -80,62 +80,56 @@
             <p class=" col-span-4 text-2xl font-bold text-palette-200 text-center md:mb-4">Diferentes servicios. </p>
             <div class=" col-span-4 md:col-span-2 lg:col-span-1 bg-palette-200 rounded-md shadow-md">
                 <img class=" rounded-t-md"
-                    src="https://www.cootracerrejon.coop/wp-content/uploads/2021/12/beneficios-economia-solidaria.jpg"
-                    alt="">
+                    src="https://cdn.pixabay.com/photo/2020/08/05/20/47/fruits-5466407_1280.jpg"
+                    alt="" >
                 <div class="py-6 px-4">
                     <p class=" text-center text-palette-100 font-bold text-lg">
-                        Economía Solidaria
+                        Cuida tu Salud de Forma Natural
                     </p>
                     <p class=" text-center text-palette-100 mt-4">
-                        Únete al club ganador y crea una fuente de trabajo de manera práctica.
-                        Participa en los
-                        sorteos que se realizan constantemente.
+                        Optar por productos naturales ayuda a mantener un equilibrio saludable, respetando el bienestar del cuerpo y del entorno.</p>
                     </p>
                 </div>
             </div>
 
             <div class=" col-span-4 md:col-span-2 lg:col-span-1 bg-palette-300 rounded-md shadow-md">
                 <img class=" rounded-t-md"
-                    src="https://img.freepik.com/foto-gratis/hombre-pie-asiento-conductor-telefono_23-2148693729.jpg?w=740&t=st=1671725607~exp=1671726207~hmac=1e48071b05458e7c25cf7b492e74f666d7fc8b6502ce416768badd38bc11ec4c"
+                    src="https://media.istockphoto.com/id/1325214348/es/foto/d%C3%ADa-mundial-del-medio-ambiente-con-el-trabajo-en-equipo-de-la-comunidad-global-grupo-de.jpg?s=1024x1024&w=is&k=20&c=rw2pnJWQK_wdS29xA01OeBohhx2sbAsdY13Q3wJs658="
                     alt="">
                 <div class="py-6 px-4">
                     <p class=" text-center text-palette-100 font-bold text-lg">
-                        Transporte
+                        Un Ecosistema Solidario
                     </p>
                     <p class=" text-center text-palette-100 mt-4">
-                        Con nuestro servicio de transporte tendrás: Tarifas justas, seguridad, comodidad, rapidez,
-                        soporte 24/7.
+                        Cada compra contribuye a una bolsa global, donde los beneficios se distribuyen para fomentar el bienestar colectivo.
                     </p>
                 </div>
             </div>
 
             <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-palette-400 rounded-md shadow-md">
                 <img class=" rounded-t-md"
-                    src="https://img.freepik.com/fotos-premium/vista-frontal-par-manos-sosteniendo-bolsa-papel_23-2148382368.jpg?w=740"
+                    src="https://media.istockphoto.com/id/1484825666/es/foto/el-seguimiento-y-el-an%C3%A1lisis-de-los-datos-de-la-competencia-impulsan-el-crecimiento-del.jpg?s=1024x1024&w=is&k=20&c=jN4A3j0zFcI1MwYkdjuca87ofivUd5rEngajq492yK0="
                     alt="">
                 <div class="py-6 px-4">
                     <p class=" text-center text-palette-100 font-bold text-lg">
-                        Domicilios
+                        Crecimiento Compartido
                     </p>
                     <p class=" text-center text-palette-100 mt-4">
-                        Servicio rápido y de calidad con opciones y promociones continuas a través de nuestros aliados
-                        en restaurantes, droguerías y almacenes, entre otros.
+                        El crecimiento de cada consumidor refuerza a toda la comunidad, creando un círculo virtuoso de apoyo y solidaridad.
                     </p>
                 </div>
             </div>
             <div class="col-span-4 md:col-span-2 lg:col-span-1 bg-palette-500 rounded-md shadow-md">
                 <img class=" rounded-t-md"
-                    src="https://img.freepik.com/fotos-premium/paquetes-productos-bolsa-compra-carrito-portatil-concepto-compras-entrega_38716-138.jpg?w=740"
+                    src="https://cdn.pixabay.com/photo/2023/11/18/16/09/pears-8396722_1280.jpg"
                     alt="">
                 <div class="py-6 px-4">
                     <p class=" text-center text-palette-100  font-bold text-lg">
-                        Tienda
+                        Construyendo un Futuro Saludable
                     </p>
                     <p class=" text-center text-palette-100 ">
 
-                        Con nuestra tienda en línea, podrás disfrutar de la comodidad de recibir una amplia variedad de
-                        productos. Precios justos y promociones atractivas, garantizando siempre la calidad y
-                        satisfacción de nuestros clientes.
+                        Elige un estilo de vida saludable que no solo transforme tu bienestar, sino también el de quienes te rodean.
                     </p>
                 </div>
             </div>
@@ -145,5 +139,3 @@
     </div>
 
 </x-app-layout>
-
-   

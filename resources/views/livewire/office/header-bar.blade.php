@@ -1,6 +1,6 @@
 <div class=" flex items-center">
-    <div class="" x-cloak>
+    {{-- <div class="" x-cloak>
         <x-dark-button />
-    </div>
+    </div> --}}
     <x-profile-configuration />
 </div>

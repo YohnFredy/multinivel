@@ -2,7 +2,7 @@
     <div class=" max-w-lg mx-auto px-4 py-8 bg-white rounded-md shadow-md shadow-gray-400 ">
 
         <h1 class=" text-center text-blue-600">
-            Registro fornuvi
+            REGISTRO FORNUVI
         </h1>
 
         <hr class=" mt-4 mb-8  border-blue-600">

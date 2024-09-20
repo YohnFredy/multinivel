@@ -46,7 +46,7 @@ class Unilevel extends Component
             'generational_commission' => $generational_commission,
             'rank' => $rank,
             'id' => $relationship->user_id,
-            'username' => $relationship->user->id,
+            'username' => $relationship->user->username,
             'children' => [],
             'total_direct' => $total_direct,
             'total_unilevel' =>  $total_unilevel,

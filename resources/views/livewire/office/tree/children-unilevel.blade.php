@@ -7,9 +7,9 @@
                     <h4>{{ $node['username'] }}</h4>
                 </div>
                 <div class=" col-span-2 text-palette-300 dark:text-palette-10 font-bold">
-                    <h6>$rango: {{ $node['rank'] }}</h6>
+                    {{-- <h6>$rango: {{ $node['rank'] }}</h6>
                     <h6> {{ $node['binary_commission'] }} </h6>
-                    <h6> {{ $node['generational_commission'] }} </h6>
+                    <h6> {{ $node['generational_commission'] }} </h6> --}}
                 </div>
 
                 <div class="col-span-2">

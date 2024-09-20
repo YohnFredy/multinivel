@@ -52,7 +52,6 @@ Route::middleware([
     Route::get('orders/create', CreateOrder::class)->name('orders.create');
     Route::get('orders/{order}/payment', [OrderController::class, 'payment'])->name('orders.payment');
     Route::get('orders/bold/respuesta', [OrderController::class, 'boldResponsePayment'])->name('orders.bold');
-  
 });
 
 Route::post('/webhook/bold/payment-status', [WebhookController::class, 'boldHandlePaymentStatus']);

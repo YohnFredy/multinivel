@@ -12,7 +12,7 @@
                     <h1>Página de Pago</h1>
                     
                     <h2>Producto 1</h2>
-                    <x-bold-payment-button 
+                    {{-- <x-bold-payment-button 
                         :order-id="'ORDER1-' . now()->timestamp"
                         currency="COP"
                         amount="100000"
@@ -22,7 +22,7 @@
                         tax="vat-19"
                         redirection-url="https://micomercio.com/pagos/resultado"
                         button-id="payment-button-1"
-                    />
+                    /> --}}
 
                     {{-- <h2>Producto 2</h2>
                     <x-bold-payment-button 
