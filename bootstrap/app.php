@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'webhook/*',
         ]);
+        $middleware->web(append: [
+            \App\Http\Middleware\Language::class,
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

@@ -32,7 +32,6 @@
             </div>
         </div>
     </div>
-
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6 ">
 
         <div class=" grid grid-cols-5 gap-x-4 lg:gap-x-10 xl:gap-x-20 gap-y-4 mt-8 ">
@@ -40,8 +39,7 @@
             <div class=" col-span-5 md:col-span-3 flex items-center ">
 
                 <div>
-                    <p class=" text-xl font-bold text-center text-palette-200">Salud y Solidaridad: Un Camino hacia el
-                        Bienestar Colectivo a través de Productos Naturales </p>
+                    <p class=" text-xl font-bold text-center text-palette-200">{{ __('welcome.parte_1') }} </p>
 
                     <p class="text-justify mt-4">
 

@@ -82,6 +82,8 @@
                     {{ __('Profile') }}
                 </x-dropdown-link>
 
+               {{--  @include('_partials.lang') --}}
+
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                     <x-dropdown-link href="{{ route('api-tokens.index') }}">
                         {{ __('API Tokens') }}

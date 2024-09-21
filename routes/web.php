@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Office\IndexController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TestingAndCreatingDataController;
@@ -22,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 })->name('index');
+
+
+Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lange');
+
 
 Route::get('testing_and_creating_data', [TestingAndCreatingDataController::class, 'createData'])->name('TestingAndCreatingData');
 
