@@ -1,28 +1,35 @@
 <x-layouts.office>
     <div class="bg-white rounded-lg shadow-lg p-6">
         <div class="text-center">
-            <p class=" font-bold text-sm text-azul-600 ">Link patrocinador lado izquierdo.</p>
-            <div class=" flex items-center justify-center">
-                <p class=" font-bold text-rojo-500 text-sm" id="p1">
-                    https://fornuvi.com/register/{{ $user->username }}/left</p>
-                <button class=" ml-6 text-azul-500 hover:text-azul-600" onclick="copiarAlPortapapeles('p1')">
-                    <i class="fas fa-copy mr-2"></i>Copiar
-                </button>
-            </div>
 
-            <p class=" font-bold mt-4 text-sm text-azul-600 ">Link patrocinador lado derecho.</p>
-            <div class=" flex items-center justify-center">
-                <p class=" font-bold text-rojo-500 text-sm" id="p2">
-                    https://fornuvi.com/register/{{ $user->username }}/right</p>
-                <button class=" ml-6 text-azul-500 hover:text-azul-600" onclick="copiarAlPortapapeles('p2')">
-                    <i class="fas fa-copy mr-2"></i>Copiar
-                </button>
+            <p class=" font-bold text-sm text-palette-400 ">Link patrocinador lado derecho.</p>
+            <div class="flex_1 items-center justify-center mb-8">
+                <p id="p1" class=" hidden">http://fornuvi.test/register/{{ $user->username }}/right</p>
+                <div class=" mb-4">
+                    <button class=" ml-6 text-palette-200 hover:text-palette-300 hover:underline"
+                        onclick="copiarAlPortapapeles('p1')">
+                        Clic para Copiar <i class="fas fa-copy mr-2"></i>
+                    </button>
+                </div>
+                <x-link href="{{ route('register', [$user->username, 'right']) }}">
+                    <x-button>Registrar lado derecho</x-button>
+                </x-link>
+            </div>
+            <p class=" font-bold text-sm text-palette-400 ">Link patrocinador lado izquierdo.</p>
+            <div class="flex_1 items-center justify-center mb-8">
+                <p id="p2" class=" hidden">http://fornuvi.test/register/{{ $user->username }}/left</p>
+                <div class=" mb-4">
+                    <button class=" ml-6 text-palette-200 hover:text-palette-300 hover:underline"
+                        onclick="copiarAlPortapapeles('p2')">
+                        Clic para Copiar <i class="fas fa-copy mr-2"></i>
+                    </button>
+                </div>
+                <x-link href="{{ route('register', [$user->username, 'left']) }}">
+                    <x-button>Registrar lado Izquierdo</x-button>
+                </x-link>
             </div>
         </div>
     </div>
-
-
-
     <script>
         function copiarAlPortapapeles(id_elemento) {
             var aux = document.createElement("input");

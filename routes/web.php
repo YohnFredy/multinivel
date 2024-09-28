@@ -7,7 +7,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TestingAndCreatingDataController;
 use App\Http\Controllers\WebhookController;
 use App\Livewire\Admin\BrandCotroller;
-use App\Livewire\Admin\CategoryController;
+use App\Livewire\Admin\CategoryCrud;
+use App\Livewire\Admin\CategoryIndex;
 use App\Livewire\Admin\ProductForm;
 use App\Livewire\Admin\ProductIndex;
 use App\Livewire\Cart;
@@ -26,7 +27,6 @@ Route::get('/', function () {
 
 
 Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lange');
-
 
 Route::get('testing_and_creating_data', [TestingAndCreatingDataController::class, 'createData'])->name('TestingAndCreatingData');
 
@@ -48,7 +48,9 @@ Route::middleware([
     Route::get('tree/unilevel', Unilevel::class)->name('tree.unilevel');
 
     Route::get('admin/index', [AdminIndexController::class, 'index'])->name('admin.index');
-    Route::get('admin/categorias', CategoryController::class)->name('admin.categories');
+    Route::get('admin/categorias', CategoryIndex::class)->name('admin.categories.index');
+    Route::get('admin/categories/create', CategoryCrud::class)->name('admin.categories.create');
+    Route::get('admin/categories/{category}/edit', CategoryCrud::class)->name('admin.categories.edit');
     Route::get('admin/Marca', BrandCotroller::class)->name('admin.brand');
 
     Route::get('/admin/products', ProductIndex::class)->name('admin.products.index');
@@ -66,5 +68,5 @@ Route::get('/webhook/test', function () {
 })->name('webhook.test');
 
 
-Route::get('register/{sponsor}/{position}', Membership::class);
+Route::get('register/{sponsor}/{position}', Membership::class)->name('register');
 Route::get('prueba', Prueba::class);

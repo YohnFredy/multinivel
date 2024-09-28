@@ -15,7 +15,9 @@ class ProductForm extends Form
     #[Validate('required|numeric|min:0')]
     public $price = '';
     #[Validate('nullable|numeric|min:0')]
-    public $pts = '';
+    public $pts = '', $maximum_discount='';
+    #[Validate('nullable|string')]
+    public $specifications = '', $information = '';
     #[Validate('required|boolean')]
     public $tangible = '';
     #[Validate('nullable|integer|min:0')]
@@ -25,7 +27,7 @@ class ProductForm extends Form
     #[Validate('required|exists:categories,id')]
     public $category_id = '';
     #[Validate('nullable|exists:brands,id')]
-    public $brand_id = '';
+    public $brand_id;
     #[Validate('required|boolean')]
     public $is_active = '';
 

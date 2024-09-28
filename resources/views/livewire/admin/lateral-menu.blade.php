@@ -9,7 +9,7 @@
         </li>
 
         <li>
-            <x-lateral-nav-link href="{{ route('admin.categories') }}" :active="request()->routeIs('admin.categories')">
+            <x-lateral-nav-link href="{{ route('admin.categories.index') }}" :active="request()->routeIs('admin.categories')">
                 <i class=" ml-5 mr-2 fas fa-layer-group"></i>
                 <span class="text">Categoria</span>
             </x-lateral-nav-link>

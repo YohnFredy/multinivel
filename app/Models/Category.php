@@ -29,12 +29,10 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id')->where('is_active', 1);
     }
 
-
     public function products()
     {
         return $this->hasMany(Product::class);
     }
-
 
     public static function boot()
     {

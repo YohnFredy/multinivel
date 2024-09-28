@@ -9,8 +9,8 @@
                 @livewire('product-images-carousel', ['product' => $product])
             </div>
             <div class="col-span-3 mt-4 px-10">
-                <h1 class="text-palette-200 dark:text-white font-bold uppercase">{{ $product->name }}</h1>
-                <p class="mt-6 dark:text-palette-20">{{ $product->description }}</p>
+                <h1 class="text-palette-400 dark:text-white font-bold uppercase">{{ $product->name }}</h1>
+               <div class=" text-justify  dark:text-palette-10 mt-6 "> <p>{!!$product->description!!}</p></div>
                 <h1 class="mt-6 text-palette-200 dark:text-palette-10 font-bold">${{number_format($product->price, 0) }}</h1>
                 <p class="text-palette-400 dark:text-palette-20 font-bold">Pts: {{ $product->pts }}</p>
 
@@ -32,22 +32,22 @@
     </div>
 
     <div class="bg-white dark:bg-palette-40 py-6 p-4 mt-6 rounded-md shadow-md shadow-palette-300 dark:shadow-none">
-        <div class="grid grid-cols-2 gap-10">
-            <div class="pl-6">
-                <h2>Especificaciones</h2>
+        <div class="grid grid-cols-2 gap-14">
+            <div class="pl-6 text-justify">
+                <h2 class=" text-palette-200 dark:text-palette-10">Especificaciones</h2>
                 <hr class="border-b-2 border-palette-300 dark:border-palette-30">
-                <p class="pt-6">{{ $product->specifications }}</p>
+                <p class="pt-6">{!!$product->specifications!!}</p>
             </div>
-            <div class="col-span-1 pr-6">
-                <h2>Información adicional</h2>
+            <div class="col-span-1 pr-6 text-justify">
+                <h2 class=" text-palette-200 dark:text-palette-10">Información adicional</h2>
                 <hr class="border-b-2 border-palette-300 dark:border-palette-30">
-                <p class="pt-6">{{ $product->information }}</p>
+                <p class="pt-6">{!!$product->information!!}</p>
             </div>
         </div>
     </div>
     <div class="h-4"></div>
 
-    <x-dialog-modal wire:model="modalCart" maxWidth="3xl">
+    <x-dialog-modal wire:model="modalCart" >
         <x-slot name="title">
             <div class=" flex justify-between items-center">
                 <div class=" flex items-center">

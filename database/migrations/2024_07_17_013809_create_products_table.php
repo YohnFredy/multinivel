@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('price', 9, 2);
             $table->decimal('commission_income', 8, 2)->nullable();
             $table->decimal('pts', 8, 2)->nullable();
+            $table->decimal('maximum_discount', 4, 2)->default(0);
             $table->text('specifications')->nullable();
             $table->text('information')->nullable();
             $table->boolean('tangible')->default(true);

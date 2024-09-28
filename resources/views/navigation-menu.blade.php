@@ -15,9 +15,22 @@
                     <x-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
                         Inicio
                     </x-nav-link>
-                    {{-- <x-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
-                        {{'Productos' }}
-                    </x-nav-link>
+
+                    @php
+                        $id = 0;
+                        $user = Auth::user();
+                        if ($user) {
+                            $id = $user->id;
+                        }
+                    @endphp
+
+                    @if ($id == 1)
+                        <x-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
+                            {{ 'Productos' }}
+                        </x-nav-link>
+                    @endif
+
+                    {{-- 
                     <x-nav-link href="#">
                         {{ 'Oportunidad' }}
                     </x-nav-link>
@@ -39,13 +52,13 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 {{-- <div class="hidden lg:flex mr-2" x-cloak>
                     <x-dark-button />
-                </div>  --}}
-                
+                </div>  --}} 
+
                 <!-- Teams Dropdown -->
                 @auth
                     <x-profile-configuration />
                 @else
-                    <a href="{{ route('login') }}" :active="request() -> routeIs('login')">
+                    <a href="{{ route('login') }}" :active="request() - > routeIs('login')">
                         <x-dropdown-button>
                             Iniciar Sesión
                         </x-dropdown-button>
@@ -53,13 +66,20 @@
                 @endauth
 
                 <!-- cart -->
-                {{-- <div class=" ml-3">
-                    <a href="{{ route('cart') }}" :active="request()->routeIs('cart')" class="relative inline-block cursor-pointer">
-                        <i class="fas fa-cart-arrow-down text-xl {{ request()->routeIs('cart') ? 'text-palette-400 dark:text-white': 'text-palette-200 hover:text-palette-300 dark:text-palette-30 dark:hover:text-white' }}"></i>
-                        <div class="top-0 left-5 absolute {{ request()->routeIs('cart') ? 'bg-palette-200 dark:bg-palette-30' : 'bg-palette-400 dark:bg-white' }} rounded-full p-1"></div> 
-                    </a>
-                </div> --}}
+                @if ($id == 1)
+                    <div class=" ml-3">
+                        <a href="{{ route('cart') }}" :active="request() - > routeIs('cart')"
+                            class="relative inline-block cursor-pointer">
+                            <i
+                                class="fas fa-cart-arrow-down text-xl {{ request()->routeIs('cart') ? 'text-palette-400 dark:text-white' : 'text-palette-200 hover:text-palette-300 dark:text-palette-30 dark:hover:text-white' }}"></i>
+                            <div
+                                class="top-0 left-5 absolute {{ request()->routeIs('cart') ? 'bg-palette-200 dark:bg-palette-30' : 'bg-palette-400 dark:bg-white' }} rounded-full p-1">
+                            </div>
+                        </a>
+                    </div>
+                @endif
             </div>
+
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 {{-- <x-dark-button /> --}}

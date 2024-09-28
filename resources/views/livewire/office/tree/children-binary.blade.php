@@ -17,22 +17,22 @@
                 @endif
                 
                 <div class=" col-span-1">
-                    <h5 class=" text-palette-400 dark:text-palette-20"> Left</h5>
+                    <h5 class=" text-palette-400 dark:text-palette-20">Right </h5>
                 </div>
                 <div class=" col-span-1">
-                    <h5 class=" text-palette-400 dark:text-palette-20">Right</h5>
+                    <h5 class=" text-palette-400 dark:text-palette-20">Left</h5>
                 </div>
                 <div class="col-span-1">
-                    <h6 class=" text-palette-200 dark:text-palette-20"> <span class=" text-palette-300 dark:text-palette-10 font-semibold">Usr:</span> {{ $node['left'] }}</h6>
+                    <h6 class=" text-palette-200 dark:text-palette-20"> <span class=" text-palette-300 dark:text-palette-10 font-semibold">Usr:</span> {{ $node['right'] }}</h6>
                 </div>
                 <div class="col-span-1">
-                    <h6 class="text-palette-200 dark:text-palette-20"> <span class="text-palette-300 dark:text-palette-10 font-semibold">Usr:</span> {{ $node['right'] }}</h6>
+                    <h6 class="text-palette-200 dark:text-palette-20"> <span class="text-palette-300 dark:text-palette-10 font-semibold">Usr:</span> {{ $node['left'] }}</h6>
                 </div>
                 <div class="col-span-1">
-                    <h6 class=" text-palette-200 dark:text-palette-20"><span class="text-palette-300 dark:text-palette-10 font-semibold">Pts:</span> {{ $node['leftPts'] }} </h6>
+                    <h6 class=" text-palette-200 dark:text-palette-20"><span class="text-palette-300 dark:text-palette-10 font-semibold">Pts:</span> {{ $node['rightPts'] }} </h6>
                 </div>
                 <div class="col-span-1">
-                    <h6 class=" text-palette-200 dark:text-palette-20"><span class="text-palette-300 dark:text-palette-10 font-semibold">Pts:</span> {{ $node['rightPts'] }}</h6>
+                    <h6 class=" text-palette-200 dark:text-palette-20"><span class="text-palette-300 dark:text-palette-10 font-semibold">Pts:</span> {{ $node['leftPts'] }}</h6>
                 </div>
                 
             </div>

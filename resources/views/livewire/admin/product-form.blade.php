@@ -6,7 +6,7 @@
 
         <form wire:submit.prevent="{{ $isEditMode ? 'update' : 'save' }}" x-on:submit="$refs.fileInput.value = ''">
             <div class=" grid grid-cols-6 gap-4 gap-y-2">
-                <div class="col-span-6 md:col-span-3">
+                <div class="col-span-6 md:col-span-2">
                     <x-input-l type="text" label="Nombre:" for="form.name" wire:model.live="form.name" required autofocus
                         autocomplete="form.name" />
                 </div>
@@ -18,6 +18,10 @@
                     <span class=" absolute right-0  text-palette-400 text-xs">{{ $suggestedPts }}</span>
                     <x-input-l type="number" label="Pts:" for="pts" wire:model="form.pts" step="0.01"
                         min="0" required />
+                </div>
+                <div class="col-span-6 md:col-span-1">
+                    <x-input-l type="number" label="Descuento %:" for="form.maximum_discount"
+                        wire:model="form.maximum_discount" min="0" required />
                 </div>
                 <div class="col-span-6 md:col-span-1">
                     <x-input-l type="number" label="Stock:" for="form.stock" wire:model="form.stock" min="0"
@@ -47,11 +51,28 @@
                     </x-select-l>
                 </div>
 
-                <div class="col-span-6">
-                    <x-textarea-l label="Descripción:" for="form.description" wire:model.live="form.description"
-                        rows="3">
-                    </x-textarea-l>
+                <div class="col-span-6" wire:ignore>
+                    <x-label for="descripcion:">Descripcion:</x-label>
+                    <textarea id="editor" wire:model.live="form.description"> {{ $form->description }}
+                    </textarea>
+                    <x-input-error for="form.description" />
                 </div>
+
+                <div class="col-span-6" wire:ignore>
+                    <x-label for="Specifications">Specifications:</x-label>
+                    <textarea id="editor2" wire:model.live="form.specifications"> {{ $form->specifications }}
+                    </textarea>
+                    <x-input-error for="form.specifications" />
+                </div>
+
+                <div class="col-span-6" wire:ignore>
+                    <x-label for="information">Information:</x-label>
+                    <textarea id="editor3" wire:model.live="form.information"> {{ $form->information }}
+                    </textarea>
+                    <x-input-error for="form.information" />
+                </div>
+
+
                 <div class="col-span-6 md:col-span-2">
                     <x-select-l label="Categoría:" for="form.category_id" wire:model.live="selectedCategory">
                         <option value="" hidden>Seleccionar</option>
@@ -72,16 +93,17 @@
                     </div>
                 @endif
 
-               @if ($subsubcategories)
+                @if ($subsubcategories)
                     <div class="col-span-6 md:col-span-2">
-                        <x-select-l label="Sub-subcategoría:" for="subsubcategory_id" wire:model.live="selectedSubsubcategory">
+                        <x-select-l label="Sub-subcategoría:" for="subsubcategory_id"
+                            wire:model.live="selectedSubsubcategory">
                             <option value="" hidden>Seleccionar</option>
                             @foreach ($subsubcategories as $subsubcategory)
                                 <option value="{{ $subsubcategory->id }}">{{ $subsubcategory->name }}</option>
                             @endforeach
                         </x-select-l>
                     </div>
-                @endif 
+                @endif
 
                 <div class="col-span-6 md:col-span-2">
                     @if ($brands)
@@ -90,15 +112,12 @@
                                 <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                             @endforeach
                         </x-select-l>
-                    @else
-                        <x-select-l label="Marca:" for="form.brand_id" nameOption="sin" wire:model="form.brand_id">
-                        </x-select-l>
                     @endif
                 </div>
 
                 <div class="col-span-6 form-group">
-                    <x-input-file-l label="Imagenes:" for="form.newImages" wire:model="form.newImages" x-ref="fileInput"
-                        wire:loading.attr="disabled" />
+                    <x-input-file-l label="Imagenes:" for="form.newImages" wire:model="form.newImages"
+                        x-ref="fileInput" wire:loading.attr="disabled" />
                 </div>
             </div>
 
@@ -120,12 +139,54 @@
                     </div>
                 </div>
             @endif
-          
+
             <div class=" flex items-center justify-end mt-4">
-                <a class=" mr-4 text-xl font-bold text-palette-400 hover:text-opacity-80" href="{{route('admin.products.index')}}">  <i class="fas fa-arrow-left"></i></a>
+                <a class=" mr-4 text-xl font-bold text-palette-400 hover:text-opacity-80"
+                    href="{{ route('admin.products.index') }}"> <i class="fas fa-arrow-left"></i></a>
                 <x-button type="submit" wire:loading.attr="disabled">{{ $isEditMode ? 'Actualizar' : 'Guardar' }}
                 </x-button>
             </div>
         </form>
     </div>
+
+    @push('js')
+        <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
+
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#editor'))
+                .then(function(editor) {
+                    editor.model.document.on('change:data', () => {
+                        @this.set('form.description', editor.getData());
+                    });
+                })
+                .catch(error => {
+                    Console.error(error);
+                });
+        </script>
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#editor2'))
+                .then(function(editor2) {
+                    editor2.model.document.on('change:data', () => {
+                        @this.set('form.specifications', editor2.getData());
+                    });
+                })
+                .catch(error => {
+                    Console.error(error);
+                });
+        </script>
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#editor3'))
+                .then(function(editor3) {
+                    editor3.model.document.on('change:data', () => {
+                        @this.set('form.information', editor3.getData());
+                    });
+                })
+                .catch(error => {
+                    Console.error(error);
+                });
+        </script>
+    @endpush
 </div>

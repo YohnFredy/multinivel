@@ -1,5 +1,5 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class=" max-w-lg mx-auto px-4 py-8 bg-white rounded-md shadow-md shadow-gray-400 ">
+    <div class=" max-w-lg mx-auto px-4 py-8 bg-white rounded-md shadow-md shadow-palette-300 ">
 
         <h1 class=" text-center text-blue-600">
             REGISTRO FORNUVI
@@ -69,8 +69,7 @@
                                 @endforeach
                             </x-select-field>
                         @else
-                            <x-input-field wire:model.blur="addCity" type="text" name="addCity"
-                                label="Ciudad" />
+                            <x-input-field wire:model.blur="addCity" type="text" name="addCity" label="Ciudad" />
                         @endif
                     @endif
                 @endif
@@ -79,7 +78,7 @@
             <x-input-field wire:model="form.address" type="text" name="form.address" label="Dirección" />
 
             <x-input-field wire:model.live.debounce.750ms="form.password" type="password" name="form.password"
-                label="Password"  />
+                label="Password" />
 
             <x-input-field wire:model.live.debounce.750ms="form.password_confirmation" type="password"
                 name="form.password_confirmation" label="Confirmar Password" />
@@ -90,29 +89,22 @@
                     disabled />
             </div>
 
-            <div class=" mb-6">
-                <x-checkbox wire:model="form.terms" class="mr-2" /> I agree to
-                <x-link href="{{ route('terms.show') }}">
-                    Terms of Service
-                </x-link>
-                and
-                <x-link href="{{ route('policy.show') }}">
-                    Privacy Policy
-                </x-link>
-                <div>
-                    @error('form.terms')
-                        <span class="error text-sm text-red-500">{{ $message }}</span>
-                    @enderror
-                </div>
+            <div class="flex items-center">
+                <x-checkbox wire:model="form.terms" class="mr-2" />
+                @livewire('terms-and-privacy')
+            </div>
+            <div>
+                @error('form.terms')
+                    <span class="error text-sm text-palette-400">{{ $message }}</span>
+                @enderror
             </div>
 
-            <div class=" text-center">
+            <div class=" text-center mt-6 ">
                 <x-submit-button class=" w-full">guardar registro</x-submit-button>
             </div>
 
-
             <div class=" text-right mt-3 ">
-                <x-link href="http://fornuvi.test/">
+                <x-link href="{{ route('index') }}">
                     Pagina de inicio</x-link>
             </div>
 
@@ -163,7 +155,6 @@
             <x-secondary-button wire:click="$set('confirmingRegistration', false)">
                 Cerrar
             </x-secondary-button>
-
 
             <x-submit-button class="ml-2" wire:click="redirectToHome" autofocus>
                 Ir a la página de inicio

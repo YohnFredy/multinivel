@@ -8,9 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
-    public function index(){
-        
+    public function index()
+    {
+
         $user = Auth::user();
+
+        if ($user->id != 1) {
+            return redirect('/');
+        }
 
         return view('admin.index', compact('user'));
     }

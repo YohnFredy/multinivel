@@ -113,6 +113,7 @@
     @stack('modals')
 
     @livewireScripts
+    @stack('js')
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

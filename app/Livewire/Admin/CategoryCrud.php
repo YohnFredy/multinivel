@@ -2,45 +2,39 @@
 
 namespace App\Livewire\Admin;
 
-use App\Livewire\Forms\Admin\ProductForm as AdminProductForm;
-use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Product;
-use Livewire\Component;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
-use Livewire\WithFileUploads;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
 
-class ProductForm extends Component
+class CategoryCrud extends Component
 {
-    use WithFileUploads;
-    public AdminProductForm $form;
+    #[Validate('required|string|min:3|max:100')]
+    public $name = "";
+    #[Validate('string|max:255')]
+    public  $description = '';
+    #[Validate('required|boolean')]
+    public  $is_active = '';
 
-    public $isEditMode = false;
-    public $suggestedPts;
-    public $product, $content; 
+    public $category, $isEditMode = false, $parent_id = '';
     public $selectedCategory, $selectedSubcategory, $selectedSubsubcategory;
-    public $categories, $subcategories, $subsubcategories, $brands;
+    public $categories, $subcategories, $subsubcategories;
 
-    public function mount(Product $product)
+    public function mount(Category $category)
     {
-
+        $this->category = $category;
         $this->categories = Category::whereNull('parent_id')->get();
-        $this->brands = Brand::all();
-        $this->product = $product;
 
-        if ($this->product->exists) {
-            $this->loadProductData();
+        if ($this->category->exists) {
+            $this->loadCategoryData();
             $this->isEditMode = true;
         }
     }
 
-    public function loadProductData()
+    public function loadCategoryData()
     {
-        $this->form->fill($this->product->toArray());
-        $this->form->images = $this->product->images->pluck('path')->toArray();
-
-        $this->populateCategoryData($this->form->category_id);
+        $this->fill($this->category->toArray());
+        $this->populateCategoryData($this->category->id);
     }
 
     public function populateCategoryData($categoryId)
@@ -69,7 +63,7 @@ class ProductForm extends Component
     {
         $this->selectedSubcategory = null;
         $this->selectedSubsubcategory = null;
-        $this->form->category_id = $categoryId;
+        $this->parent_id = $categoryId;
         $this->subcategories = Category::where('parent_id', $categoryId)->get();
 
         $this->subcategories = Category::where('parent_id', $categoryId)->get();
@@ -82,7 +76,7 @@ class ProductForm extends Component
     public function updatedSelectedSubcategory($subcategoryId)
     {
         $this->selectedSubsubcategory = null;
-        $this->form->category_id = $subcategoryId;
+        $this->parent_id = $subcategoryId;
         $this->subsubcategories = Category::where('parent_id', $subcategoryId)->get();
         $this->subsubcategories  = Category::where('parent_id', $subcategoryId)->get();
         if (!count($this->subsubcategories) > 0) {
@@ -92,40 +86,27 @@ class ProductForm extends Component
 
     public function updatedSelectedSubsubcategory($subsubcategoryId)
     {
-        $this->form->category_id = $subsubcategoryId;
+        $this->parent_id = $subsubcategoryId;
     }
 
     public function save()
     {
-        $this->form->store();
-        $this->resetForm();
+        $this->validate();
+        $this->category = Category::create($this->all());
+        return redirect()->route('admin.categories.index');
     }
 
     public function update()
     {
-        $this->form->update($this->product);
-        $this->resetForm();
-    }
-
-    public function removeImage($path)
-    {
-        $this->form->images = array_filter($this->form->images, fn ($image) => $image !== $path);
-        Storage::delete('public/' . $path);
-        $this->product->images()->where('path', $path)->delete();
+        $this->validate();
+        $this->category->update(
+            $this->all()
+        );
     }
 
     #[Layout('components.layouts.admin')]
     public function render()
     {
-        if ($this->form->price) {
-            $this->suggestedPts = number_format($this->form->price * 0.20, 2, '.', ',');
-        }
-        return view('livewire.admin.product-form');
-    }
-
-    private function resetForm()
-    {
-        $this->form->reset();
-        $this->loadProductData();
+        return view('livewire.admin.category-crud');
     }
 }

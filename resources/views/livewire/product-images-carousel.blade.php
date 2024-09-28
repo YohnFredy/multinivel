@@ -8,7 +8,7 @@
                             <div class="flex justify-center ">
                                 <div wire:key="main-{{ $index }}">
                                     <img src="{{ asset('storage/' . $image->path) }}" alt="{{ $product->name }}"
-                                        class="  object-fill h-96 ">
+                                        class=" rounded-md  object-fill h-96 ">
                                 </div>
                             </div>
                         </div>

@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class PointValue extends Component
 {
-    public $ptsValue = 0;
+    public $ptsValue = 1.5;
     public $income;
     public $dolar = 4174.26;
     public $minimun_pts;
@@ -19,36 +19,37 @@ class PointValue extends Component
     public function mount()
     {
         $this->minimun_pts = config('services.multilevel.minimum_pts');
-        $this->income = Income::where('status', 1)->firstOrFail();
+        $this->income = Income::where('status', 1)->first();
     }
 
     public function updatePointValue()
     {
+        if ($this->income) {
+            DB::table('commissions')->truncate();
+            DB::table('ranks')->truncate();
 
-        DB::table('commissions')->truncate();
-        DB::table('ranks')->truncate();
 
+            $binaryPayment = $this->calculateBinaryPayment();
+            $ptsValue = $this->calculatePointsValue($binaryPayment);
 
-        $binaryPayment = $this->calculateBinaryPayment();
-        $ptsValue = $this->calculatePointsValue($binaryPayment);
+            $this->income->update([
+                'binary_points_for_payment' => $binaryPayment,
+                'pts_value' => $ptsValue,
+            ]);
 
-        $this->income->update([
-            'binary_points_for_payment' => $binaryPayment,
-            'pts_value' => $ptsValue,
-        ]);
-
-        $this->ptsValue = $ptsValue;
+            $this->ptsValue = $ptsValue;
+        }
     }
 
     private function calculateBinaryPayment()
-{
-    $points = UserPoint::all()->sum(function ($userPoint) {
-        $minPts = min($userPoint->left_pts, $userPoint->right_pts); 
-        return $this->minimun_pts <= $minPts ? $minPts : 0; 
-    });
+    {
+        $points = UserPoint::all()->sum(function ($userPoint) {
+            $minPts = min($userPoint->left_pts, $userPoint->right_pts);
+            return $this->minimun_pts <= $minPts ? $minPts : 0;
+        });
 
-    return $points * 0.1;
-}
+        return $points * 0.1;
+    }
 
     private function calculatePointsValue(float $binaryPayment): float
     {

@@ -8,15 +8,18 @@ use Livewire\Form;
 
 class CategoryForm extends Form
 {
+
+
     #[Validate('required|string|max:100|min:3')]
     public $name = '';
-
-    public $slug = '';
 
     #[Validate('nullable|string|min:3')]
     public $description = '';
 
-    public $category_id;
+    public $parent_id = NULL;
+
+
+
 
     public function store()
     {
@@ -30,7 +33,5 @@ class CategoryForm extends Form
         $category->update(
             $this->all()
         );
-       
     }
-
 }

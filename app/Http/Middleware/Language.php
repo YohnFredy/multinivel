@@ -20,7 +20,7 @@ class Language
         if (Session()->has('appLocale') and array_key_exists(Session()->get('appLocale'), Config('languages'))) {
             App::setLocale(Session()->get('appLocale'));
         } else {
-            App::setLocale( Config('app.fallback_locale'));
+            App::setLocale('es');
         }
         return $next($request);
     }
