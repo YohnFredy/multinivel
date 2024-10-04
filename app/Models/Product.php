@@ -11,9 +11,9 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'description', 'price','commission_income', 'pts', 'maximum_discount', 'specifications', 'information', 'tangible', 'stock', 'allow_backorder','category_id', 'brand_id', 'is_active'];
+    protected $fillable = ['name', 'slug', 'description', 'price', 'commission_income', 'pts', 'maximum_discount', 'specifications', 'information', 'tangible', 'stock', 'allow_backorder', 'category_id', 'brand_id', 'is_active'];
 
-   
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -39,6 +39,11 @@ class Product extends Model
         $count = static::where('slug', 'LIKE', "{$slug}%")->count();
 
         return $count ? "{$slug}-{$count}" : $slug;
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
     public function images()

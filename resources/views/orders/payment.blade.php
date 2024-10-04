@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <!-- Order Number -->
         <div class="bg-white dark:bg-palette-40 rounded-lg p-6 shadow-md shadow-palette-300 dark:shadow-none mb-6">
-            <p class="text-lg font-semibold text-palette-400 dark:text-white uppercase">Orden ID: {{ $order->id }}</p>
+            <p class="text-lg font-semibold text-palette-400 dark:text-white uppercase">Referencia: <span class="text-palette-200">{{ $order->public_order_number }}</span></p>
         </div>
 
         <!-- Shipping and Contact Details -->
@@ -19,7 +19,12 @@
                         <p class="">Envío a la dirección:</p>
                         <p class="">{{ $order->address }} - {{ $order->additional_address }}</p>
                         <p class="">{{ $order->country->name }} - {{ $order->department->name }} -
-                            {{ $order->city->name }} {{ $order->addCity }}</p>
+                            @if ($order->city)
+                                {{ $order->city->name }}
+                            @else
+                                {{ $order->addCity }}
+                            @endif
+                        </p>
                     @endif
                 </div>
 
@@ -36,31 +41,39 @@
         <div class="bg-white dark:bg-palette-40 rounded-lg p-6 shadow-md shadow-palette-300 dark:shadow-none mb-6">
             <p class="text-lg font-semibold text-palette-200 dark:text-white uppercase mb-4">Resumen de Pedido</p>
             <div class="overflow-x-auto">
-                <table class="min-w-full text-sm">
-                    <thead class="bg-palette-200 dark:bg-palette-60 text-white uppercase text-xs">
+
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    
+                    <thead class="text-xs bg-palette-200 dark:bg-palette-60 text-white uppercase ">
                         <tr>
-                            <th class="px-4 py-2 text-center"></th>
-                            <th class="px-4 py-2">Producto</th>
-                            <th class="px-4 py-2 text-center">Cant</th>
-                            <th class="px-4 py-2 text-right">Total</th>
+                            <th scope="col" class="px-6 py-3">Producto</th>
+                            <th scope="col" class="px-6 py-3">Cant</th>
+                            <th scope="col" class="px-6 py-3">Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($order->items as $item)
                             <tr
                                 class="border-b border-palette-300 dark:border-palette-20 hover:bg-palette-10 dark:hover:bg-palette-50">
-                                <td class="px-4 py-3 text-center">
+                                <th scope="row" class="flex items-center px-6 py-4 text-palette-200 whitespace-nowrap dark:text-white">
+
                                     @if ($item->product->latestImage)
                                         <img src="{{ asset('storage/' . $item->product->latestImage->path) }}"
-                                            alt="{{ $item->product->name }}" class="w-12 h-12 object-cover rounded">
+                                            alt="{{ $item->product->name }}" class="w-10 h-10 rounded-md">
                                     @else
-                                        <img src="{{ asset('images/default.png') }}" alt="Default Image"
-                                            class="w-12 h-12 object-cover rounded">
+                                        <img src="{{ asset('images/default.png') }}" alt="{{ $item->product->name }}"
+                                        class="w-10 h-10 rounded-md">
                                     @endif
-                                </td>
-                                <td class="px-4 py-3">{{ $item->name }}</td>
-                                <td class="px-4 py-3 text-center">{{ $item->quantity }}</td>
-                                <td class="px-4 py-3 text-right">${{ number_format($item->price * $item->quantity, 0) }}</td>
+
+                                    <div class="ps-3">
+                                        <div class="text-base font-semibold">{{ $item->name }}</div>
+                                    </div>  
+                                </th>
+                                
+
+                                <td class="px-6 py-4">{{ $item->quantity }}</td>
+                                <td class="px-6 py-4">
+                                    ${{ number_format($item->price * $item->quantity, 0) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -75,7 +88,7 @@
                     class=" h-28 object-cover rounded-md" alt="Logo">
                 <div class="text-right">
                     <p class="">Subtotal: ${{ number_format($order->total - $order->shipping_cost, 0) }}</p>
-                    <p class="">Costo de Envío: ${{ number_format($order->shipping_cost, 0) }} </p>
+                    {{-- <p class="">Costo de Envío: ${{ number_format($order->shipping_cost, 0) }} </p> --}}
                     <p class="text-lg font-semibold">Total: ${{ number_format($order->total, 0) }}</p>
                     <div class=" mt-2">
 
@@ -96,7 +109,7 @@
     <!-- Incluir el archivo JavaScript separado -->
     <script src="{{ asset('js/boldCheckout.js') }}"></script>
 
-{{-- 
+    {{-- 
     <script>
         const initBoldCheckout = () => {
             if (document.querySelector('script[src="https://checkout.bold.co/library/boldPaymentButton.js"]')) {

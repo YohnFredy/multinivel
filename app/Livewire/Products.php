@@ -14,6 +14,7 @@ class Products extends Component
 
     public $search = '';
     public $category_id = '';
+    public $readyToLoad = false;
 
 
     #[On('showCategory')]
@@ -29,14 +30,15 @@ class Products extends Component
         $this->resetPage();
     }
 
-    public function cart() {
-        dd('hola');
-        
+    public function loadPost(){
+        $this->readyToLoad = true;
     }
 
     public function render()
     {
-        $productsQuery = Product::query();
+
+        if ($this->readyToLoad) {
+            $productsQuery = Product::query();
 
         if (!empty($this->search)) {
             $searchTerms = explode(' ', $this->search);
@@ -53,6 +55,12 @@ class Products extends Component
         }
 
         $products = $productsQuery->paginate(8);
+           
+        } else {
+            $products = Product::where('id', '<', 1)->paginate(8);
+        }
+        
+        
 
         return view('livewire.products', [
             'products' => $products

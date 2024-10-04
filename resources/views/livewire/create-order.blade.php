@@ -1,5 +1,4 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
     <div class="grid grid-cols-6 gap-6 mt-6">
         <div class="col-span-6 md:col-span-4">
             <div class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none p-4 mt-2">
@@ -16,20 +15,6 @@
             <div x-data="{ envio_type: @entangle('envio_type') }" class="mt-6">
                 <p class=" font-bold">Envios</p>
                 <div
-                    class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none p-4 mt-2">
-                    <div class=" flex justify-between">
-                        <div class="flex items-center">
-                            <input wire:model="envio_type" wire:change="onEnvioTypeChange" type="radio"
-                                x-model="envio_type" name="envio_type" value="1"
-                                class="text-palette-200 bg-palette-10 dark:text-black border-palette-300  focus:ring-palette-150 dark:focus:ring-white dark:ring-offset-palette-80 focus:ring-2 dark:bg-palette-80 dark:border-palette-20">
-                            <label for="envio_type_1" class="ml-2 font-medium  dark:text-palette-30">Recojo en
-                                tineda</label>
-                        </div>
-                        <div class=" ml-2 font-medium">Gratis</div>
-                    </div>
-                </div>
-
-                <div
                     class=" bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none p-4 mt-4">
                     <div class="flex items-center">
                         <input wire:model="envio_type" wire:change="onEnvioTypeChange" type="radio"
@@ -38,7 +23,6 @@
                         <label for="envio_type_1" class="ml-2 font-medium  dark:text-palette-30">Envio a
                             domicilio</label>
                     </div>
-
                     <div class="hidden mt-4" :class="{ 'hidden': envio_type != 2 }">
                         <div class="grid grid-cols-2 gap-2">
                             <div class="col-span-2 md:col-span-1">
@@ -77,29 +61,50 @@
                             @endif
 
                             <div class="col-span-2 md:col-span-1">
-                                <x-input-l wire:model.blur="address" type="text" label="Dirección:" for="address"
+                                <x-input-l wire:model="address" type="text" label="Dirección:" for="address"
                                     required placeholder="Ingrese dirección " />
                             </div>
                         </div>
                         <div class=" mt-2">
-                            <x-input-l wire:model.blur="additionalAddress" type="text" label="Referencia:"
-                                for="nota" placeholder="Ingrese referencia" />
+                            <x-input-l wire:model="additionalAddress" type="text" label="Referencia:" for="nota"
+                                placeholder="Ingrese referencia" />
                         </div>
 
+                        <div class=" mt-4 bg-palette-10 dark:bg-palette-60  rounded-lg p-4">
+                            <p class=" font-bold text-palette-400 dark:text-white ">Información sobre el envío.</p>
+
+                            <p class="mt-2 text-justify">Queremos informarte que el costo del envío se pagará al momento
+                                de recibir tu producto. Esto
+                                significa que solo necesitarás realizar el pago del valor del artículo a través de
+                                nuestra
+                                pasarela de pago segura.
+                            </p>
+                            <p class="mt-2 text-justify"> El monto del envío se abonará directamente al repartidor en el
+                                momento de la entrega.</p>
+                            <p class="mt-2 text-justify"> Si tienes alguna duda, no dudes en contactarnos al correo
+                                <strong>contacto@fornuvi.com</strong> ¡Estamos aquí para ayudarte!
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <x-button wire:loading.attr="disabled" wire:target="create_order" wire:click="create_order" class="mt-6">
-                Continuar con la compra</x-button>
-
-            <div class=" py-4">
-                <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, incidunt eligendi! Vel, ab?
-                    Nostrum optio inventore id nam expedita, neque blanditiis veritatis ipsa iusto ullam odit, eos
-                    voluptatem ad nisi? <a
-                        class=" text-palette-400 dark:text-white font-semibold hover:text-opacity-85 dark:hover:text-opacity-85"
-                        href="http://">Politicas
-                        y Privaciddad.</a></p>
+            <div
+                class=" hidden md:block bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none p-4 mt-4">
+                <div class="flex items-center">
+                    <x-checkbox wire:model="terms" class="mr-2" />
+                    @livewire('purchase-policy-and-conditions')
+                </div>
+                <div>
+                    @error('terms')
+                        <span class="error text-sm text-palette-400">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <x-button wire:loading.attr="disabled" wire:target="create_order" wire:click="create_order"
+                        class="mt-6">
+                        Continuar con la compra</x-button>
+                </div>
             </div>
         </div>
         <div class="col-span-6 md:col-span-2">
@@ -135,6 +140,25 @@
                         </li>
                     </ul>
                 </div>
+            </div>
+        </div>
+
+        <div
+            class="col-span-6 md:col-span-2 md:hidden bg-white dark:bg-palette-40 rounded-md shadow-md shadow-palette-300 dark:shadow-none p-4 mt-4">
+            <div class="flex items-center">
+                <x-checkbox wire:model="terms" class="mr-2" />
+                @livewire('purchase-policy-and-conditions')
+            </div>
+            <div>
+                @error('terms')
+                    <span class="error text-sm text-palette-400">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div>
+                <x-button wire:loading.attr="disabled" wire:target="create_order" wire:click="create_order"
+                    class="mt-6">
+                    Continuar con la compra</x-button>
             </div>
         </div>
     </div>

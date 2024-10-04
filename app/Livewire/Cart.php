@@ -9,7 +9,7 @@ class Cart extends Component
 {
     public $cart = [];
     public $products = [];
-    public $quantity;
+    public $quantity = 1;
     public $total;
 
 

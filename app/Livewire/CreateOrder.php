@@ -20,7 +20,8 @@ class CreateOrder extends Component
     public $countries = [], $departments = [], $cities = [];
 
     #[Validate]
-    public $name = '', $phone = '', $envio_type = 1, $selectedCountry, $selectedDepartment, $selectedCity,  $addCity = '', $address = '';
+    public $name = '', $phone = '', $envio_type = 2, $selectedCountry, $selectedDepartment, $selectedCity,  $addCity = '', $address = '', $terms = false;
+
     public function rules()
     {
         return [
@@ -32,6 +33,7 @@ class CreateOrder extends Component
             'selectedCity' => Rule::requiredIf($this->envio_type == 2 && empty($this->addCity)),
             'addCity' => Rule::requiredIf($this->envio_type == 2 && empty($this->selectedCity)),
             'address' => Rule::requiredIf($this->envio_type == 2),
+            'terms' => 'required|accepted',
         ];
     }
 
@@ -42,7 +44,7 @@ class CreateOrder extends Component
         $this->countries = Country::all();
     }
 
-    
+
 
     public function onEnvioTypeChange()
     {
@@ -110,19 +112,20 @@ class CreateOrder extends Component
         $this->billingProcess();
     }
 
-    public function billingProcess(){
+    public function billingProcess()
+    {
         $this->total = $this->subTotal - $this->discount + $this->shipping_cost;
     }
 
     public function create_order()
     {
-      $this->user_id = Auth::user()->id;
+        $this->user_id = Auth::user()->id;
         $this->validate();
 
         $publicOrderNumber = strtoupper(dechex(time()) . bin2hex(random_bytes(4)));
-        
+
         $orderData = [
-            'public_order_number'=>$publicOrderNumber, 
+            'public_order_number' => $publicOrderNumber,
             'user_id' => $this->user_id,
             'contact' => $this->name,
             'phone' => $this->phone,
@@ -150,15 +153,15 @@ class CreateOrder extends Component
                 'order_id' => $order->id,
                 'product_id' =>  $product['id'],
                 'name' =>  $product['name'],
-                'quantity' => $product['quantity'], 
+                'quantity' => $product['quantity'],
                 'price' => $product['price'],
-                'pts' => $product['pts'],    
-            ]); 
+                'pts' => $product['pts'],
+            ]);
         }
 
         session()->forget('cart');
 
-        return redirect()->route('orders.payment', $order); 
+        return redirect()->route('orders.payment', $order);
     }
 
     public function render()

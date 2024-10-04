@@ -4,15 +4,18 @@ namespace App\Livewire;
 
 use App\Models\Image;
 use App\Models\Product;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class ShowProduct extends Component
 {
 
     public $product;
-    public $quantity = 1;
     public $modalCart = false;
     public $cart = [];
+
+    #[Validate('required|integer|min:1|max:100')]
+    public $quantity = 1;
 
     public function mount(Product $product)
     {
@@ -22,28 +25,19 @@ class ShowProduct extends Component
 
     public function increment()
     {
-        $this->quantity++;
-        if ($this->quantity > 1000) {
-            $this->quantity = 1000;
-        }
+        $this->quantity = min(100, $this->quantity + 1);
+      
     }
 
     public function decrement()
     {
-        $this->quantity--;
-        if ($this->quantity < 1) {
-            $this->quantity = 1;
-        }
+        $this->quantity = max(1, $this->quantity - 1);
     }
 
-    public function updatedQuantity()
+    public function updatedQuantity($value)
     {
-        if ($this->quantity < 1) {
-            $this->quantity = 1;
-        }
-        if ($this->quantity > 1000) {
-            $this->quantity = 1000;
-        }
+        $this->quantity = max(1, min(100, intval($value)));
+        $this->validateOnly('quantity');
     }
 
     public function addToCart()

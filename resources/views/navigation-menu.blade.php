@@ -24,11 +24,9 @@
                         }
                     @endphp
 
-                    @if ($id == 1)
-                        <x-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
-                            {{ 'Productos' }}
-                        </x-nav-link>
-                    @endif
+                    <x-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
+                        {{ 'Productos' }}
+                    </x-nav-link>
 
                     {{-- 
                     <x-nav-link href="#">
@@ -50,9 +48,9 @@
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                {{-- <div class="hidden lg:flex mr-2" x-cloak>
+                <div class="hidden lg:flex mr-2" x-cloak>
                     <x-dark-button />
-                </div>  --}} 
+                </div>
 
                 <!-- Teams Dropdown -->
                 @auth
@@ -66,22 +64,33 @@
                 @endauth
 
                 <!-- cart -->
-                @if ($id == 1)
-                    <div class=" ml-3">
-                        <a href="{{ route('cart') }}" :active="request() - > routeIs('cart')"
-                            class="relative inline-block cursor-pointer">
-                            <i
-                                class="fas fa-cart-arrow-down text-xl {{ request()->routeIs('cart') ? 'text-palette-400 dark:text-white' : 'text-palette-200 hover:text-palette-300 dark:text-palette-30 dark:hover:text-white' }}"></i>
-                            <div
-                                class="top-0 left-5 absolute {{ request()->routeIs('cart') ? 'bg-palette-200 dark:bg-palette-30' : 'bg-palette-400 dark:bg-white' }} rounded-full p-1">
-                            </div>
-                        </a>
-                    </div>
-                @endif
+                <div class=" ml-3">
+                    <a href="{{ route('cart') }}" :active="request() - > routeIs('cart')"
+                        class="relative inline-block cursor-pointer">
+                        <i
+                            class="fas fa-cart-arrow-down text-xl {{ request()->routeIs('cart') ? 'text-palette-400 dark:text-white' : 'text-palette-200 hover:text-palette-300 dark:text-palette-30 dark:hover:text-white' }}"></i>
+                        <div
+                            class="top-0 left-5 absolute {{ request()->routeIs('cart') ? 'bg-palette-200 dark:bg-palette-30' : 'bg-palette-400 dark:bg-white' }} rounded-full p-1">
+                        </div>
+                    </a>
+                </div>
             </div>
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
+                <!-- cart -->
+
+                <div class=" mr-4">
+                    <a href="{{ route('cart') }}" :active="request() - > routeIs('cart')"
+                        class="relative inline-block cursor-pointer">
+                        <i
+                            class="fas fa-cart-arrow-down text-lg {{ request()->routeIs('cart') ? 'text-palette-400 dark:text-white' : 'text-palette-200 hover:text-palette-300 dark:text-palette-30 dark:hover:text-white' }}"></i>
+                        <div
+                            class="top-0 left-5 absolute {{ request()->routeIs('cart') ? 'bg-palette-200 dark:bg-palette-30' : 'bg-palette-400 dark:bg-white' }} rounded-full p-1">
+                        </div>
+                    </a>
+                </div>
+
                 {{-- <x-dark-button /> --}}
                 <button @click="open = ! open"
                     class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
@@ -100,12 +109,6 @@
     <!-- Responsive Navigation Menu -->
 
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
 
@@ -138,10 +141,15 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Account Management -->
-
                 <x-responsive-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
                     {{ 'Inicio' }}
                 </x-responsive-nav-link>
+
+                <x-responsive-nav-link href="{{ route('products') }}" :active="request()->routeIs('products')">
+                    {{ 'Productos' }}
+                </x-responsive-nav-link>
+
+
                 <x-responsive-nav-link href="{{ route('office.index') }}" :active="request()->routeIs('office.index')">
                     {{ 'Oficina' }}
                 </x-responsive-nav-link>

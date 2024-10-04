@@ -30,10 +30,10 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123'),
         ]);
         
-       /*   User::factory(1)->create();  */
+      User::factory(2)->create(); 
         $this->call(RelationshipSeeder::class); 
 
-       /*   Category::factory()->create([
+       Category::factory(3)->create([
             'name' => 'Hogar',
             'slug' => 'hogar',
             'description' => 'hogar la mejor manera',
@@ -47,8 +47,8 @@ class DatabaseSeeder extends Seeder
             $product->images()->createMany(
                 Image::factory(1)->product()->make()->toArray()
             );
-        });
+        }); 
 
-        $this->call(CountrySeeder::class);  */
+        $this->call(CountrySeeder::class);  
     }
 }

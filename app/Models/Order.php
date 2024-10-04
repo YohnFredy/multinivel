@@ -11,11 +11,8 @@ class Order extends Model
 
     protected $fillable = ['public_order_number', 'user_id', 'contact', 'phone', 'status', 'envio_type', 'discount', 'shipping_cost', 'total', 'total_pts', 'country_id', 'department_id', 'city_id', 'addCity', 'address', 'additional_address', 'payment_id'];
 
-    const STATUS_PROCESSING = 'processing';
-    const STATUS_PENDING = 'pending';
-    const STATUS_APPROVED = 'approved';
-    const STATUS_REJECTED = 'rejected';
-    const STATUS_FAILED = 'failed';
+  /*   const STATUS_PENDING = 'pending'; */
+   
 
 
     public function getRouteKeyName()

@@ -3,7 +3,6 @@
     x-bind:class="{ 'dark': isDarkMode }">
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -15,13 +14,13 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
         integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
-        
 
     @stack('css')
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
+
+    @stack('js')
 
     <script>
         (function() {
@@ -32,12 +31,13 @@
             }
         })();
     </script>
-
     <!-- Styles -->
     @livewireStyles
+
 </head>
 
-<body class="bg-gray-100 text-gray-900">
+<body class="font-sans antialiased">
+    
     <div class="min-h-screen bg-palette-100 dark:bg-palette-80">
         @livewire('navigation-menu')
 
@@ -45,12 +45,15 @@
         <main class=" text-palette-300 dark:text-palette-20">
             {{ $slot }}
         </main>
+
+        @include('footer')
+
+        
     </div>
 
     @stack('modals')
 
     @livewireScripts
-    <script src="https://unpkg.com/alpinejs" defer></script>
 
     <script>
         function darkModeHandler() {
@@ -89,6 +92,9 @@
         }
     </script>
 
+    @stack('script')
+
 </body>
 
 </html>
+

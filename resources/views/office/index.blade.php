@@ -11,7 +11,7 @@
                         Clic para Copiar <i class="fas fa-copy mr-2"></i>
                     </button>
                 </div>
-                <x-link href="{{ route('register', [$user->username, 'right']) }}">
+                <x-link href="{{ route('membership', [$user->username, 'right']) }}">
                     <x-button>Registrar lado derecho</x-button>
                 </x-link>
             </div>
@@ -24,7 +24,7 @@
                         Clic para Copiar <i class="fas fa-copy mr-2"></i>
                     </button>
                 </div>
-                <x-link href="{{ route('register', [$user->username, 'left']) }}">
+                <x-link href="{{ route('membership', [$user->username, 'left']) }}">
                     <x-button>Registrar lado Izquierdo</x-button>
                 </x-link>
             </div>

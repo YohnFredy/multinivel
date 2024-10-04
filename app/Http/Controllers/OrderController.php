@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Test;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -11,6 +12,8 @@ class OrderController extends Controller
     {
         return view('orders.show', compact('order'));
     }
+
+
     public function payment(Order $order)
     {
         $apiKey = config('services.bold.api_key');
@@ -39,6 +42,7 @@ class OrderController extends Controller
 
     public function boldResponsePayment(Request $request)
     {
+
         $orderId = $request->input('bold-order-id');
         $status = $request->input('bold-tx-status');
 
@@ -49,7 +53,7 @@ class OrderController extends Controller
                 // Puedes agregar más lógica, como enviar un correo de confirmación o actualizar el estado de la orden en la base de datos
                 break;
 
-            case 'processing': 
+            case 'processing':
                 $message = 'Tu transacción está en proceso. Te notificaremos cuando se complete.';
                 break;
 
@@ -71,5 +75,17 @@ class OrderController extends Controller
         }
 
         return view('orders.boldResponse', compact('orderId', 'status', 'message'));
+    }
+
+
+    public function boldHandlePaymentStatus(Request $request)
+    {
+        // Captura toda la información que llega por POST
+        $data = $request->all();
+
+        // Guarda la información en el campo 'texto'
+        Test::create([
+            'texto' => json_encode($data), // Guardamos la información en formato JSON
+        ]);
     }
 }

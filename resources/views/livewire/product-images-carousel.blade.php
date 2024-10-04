@@ -1,14 +1,14 @@
 <div>
     {{-- Main Image Carousel --}}
-    <div class="px-2">
-        <div class="relative  rounded-lg  h-96 w-full overflow-hidden">
-                <div class="flex transition-transform duration-500" style="transform: translateX(-{{ $mainImageIndex * 100 }}%);">
+    <div class="px-5">
+        <div class="relative rounded-lg overflow-hidden">
+                <div class="flex transition-transform duration-500 " style="transform: translateX(-{{ $mainImageIndex * 100 }}%);">
                     @foreach ($product->images as $index => $image)
                         <div class="flex-none w-full">
-                            <div class="flex justify-center ">
+                            <div class="flex justify-center  ">
                                 <div wire:key="main-{{ $index }}">
                                     <img src="{{ asset('storage/' . $image->path) }}" alt="{{ $product->name }}"
-                                        class=" rounded-md  object-fill h-96 ">
+                                        class=" rounded-md  object-fill border-2 border-palette-30">
                                 </div>
                             </div>
                         </div>

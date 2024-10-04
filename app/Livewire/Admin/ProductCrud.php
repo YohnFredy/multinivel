@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin;
 
-use App\Livewire\Forms\Admin\ProductForm as AdminProductForm;
+use App\Livewire\Forms\Admin\ProductForm;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -11,20 +11,19 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\WithFileUploads;
 
-class ProductForm extends Component
+class ProductCrud extends Component
 {
     use WithFileUploads;
-    public AdminProductForm $form;
+    public ProductForm $form;
 
     public $isEditMode = false;
     public $suggestedPts;
-    public $product, $content; 
+    public $product, $content;
     public $selectedCategory, $selectedSubcategory, $selectedSubsubcategory;
     public $categories, $subcategories, $subsubcategories, $brands;
 
     public function mount(Product $product)
     {
-
         $this->categories = Category::whereNull('parent_id')->get();
         $this->brands = Brand::all();
         $this->product = $product;
@@ -109,9 +108,15 @@ class ProductForm extends Component
 
     public function removeImage($path)
     {
-        $this->form->images = array_filter($this->form->images, fn ($image) => $image !== $path);
+        $this->form->images = array_filter($this->form->images, fn($image) => $image !== $path);
         Storage::delete('public/' . $path);
         $this->product->images()->where('path', $path)->delete();
+    }
+
+    private function resetForm()
+    {
+        $this->form->reset();
+        $this->loadProductData();
     }
 
     #[Layout('components.layouts.admin')]
@@ -120,12 +125,6 @@ class ProductForm extends Component
         if ($this->form->price) {
             $this->suggestedPts = number_format($this->form->price * 0.20, 2, '.', ',');
         }
-        return view('livewire.admin.product-form');
-    }
-
-    private function resetForm()
-    {
-        $this->form->reset();
-        $this->loadProductData();
+        return view('livewire.admin.product-crud');
     }
 }
